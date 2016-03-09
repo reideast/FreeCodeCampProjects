@@ -1,0 +1,45 @@
+/*html * {
+  border: 1px solid red;
+}*/
+
+body {
+  font-family: Consolas, monospace;
+}
+
+button {
+  font-family: Consolas, monospace;
+  width: 100%;
+}
+
+header {
+  margin-top: 20px;
+}
+
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 28px;
+  }
+}
+
+/*#searchForm input[type=text] {
+  width: 100%;
+}*/
+
+#containerMain {
+  
+}
+
+/*.row {
+  border: 1px solid green;
+}*/
+
+/*#textBoxContainer {
+  padding-right: 0;
+}*/
+
+#formRow {
+  margin: 0 -7.5px;
+}
+#formRow > div {
+  padding: 0 7.5px;
+}
