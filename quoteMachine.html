@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <meta name="google" value="notranslate">
+
+
+    <title>CodePen - Quotes (For Free Code Camp)</title>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" href="http://codepen.io/assets/reset/reset.css">
+
+    <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'>
+<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+
+        <style>
+      body {
+  font-family: Lato, Georgia, 'Times New Roman', Times, serif;
+}
+
+.quoteBox {
+  border: 3px solid gray;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+#attrib {
+  font-style: italic;
+}
+
+/* .quoteBox .row:first-child {
+  margin-top: 20px;
+}
+.quoteBox .row:last-child {
+  margin-bottom: 20px;
+} */
+
+    </style>
+
+    
+    
+    
+  </head>
+
+  <body>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+<div class="container-fluid"> 
+  <div class="row">
+    <div class="col-md-offset-3 col-md-6 sm-col-12">
+      <div class="quoteBoxTitle">
+        <h1>Get a Quote:</h1>
+      </div>
+      <div class="quoteBox">
+        <div class="row">
+          <div class="col-xs-1 col-xs-offset-1">
+            <a id="tweetButton" target="_blank" href="https://twitter.com/intent/tweet?text=Hello%20world" class="btn btn-primary" role="button"><i class="fa fa-twitter"></i></a>
+          </div>
+          <div class="col-xs-1">
+            <a href="#" id="redditButton" target="_blank" class="btn btn-primary"><i class="fa fa-reddit"></i></a>
+          </div>
+          <div class="col-xs-2 col-xs-offset-5">
+            <button onclick="getQuote()" class="btn btn-success">Random Quote</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-offset-1 col-xs-10">
+            <div id="quote"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-offset-1 col-xs-10">
+            <div id="attrib"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> <!--container-->
+    
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
+
+        <script>
+      $(document).ready(function() {
+  console.log("*************");
+  shuffleQuotes();
+  getQuote();
+});
+
+function shuffleQuotes() {
+  for (var numShuffles = 0; numShuffles < 2; numShuffles++){
+    for (var i = 0; i < quotes.length; i++) {
+      var rand = Math.ceil(Math.random() * quotes.length) + 1;
+      var temp = quotes[i];
+      quotes[i] = quotes[rand];
+      quotes[rand] = temp;
+    }
+  }
+}
+
+function getQuote() {
+  var tweetURL = "";
+  var redditURL = "";
+  
+  currQuote = (currQuote + 1) % quotes.length;
+  console.log(currQuote);
+  console.log(quotes[currQuote].quote);
+  $("#quote").html("<h3>" + quotes[currQuote].quote + "</h3>");
+  tweetURL += quotes[currQuote].quote;
+  redditURL += quotes[currQuote].quote;
+  if (quotes[currQuote].hasOwnProperty("attrib")) {
+    console.log(quotes[currQuote].attrib);
+    $("#attrib").html("<h4>" + quotes[currQuote].attrib + "</h4>");
+    tweetURL += " - " + quotes[currQuote].attrib;
+    redditURL += " - " + quotes[currQuote].attrib;
+  }
+  else {
+    $("#attrib").html("");
+  }
+  
+  tweetURL = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(tweetURL) + "&hashtags=quotation" + "&via=andrewreideast";
+  $("#tweetButton").prop("href", tweetURL);
+  
+  redditURL = "https://www.reddit.com/submit?title=" +  encodeURIComponent(redditURL) + "&url=" + encodeURIComponent("http://codepen.io/andrewreideast/pen/yewRaR");
+  $("#redditButton").prop("href", redditURL);
+}
+
+var currQuote = -1;
+var quotes = [
+  {
+    "quote": "Nutritional tip: Only Irish Coffee provides in a single glass all four essential food groups: alchohol, caffeine, sugar, and fat."
+  },
+  {
+    "quote": "I believe that professional wrestling is clean and everything else in the world is fixed.",
+    "attrib": "Frank Deford"
+  },
+  {
+    "quote": "Whatever their other contributions to society, lawyers could be an important source of protein.",
+    "attrib": "Guindon cartoon caption"
+  },
+  {
+    "quote": "The goal of all inanimate objects is to resist man and ultimately defeat him.",
+    "attrib": "Russell Baker"
+  },
+  {
+    "quote": "A man's gotta do what a man's gotta do.",
+    "attrib": "Sylvester Stallone"
+  },
+  {
+    "quote": "If you can't laugh at yourself, make fun of other people.",
+    "attrib": "Bobby Slayton"
+  },
+  {
+    "quote": "Historical reminder: Always keep Horace before Descartes."
+  },
+  {
+    "quote": "Economists are people who work with numbers, but who don't have the personality to be accountants."
+  },
+  {
+    "quote": "No matter how cynical you get, it is just impossible to keep up.",
+    "attrib": "Lily Tomlin"
+  },
+  {
+    "quote": "I believe more people would be alive today if there were a death penalty.",
+    "attrib": "Nancy Reagan"
+  },
+  {
+    "quote": "Never believe anything until it has been officially denied."
+  },
+  {
+    "quote": "Be true to your teeth and they won't be false to you.",
+    "attrib": "Soupy Sales"
+  },
+  {
+    "quote": "If you're gonna steal, steal from kin—at least they're less likely to put the law on you.",
+    "attrib": "Bret Maverick"
+  },
+  {
+    "quote": "It takes so little to ruin a perfect day: a stone in the shoe; a cockroach in the spaghetti sauce; a woman's laugh.",
+    "attrib": "H.L. Mencken"
+  },
+  {
+    "quote": "Time is the slippery, viscid, wavering tool of a malignant prestidigitator with nineteen thumbs."
+  },
+  {
+    "quote": "Time is nature's way of keeping everything from happening all at once."
+  },
+  {
+    "quote": "When the tides of life turn against you And the current upsets your boat, Don't waste those tears on what might have been, Just lay on your back and float.",
+    "attrib": "Ed Norton (\"The Honeymooners\")"
+  },
+  {
+    "quote": "Due to the shape of the North American elk's esophagus, even if it could speak, it could not pronounce the word \"Lasagna.\"",
+    "attrib": "Cliff Clavin (\"Cheers\")"
+  },
+  {
+    "quote": "Did you hear about the two dyslexic theologians who sat around arguing about the existence of Dog?"
+  },
+  {
+    "quote": "Working rule #23: Go through the motions anyway; you might get lucky."
+  },
+  {
+    "quote": "If once a man indulges himself in murder, very soon he comes to think little of robbing; and from robbing he next comes to drinking and Sabbath-breaking, and from that to incivility and procrastination.",
+    "attrib": "Thomas De Quincey"
+  },
+  {
+    "quote": "The difference between genius and stupidity is that genius has its limits."
+  },
+  {
+    "quote": "If it weren't for pickpockets, I'd have no sex life at all.",
+    "attrib": "Rodney Dangerfield"
+  },
+  {
+    "quote": "If Shakespeare had been in pro basketball he never would have had time to write his solliloquies.  He would always have been on a plane between Phoenix and Kansas City.",
+    "attrib": "Paul Westhead, basketball coach"
+  },
+  {
+    "quote": "A team is a team.  Shakespeare said that many times.",
+    "attrib": "Dan Devine, football coach"
+  },
+  {
+    "quote": "A piano is a piano is a piano.",
+    "attrib": "Gertrude Steinway"
+  },
+  {
+    "quote": "A little inaccuracy sometimes saves tons of explanation.",
+    "attrib": "H. H. Munro (Saki)"
+  },
+  {
+    "quote": "I propose getting rid of conventional armaments and replacing them with reasonably-priced hydrogen bombs that would be distributed equally throughout the world.",
+    "attrib": "Idi Amin"
+  },
+  {
+    "quote": "I don't want any yes-men around me.  I want everybody to tell me the truth even if it costs them their jobs.",
+    "attrib": "Sam Goldwyn"
+  },
+  {
+    "quote": "I wasn't kissing her.  I was whispering in her mouth.",
+    "attrib": "Chico Marx"
+  },
+  {
+    "quote": "Work is of two kinds: first, altering the position of matter at or near the earth's surface relative to other matter; second, telling other people to do so.",
+    "attrib": "Bertrand Russell"
+  },
+  {
+    "quote": "I have enough money to last me the rest of my life, unless I buy something.",
+    "attrib": "Jackie Mason"
+  },
+  {
+    "quote": "While you're saving your face you're losing your ass.",
+    "attrib": "Lyndon B. Johnson"
+  },
+  {
+    "quote": "I have already given two cousins to the war and I stand ready to sacrifice my wife's brother.",
+    "attrib": "Artemus Ward"
+  },
+  {
+    "quote": "Isn't there any other part of the matzo you can eat?",
+    "attrib": "Marilyn Monroe, upon being served matzo ball soup 3 meals in a row."
+  },
+  {
+    "quote": "It is not true that life is one damn thing after another—it is the same damn thing over and over.",
+    "attrib": "Edna St. Vincent Millay"
+  },
+  {
+    "quote": "The less things change, the more they remain the same.",
+    "attrib": "Sicilian proverb"
+  },
+  {
+    "quote": "The brotherhood of man is no mere poet's dream; it is a most depressing and humiliating reality.",
+    "attrib": "Oscar Wilde"
+  },
+  {
+    "quote": "Gaiety is the most outstanding feature of the Soviet Union.",
+    "attrib": "Joseph Stalin"
+  },
+  {
+    "quote": "In Italy, for 30 years under the Borgias, they had warfare, terror, murder, and bloodshed, but they produced Michelangelo, Leonardo Da Vinci, and the Renaissance.  In Switzerland, they had brotherly love, they had 500 years of democracy and peace—and what did they produce? The coockoo clock.",
+    "attrib": "from the movie \"The Third Man\""
+  },
+  {
+    "quote": "Historians have now definitely established that Juan Cabrillo, discoverer of California, was not looking for Kansas, thus setting a precedent that continues to this day.",
+    "attrib": "Wayne Shannon"
+  },
+  {
+    "quote": "When a book and a head collide and there is a hollow sound, is it always the book?",
+    "attrib": "Georg Christoph Lichtenberg"
+  },
+  {
+    "quote": "Great Moments in Literature: In 1936, Ernest Hemingway, while trout fishing, caught a carp and decided not to write about it.",
+    "attrib": "Guindon cartoon caption"
+  },
+  {
+    "quote": "A boy can learn a lot from a dog: obedience, loyalty, and the importance of turning around three times before lying down.",
+    "attrib": "Robert Benchley"
+  },
+  {
+    "quote": "When you go into court you are putting your fate into the hands of 12 people who weren't smart enough to get out of jury duty.",
+    "attrib": "Norm Crosby"
+  },
+  {
+    "quote": "It matters not whether you win or lose; what matters is whether I win or lose.",
+    "attrib": "Daring Weinberg"
+  },
+  {
+    "quote": "It is easier to get forgiveness than permission.",
+    "attrib": "Stewart's Law of Retroaction"
+  },
+  {
+    "quote": "Poets have been mysteriously silent on the subject of cheese.",
+    "attrib": "G. K. Chesterton"
+  },
+  {
+    "quote": "Soderquist's paradox: There are more horse's asses than there are horses."
+  },
+  {
+    "quote": "The future is very much like the present, only longer.",
+    "attrib": "Dan Quisenberry"
+  },
+  {
+    "quote": "It is better to deal with crooks than with fools, because the crooks sometimes take a break.",
+    "attrib": "Alexandre Dumas (the younger)"
+  },
+  {
+    "quote": "I could now afford all the things I never had as a kid, if I didn't have kids.",
+    "attrib": "Robert Orben"
+  },
+  {
+    "quote": "Life being what it is, one dreams of revenge.",
+    "attrib": "Paul Gauguin"
+  },
+  {
+    "quote": "Computers are useless.  They can only give you answers.",
+    "attrib": "Pablo Picasso"
+  },
+  {
+    "quote": "BAD SPELLERS OF THE WORLD, UNTIE!"
+  },
+  {
+    "quote": "Proof that cats are smarter than dogs: You cannot get eight cats to pull a sled through snow."
+  },
+  {
+    "quote": "In America, anyone can become president. But that's one of the risks you have to take.",
+    "attrib": "Adlai Stevenson"
+  },
+  {
+    "quote": "Most of our future lies ahead of us.",
+    "attrib": "Denny Crum, Louisville basketball coach"
+  },
+  {
+    "quote": "You're never too old to do goofy stuff.",
+    "attrib": "Ward Cleaver  (\"Leave It to Beaver\")"
+  },
+  {
+    "quote": "You know what makes this country great?  You don't have to be witty or clever, as long as you can hire someone who is.",
+    "attrib": "Ted Baxter (\"The Mary Tyler Moore Show\")"
+  },
+  {
+    "quote": "Actress Robin Givens has filed a libel suit against estranged husband Mike Tyson, claiming he told a reporter that she was after his money....  She's asking $125 million.",
+    "attrib": "NBC News"
+  },
+  {
+    "quote": "You can get more with a kind word and a gun than you can with a kind word alone.",
+    "attrib": "Al Capone"
+  },
+  {
+    "quote": "If you have been in a poker game for 30 minutes and you still don't know who the pigeon is, the pigeon is you."
+  },
+  {
+    "quote": "Outside of a dog, a book is a man's best friend. Inside of a dog, it's too dark to read.",
+    "attrib": "Groucho Marx"
+  },
+  {
+    "quote": "My neighbors down here in Barbour County, Alabama are kindly, intelligent, educated, and refined.",
+    "attrib": "George Wallace"
+  },
+  {
+    "quote": "Everything should be as simple as it is, but not simpler.",
+    "attrib": "Albert Einstein"
+  },
+  {
+    "quote": "Success is having to worry about every damn thing in the world, except money.",
+    "attrib": "Johnny Cash"
+  },
+  {
+    "quote": "I think I am beginning to understand something of it.",
+    "attrib": "Auguste Renoir (his last words)"
+  },
+  {
+    "quote": "Do you think a man who knows his own value grants anyone the right to criticize even his most trivial qualities?",
+    "attrib": "Arnold Schoenberg"
+  },
+  {
+    "quote": "If there ain't no place to go, there's no way to take a trip.",
+    "attrib": "\"Dandy\" Don Meredith"
+  },
+  {
+    "quote": "Society is merely everybody else, and you don't owe everybody anything.",
+    "attrib": "Thomas Berger"
+  },
+  {
+    "quote": "City ain't no place for a woman, though a lot of pretty men go there.",
+    "attrib": "W.C. Fields (in \"The Fatal Glass of Beer\")"
+  },
+  {
+    "quote": "Never kick a fresh turd on a hot day.",
+    "attrib": "Harry S Truman"
+  },
+  {
+    "quote": "If you're good, you can do it anywhere—even on the ground with a stick.",
+    "attrib": "Alvin Doyle Moore"
+  },
+  {
+    "quote": "It is bad today, and it will be worse tomorrow; and so on until the worst of all.",
+    "attrib": "Arthur Schopenhauer"
+  },
+  {
+    "quote": "To ensure freshness, all foods are cooked from scratch, which is subject to run out.",
+    "attrib": "Dip's Country Kitchen (Chapel Hill, N.C.)"
+  },
+  {
+    "quote": "If you have to eat crow, eat it while it's hot.",
+    "attrib": "Alben Barkley"
+  },
+  {
+    "quote": "Tome mucho cafe, fume un buen cigarro, y no se ocupe. (Drink a lotta coffee, smoke a good cigar, and don't fret yourself)",
+    "attrib": "The World's Oldest Living Peruvian (aged about 165)"
+  },
+  {
+    "quote": "Some people are so ignorant they wouldn't know how to pour piss out of a boot—even if the instructions were printed on the heel.",
+    "attrib": "Lyndon Baines Johnson"
+  },
+  {
+    "quote": "His Majesty does not know what the Band has just played, but it is never to be played again!",
+    "attrib": "King George V"
+  },
+  {
+    "quote": "I guess when you turn off the main road, you have to be prepared to see some funny houses.",
+    "attrib": "Stephen King (from \"Rage\")"
+  },
+  {
+    "quote": "If I'd've hit that many singles, I'd've worn a dress.",
+    "attrib": "Mickey Mantle, 1985, reflecting on Pete Rose breaking Ty Cobb's record"
+  },
+  {
+    "quote": "The fact that many people prefer bad art to good art is not a matter for criminal prosecution but an ingredient in the human comedy, one by which other people will always know how to profit.",
+    "attrib": "John Russell"
+  },
+  {
+    "quote": "What was was was!  What is is is!",
+    "attrib": "Sparky Anderson, 1986"
+  },
+  {
+    "quote": "Although our information is incorrect, we do not vouch for it.",
+    "attrib": "Erik Alfred Leslie Satie"
+  },
+  {
+    "quote": "If you can kill a snake with it, it ain't art.",
+    "attrib": "Orcenith Lyle Bonge"
+  },
+  {
+    "quote": "The only thing one can be proud of is of having worked in such a way that an official reward for your labor cannot be envisaged by anyone.",
+    "attrib": "Jean Cocteau"
+  },
+  {
+    "quote": "I told Jimmy Carter that Reagan's got just what this country wants: a good head o' hair and a mean line o' talk.",
+    "attrib": "St. Eom of the Land of Pasquan"
+  },
+  {
+    "quote": "The only thing God didn't do to Job was give him a computer.",
+    "attrib": "I. F. Stone"
+  },
+  {
+    "quote": "90 percent of the worst human beings I know are poets.  Most poets these days are so square they have to walk around the block just to turn over in bed.",
+    "attrib": "Kenneth Rexroth"
+  },
+  {
+    "quote": "The race is not always to the swift, nor the battle to the strong—but that's usually the way to bet.",
+    "attrib": "Damon Runyon"
+  },
+  {
+    "quote": "What got you here will get you out of here.",
+    "attrib": "Joe Garagiola"
+  },
+  {
+    "quote": "It is a fine thing when a man who thoroughly understands a subject is unwilling to open his mouth.",
+    "attrib": "Yoshida Kendo"
+  },
+  {
+    "quote": "On the BBC there has been a spate of XVIIIc English composers, perhaps to show us why they are unknown; and a careful selection of the worst pieces of J.C. Bach set off with nothings by Frederick the Great.  As for poerty—and as for readers—the squalor is repulsive.",
+    "attrib": "Basil Bunting"
+  },
+  {
+    "quote": "What dull barbarians are not proud of their dullness and barbarism?",
+    "attrib": "Thackeray"
+  },
+  {
+    "quote": "Tutti Frutti, good booty / If it don't fit, don't force it You can grease it, make it easy ... AWOP-BOP-A-LOO-MOP, ALOP-BAM-BOOM!",
+    "attrib": "Richard Wayne Penniman, 1955"
+  },
+  {
+    "quote": "People know what they do; they frequently know why they do what they do; but what they don't know is what what they do does.",
+    "attrib": "Michel Foucault"
+  },
+  {
+    "quote": "The whole dream of democracy is to raise the proletarian to the level of stupidity attained by the bourgeois.",
+    "attrib": "Gustave Flaubert"
+  },
+  {
+    "quote": "For what do we live, but to make sport for our neighbors, and laugh at them in our turn.",
+    "attrib": "Jane Austen"
+  },
+  {
+    "quote": "I believe that if I ever had to practice cannibalism, I might manage it if there were enough tarragon around.",
+    "attrib": "James Beard"
+  },
+  {
+    "quote": "When one starts from a portrait and seeks by successive eliminations to find pure form ... one inevitably ends up with an egg.",
+    "attrib": "Pablo Picasso"
+  },
+  {
+    "quote": "Each morning when I awake, I experience again a supreme pleasure—that of being Salvatore Dali.",
+    "attrib": "Himself"
+  },
+  {
+    "quote": "Middle age is when you are faced with two temptations, and you choose the one that will get you home by 9 o'clock.",
+    "attrib": "Ronald Reagan"
+  },
+  {
+    "quote": "Whatever women do they must do twice as well as men to be thought of as half as good.  Luckily, this is not difficult.",
+    "attrib": "Charlotte Whitton, Mayor of Ottawa"
+  },
+  {
+    "quote": "After ecstasy, the laundry.",
+    "attrib": "Zen koan (quoted in \"Newsweek,\" 12/17/84)"
+  },
+  {
+    "quote": "Nothing we use or touch can be expressed in words that equal what is given by the senses.",
+    "attrib": "Hannah Arendt"
+  },
+  {
+    "quote": "I have a total irreverence for anything connected with society, except that which makes the roads safer, the beer stronger, the food cheaper, and the old men and women warmer in the winter and happier in the summer.",
+    "attrib": "Brendan Behan"
+  },
+  {
+    "quote": "Ours is the age of substitutes: Instead of language we have jargon; instead of principles, slogans; instead of genuine ideas, bright suggestions.",
+    "attrib": "Eric Bentley"
+  },
+  {
+    "quote": "Life—the way it really is—is a battle not between Bad and Good but between Bad and Worse.",
+    "attrib": "Joseph Brodsky"
+  },
+  {
+    "quote": "If you think that you can think about a thing, inextricably attached to something else, without thinking of the thing it is attached to, then you have a legal mind.",
+    "attrib": "Thomas Reed Powell"
+  },
+  {
+    "quote": "I have spent all my life under a Communist regime, and I will tell you that a society without any objective legal scale is a terrible one indeed.  But a society with no other scale but the legal one is not quite worthy of man either.",
+    "attrib": "Alexander Solzhenitsyn"
+  },
+  {
+    "quote": "The rain it raineth on the just And also on the unjust fella; But chiefly on the just, because The unjust steals the just's umbrella.",
+    "attrib": "Sam Ervin"
+  },
+  {
+    "quote": "It may be that we have all lived before and died, and this is hell.",
+    "attrib": "A.L. Prusick"
+  },
+  {
+    "quote": "Always look out for Number One and be careful not to step in Number Two.",
+    "attrib": "Rodney Dangerfield"
+  },
+  {
+    "quote": "Men are superior to women.  For one thing, they can urinate from a speeding car.",
+    "attrib": "Will Durst"
+  },
+  {
+    "quote": "I have known more men destroyed by the desire to have wife and child and to keep them in comfort than I have seen destroyed by drink and harlots.",
+    "attrib": "William Butler Yeats"
+  },
+  {
+    "quote": "If a woman has to choose between catching a fly ball and saving an infant's life, she will choose to save the infant's life without even considering if there are men on base.",
+    "attrib": "Dave Barry"
+  },
+  {
+    "quote": "I go from stool to stool in singles bars hoping to get lucky, but there's never any gum under any of them.",
+    "attrib": "Emo Philips"
+  },
+  {
+    "quote": "This gum tastes funny.",
+    "attrib": "Sign on a condom machine."
+  },
+  {
+    "quote": "I married the first man I ever kissed.  When I tell my children that, they just about throw up.",
+    "attrib": "Barbara Bush"
+  },
+  {
+    "quote": "Being head of state is an extremely thankless job.",
+    "attrib": "Bokassa I, former emperor of the Central African Republic, while on trial for infanticide, cannibalism, and torture."
+  },
+  {
+    "quote": "Baseball would be a better game if more third basemen got hit in the mouth by line drives.",
+    "attrib": "Dan Jenkins"
+  },
+  {
+    "quote": "Making duplicate copies and computer printouts of things no one wanted even one of in the first place is giving America a new sense of purpose.",
+    "attrib": "Andy Rooney"
+  },
+  {
+    "quote": "I don't want to achieve immortality by being inducted into baseball's Hall of Fame.  I want to achieve immortality by not dying.",
+    "attrib": "Leo Durocher at eighty-one."
+  },
+  {
+    "quote": "Time flies like an arrow. Fruit flies like a banana.",
+    "attrib": "Lisa Grossman"
+  },
+  {
+    "quote": "Some guy hit my fender, and I said to him, \"Be fruitful and multiply,\"  but not in those words.",
+    "attrib": "Woody Allen"
+  },
+  {
+    "quote": "Capital punishment is our society's recognition of the sanctity of human life.",
+    "attrib": "Senator Orrin Hatch of Utah"
+  },
+  {
+    "quote": "When dealing with the insane, the best method is to pretend to be sane.",
+    "attrib": "Hermann Hesse"
+  },
+  {
+    "quote": "A society made up of individuals who were capable of original thought would probably be unendurable.  The pressure of ideas would simply drive it frantic.",
+    "attrib": "H.L. Mencken"
+  },
+  {
+    "quote": "When a true genius appears in the world, you may know him by this sign, that the dunces are all in confederacy against him.",
+    "attrib": "Swift"
+  },
+  {
+    "quote": "Yes, there will be sex after death; we just won't be able to feel it.",
+    "attrib": "Lily Tomlin"
+  },
+  {
+    "quote": "Boredome is the bitter fruit of too much routine, or none at all.",
+    "attrib": "Brendan Francis"
+  },
+  {
+    "quote": "When you watch television, you never see people watching television.  We love television because it brings us a world in which television does not exist.",
+    "attrib": "Barbara Ehrenreich"
+  },
+  {
+    "quote": "Baseball is what we were; football is what we have become.",
+    "attrib": "Mary McGrory"
+  },
+  {
+    "quote": "If Jesus was Jewish, how come he has a Mexican name ?"
+  },
+  {
+    "quote": "Some mornings it just doesn't seem worth it to gnaw through the leather straps.",
+    "attrib": "Emo Philips"
+  },
+  {
+    "quote": "A criminal is a person with predatory instincts without sufficient capital to form a corporation.",
+    "attrib": "Howard Scott"
+  },
+  {
+    "quote": "Why should we take up farming when there are so many mongongo nuts in the world ?",
+    "attrib": "African Bushman, quoted by Jared Diamond"
+  },
+  {
+    "quote": "I feel sorry for people who don't drink, because when they get up in the morning, they're not going to feel any better all day.",
+    "attrib": "Frank Sinatra"
+  },
+  {
+    "quote": "I never took hallucinogenic drugs, because I never wanted my consciousness expanded one unnecessary iota.",
+    "attrib": "Fran Lebowitz"
+  },
+  {
+    "quote": "People hate me because I am a multifaceted, talented, wealthy, internationally-famous genius.",
+    "attrib": "Jerry Lewis"
+  },
+  {
+    "quote": "As she fell face down into the black muck of the mud-wrestling pit, her sweaty, 300-pound opponent muttering soft curses in Latin on top of her, Sister Marie thought, \"There is no doubt about it; the Pope has betrayed me.\"",
+    "attrib": "entry in San Jose State's bad writing contest, 1983"
+  },
+  {
+    "quote": "Having your book turned into a movie is like seeing your oxen turned into bouillon cubes.",
+    "attrib": "John LeCarre"
+  },
+  {
+    "quote": "Nebraska is proof that Hell is full, and the dead walk the earth.",
+    "attrib": "Liz Winston"
+  },
+  {
+    "quote": "When Madonna grabs her crotch, the social order is effectively transgressed.",
+    "attrib": "Chip Wells, on his Ph.D. dissertation, \"Like a Thesis: A Postmodern Reading of Madonna Videos.\""
+  },
+  {
+    "quote": "Human beings were invented by water as a means of transporting itself from place to place.",
+    "attrib": "Tom Robbins"
+  }
+];
+      //@ sourceURL=pen.js
+    </script>
+
+    
+    
+    
+  </body>
+</html>
