@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <meta name="google" value="notranslate">
+
+
+    <title>CodePen - Weather using Async jQuery $.Promise (For Free Code Camp)</title>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" href="http://codepen.io/assets/reset/reset.css">
+
+    <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'>
+<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+
+        <style>
+      body {
+  font-family: Lato, Georgia, 'Times New Roman', Times, serif;
+}
+
+.weatherBox {
+  border: 3px solid gray;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+#iconBox {
+  font-size: 4em;
+}
+
+#weatherTemp {
+  font-size: 3em;
+}
+
+#location {
+  font-style: italic;
+}
+
+#displayError {
+  display: none;
+}
+#displayError span:first-child {
+  margin-right: 10px;
+}
+#displayError div {
+  margin-bottom: 0;
+}
+
+#options {
+  padding: 10px;
+}
+
+.message {
+  display: none;
+}
+
+    </style>
+
+    
+    
+    
+  </head>
+
+  <body>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://erikflowers.github.io/weather-icons/css/weather-icons.css">
+<div class="container-fluid"> 
+  <div class="row">
+    <div class="col-md-offset-3 col-md-6 sm-col-12">
+      <div class="quoteBoxTitle">
+        <h1>Local Weather</h1>
+      </div>
+      <div class="weatherBox">
+        <div id="displayError" class="row">
+          <div class="alert alert-warning col-xs-offset-1 col-xs-10" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign"></span><span id="errorBox"></span>
+          </div>
+        </div>
+        <div id="displayWeather" class="row">
+          <div class="col-xs-offset-1 col-xs-2">
+            <div id="iconBox"><i id="weatherIcon" class="wi"></i></div>
+          </div>
+          <div class="col-xs-col-8">
+            <div id="weatherTemp"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-offset-1 col-xs-10">
+            <div id="location"></div>
+          </div>
+        </div>
+      </div>
+      <div id="options" class="row">
+        <div class="col-xs-1">
+          <button onclick="useMetric(); getWeather();" class="btn btn-default">°C</button>
+        </div>
+        <div class="col-xs-1">
+          <button onclick="useImperial(); getWeather();" class="btn btn-default">°F</button>
+        </div>
+        <div class="col-xs-offset-8 col-xs-2">
+          <button onclick="getCRAZY();" class="btn btn-default">Random?!</button>
+        </div>
+      </div>
+      <div class="message"></div>
+    </div>
+  </div>
+</div> <!--container-->
+    
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
+
+        <script>
+      //See discussion of javascript async functions using jQuery $.Promise: http://www.html5rocks.com/en/tutorials/async/deferred/
+
+var isMetric = true;
+var fail = 0;
+
+//Open Weather Map API:
+//description: http://openweathermap.org/current
+//var exampleCall = "http://api.openweathermap.org/data/2.5/weather/city?id=524901&APPID=1111111111";
+
+$(document).ready(function() {
+  console.log("*************");
+  
+  useMetric();
+
+  getWeather();
+}); //document.ready
+
+function useMetric() {
+  isMetric = true;
+}
+function useImperial() {
+  isMetric = false;
+}
+
+function getWeather() {
+  //call a function that returns a Promise object:
+  var geolocationPromise = getGeolocationAsync();
+  //register a function to call when getGeolocationAsync finishes:
+  geolocationPromise.done(getWeatherFromAPI); //a function name
+  //register a function to call if aysnc function fails:
+  geolocationPromise.fail(setErrorMessage);
+}
+
+function getCRAZY() {
+  var loc = {
+    "lat": 0,
+    "lon": 0
+  };
+  loc.lat = Math.random() * 180 - 90;
+  loc.lon = Math.random() * 360 - 180;  
+  getWeatherFromAPI(loc);
+}
+
+//a function that will return a jQuery Promise object
+//assign the returned object to a variable, and then call .done(callbackFunction)
+function getGeolocationAsync() {
+  var deferred = $.Deferred(); //use the jQuery Deferred object
+
+  //run the async procedure, and inside the "completed" block, call Deferred methods resolve and/or reject:
+  if (navigator.geolocation) {
+    var loc = {
+      "lat": 0,
+      "lon": 0
+    };
+    console.log("Latitude:" + loc.lat + ", Longitude:" + loc.lon);
+    //here follows the async magic, which .promise awaits for
+    navigator.geolocation.getCurrentPosition(function(pos) {
+      loc.lat = pos.coords.latitude;
+      loc.lon = pos.coords.longitude;
+      console.log("Inside Async Function: Latitude:" + loc.lat + ", Longitude:" + loc.lon);
+      //.resolve links up with .done outside of the async function:
+      deferred.resolve(loc); //triggers whatever is registered via .done
+    }, function(err) {
+      //.reject links with .fail outside the ansync function:
+      deferred.reject("Geolocation returned an error [Code " + err.code + "]: " + err.message);
+    });
+  } else { //if(navigator.geolocation)
+    //setErrorMessage("Location not provided by web browser");
+    deferred.reject("Location not provided by web browser");
+  }
+
+  return deferred.promise(); //the Promise object, which has methods .done and .fail, allowing registering callback functions
+}
+
+function getWeatherFromAPI(loc) {
+  console.log("getWeather: (" + loc.lat + ", " + loc.lon + ")");
+
+  //build REST request URI
+  var apiURLBase = "http://api.openweathermap.org/data/2.5/";
+  var apiURLCall = "weather";
+  var apiLocation = "?lat=" + loc.lat + "&lon=" + loc.lon;
+  var apiUnits = (isMetric ? "&units=metric" : "&units=imperial");
+  var apiKey = "&APPID=" + "d8d9e006ce48154b2acc45933d0ec352";
+  var apiURL = (fail ? "blah" : "") + apiURLBase + apiURLCall + apiLocation + apiUnits + apiKey;
+
+  //start Async request; register callback functions:
+  $.getJSON(apiURL, writeWeatherFromAJAX).fail(weatherAJAXFail);
+}
+
+function writeWeatherFromAJAX(json) {
+  //$(".message").html("DEBUG: " + JSON.stringify(json));
+  //json.forEach(function(weatherStation) {});
+  //$("#weatherTemp").html(function() {
+  if (json.hasOwnProperty("main")) {
+    if (json.main.hasOwnProperty("temp")) {
+      $("#weatherTemp").html(Math.round(json.main.temp) + "°" + (isMetric ? "C" : "F"));
+    } else {
+      setErrorMessage("Temperature not returned by API");
+    }
+  } else {
+    if (json.main.hasOwnProperty(""))
+      if (json.hasOwnProperty("message")) {
+        setErrorMessage("Weather API returned an error message: <strong>" + json.message + "</strong>"); //{"cod":"404","message":"Error: Not found city"}
+      } else {
+        setErrorMessage("Weather API did not return or provide an error message.");
+      }
+  }
+  
+  if (json.hasOwnProperty("weather")) {
+    wicon = $("#weatherIcon");
+    wicon.removeClass();
+    wicon.addClass("wi");
+    json.weather.forEach(function(weatherStatus) {
+      //var iconType = "";
+      if (weatherStatus.id >= 200 && weatherStatus.id < 300) {
+        wicon.addClass("wi-thunderstorm");
+      }
+      else if (weatherStatus.id < 400) {
+        wicon.addClass("wi-showers");
+      }
+      else if (weatherStatus.id < 600) {
+        wicon.addClass("wi-rain");
+      }
+      else if (weatherStatus.id < 700) {
+        wicon.addClass("wi-snow");
+      }
+      else if (weatherStatus.id < 800) {
+        wicon.addClass("wi-fog");
+      }
+      else if (weatherStatus.id == 800) {
+        wicon.addClass("wi-day-sunny");
+      }
+      else if (weatherStatus.id == 801) {
+        wicon.addClass("wi-day-cloudy");
+      }
+      else if (weatherStatus.id == 802) {
+        wicon.addClass("wi-cloud");
+      }
+      else if (weatherStatus.id <= 804) {
+        wicon.addClass("wi-cloudy");
+      }
+      else if (weatherStatus.id >= 900 && weatherStatus.id <= 906) {
+        console.log("Extreme weather; no icon!");
+      }
+      else if (weatherStatus.id >= 951 && weatherStatus.id <= 962) {
+        console.log("Weather Status was a wind code: " + weatherStatus.id);
+      }
+      else {
+        console.log("Weather Status was an unknown ID code: " + weatherStatus.id);
+      }
+      
+    });
+  } else {
+    console.log("Weather API did not return a weather type for this location");
+    if (json.hasOwnProperty("message")) {
+      console.log("Weather API returned an error message: " + json.message);
+    }
+  }
+  
+  if (json.hasOwnProperty("name")) {
+    $("#location").html("Weather Station: " + json.name + ", " + json.sys.country);
+  } else {
+    console.log("Weather API did not return a weather station name for this location");
+    if (json.hasOwnProperty("message")) {
+      console.log("Weather API returned an error message: " + json.message);
+    }
+  }
+}
+
+function weatherAJAXFail(d, textStatus, error) {
+  setErrorMessage("Call to API failed. Status: " + textStatus + " Error: " + error); //http://stackoverflow.com/questions/5492838/why-does-getjson-silently-fail
+}
+
+function setErrorMessage(msg) {
+  $("#displayError").css("display", "block");
+  $("#errorBox").html(msg);
+  $("#displayWeather").css("display", "none");
+}
+      //@ sourceURL=pen.js
+    </script>
+
+    
+    
+    
+  </body>
+</html>
+ 
