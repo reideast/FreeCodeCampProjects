@@ -43,3 +43,22 @@ header {
 #formRow > div {
   padding: 0 7.5px;
 }
+
+.result img {
+  /* margin-top: -43px; /* move it back above the header, negative line-height+margin-bottom */
+  filter: saturate(0%);
+  -webkit-filter: saturate(0%);
+  -ms-filter: saturate(0%);
+}
+.result .well:hover img {
+  filter: initial;
+  -webkit-filter: initial;
+  -ms-filter: initial;
+}
+
+.resultImgBox {
+  margin: 0 0 10px 10px;
+  width: 100px;
+  /*height: 100px;*/
+  /*background-color: white;*/
+}

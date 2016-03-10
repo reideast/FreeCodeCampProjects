@@ -25,7 +25,7 @@
     </header>
     <section id="search" class="row">
       <div class="col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
-        <form id="searchForm" action="javascript:alert('submit');" class="inline-form">
+        <form id="searchForm" action="" onsubmit="return searchForIt(this);" class="inline-form">
           <div id="formRow" class="row">
             <div id="textBoxContainer" class="col-sm-7 col-sm-offset-0 col-xs-10 col-xs-offset-1 form-group">
               <label class="sr-only" for="query">Search Terms</label>
@@ -37,7 +37,7 @@
               </div>
             </div>
             <div class="col-sm-3 col-sm-offset-0 col-xs-5 col-xs-offset-2 text-center">
-              <button id="executeSearch" type="submit" class="btn">
+              <button id="executeSearch" class="btn">
                 Search
               </button>
             </div>
@@ -51,13 +51,18 @@
         </form>
       </div>
     </section>
-    <section id="results" class="row">
-      <div class="result col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
-        <h2 class="text-center">Result Title</h2>
-        <p class="text-justify">Result text, to be filled in by the JSON file that is retrieved by the API search call and the AJAX asyncronous javascript
-          response ok this is probably enough text here.</p>
-      </div>
+    <section id="results">
+      <!--<div class="result row">
+        <div class="well col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+          <h3 class="text-center">Result Title</h3>
+          <div class="resultImgBox">
+            <img src="http://placehold.it/100x100" width="100" height="100" class="pull-right">
+          </div>
+          <p class="text-justify">Result text, to be filled in by the JSON file that is retrieved by the API search call and the AJAX asyncronous javascript response ok this is probably enough text here.</p>
+        </div>
+      </div>-->
     </section>
+    
 
 
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
