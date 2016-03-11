@@ -1,7 +1,4 @@
-// $(document).ready(function() {
-//   console.log("**** page refresh ****");
-// });
-var genericResult = $('<div class="result row"><div class="well col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2"><h3 class="text-center">Result Title</h3><div class="resultImgBox pull-right text-center"><img src="http://placehold.it/100x100" width="100" height="100"></div><p class="text-justify"></p></div></div>');
+var resultTemplate = $('<div class="result row"><a class="well col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2"><h3 class="text-center">Result Title</h3><div class="resultImgBox pull-right text-center"><img src="http://placehold.it/100x100" width="100" height="100"></div><p class="text-justify"></p></a></div>');
 
 //$("#executeSearch").on("click", function() {
 function searchForIt() {
@@ -14,12 +11,12 @@ function searchForIt() {
       //console.log(JSON.stringify(pages[key]));
       // console.log(currResult);
       // console.log(currResult.children());
-      var currResult = genericResult.clone();
+      var currResult = resultTemplate.clone();
       currResult.attr("id", "wikiResult_" + pages[key].pageid);
       $("#results").append(currResult);
+      $("#" + "wikiResult_" + pages[key].pageid + " a").attr("href", "https://en.wikipedia.org/wiki/" + pages[key].title);
       $("#" + "wikiResult_" + pages[key].pageid + " h3").html(pages[key].title);
       $("#" + "wikiResult_" + pages[key].pageid + " p").html(pages[key].extract);
-      
       // console.log(pages[key].pageid);
       // console.log(pages[key].title);
       // console.log(pages[key].extract);
@@ -27,18 +24,17 @@ function searchForIt() {
         $("#" + "wikiResult_" + pages[key].pageid + " img").attr("src", pages[key].thumbnail.source);
         $("#" + "wikiResult_" + pages[key].pageid + " img").attr("width", pages[key].thumbnail.width);
         $("#" + "wikiResult_" + pages[key].pageid + " img").attr("height", pages[key].thumbnail.height);
+        // console.log(pages[key].thumbnail.source);
+        // console.log(pages[key].thumbnail.width);
+        // console.log(pages[key].thumbnail.height);
         if (pages[key].hasOwnProperty("pageimage")) {
           $("#" + "wikiResult_" + pages[key].pageid + " img").attr("alt", (pages[key].pageimage).replace(/\.[^.]+$/, ""));
           // console.log("alt=" + (pages[key].pageimage).replace(/\.[^.]+$/, ""));
         }
-        // console.log(pages[key].thumbnail.source);
-        // console.log(pages[key].thumbnail.width);
-        // console.log(pages[key].thumbnail.height);
       }
       else {
         $("#" + "wikiResult_" + pages[key].pageid + " .resultImgBox").css("display", "none");
       }
-      
     });
   };
   

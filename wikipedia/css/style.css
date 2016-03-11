@@ -1,14 +1,14 @@
-/*html * {
-  border: 1px solid red;
-}*/
-
-body {
+body, button {
   font-family: Consolas, monospace;
 }
 
-button {
-  font-family: Consolas, monospace;
+button, a[role="button"] {
   width: 100%;
+}
+a[role="button"], a[role="button"]:hover {
+  color: inherit;
+  background-color: #ddd;
+  border: 1px solid transparent;
 }
 
 header {
@@ -21,22 +21,7 @@ header {
   }
 }
 
-/*#searchForm input[type=text] {
-  width: 100%;
-}*/
-
-#containerMain {
-  
-}
-
-/*.row {
-  border: 1px solid green;
-}*/
-
-/*#textBoxContainer {
-  padding-right: 0;
-}*/
-
+/* compress white space in the search form */
 #formRow {
   margin: 0 -7.5px;
 }
@@ -44,8 +29,28 @@ header {
   padding: 0 7.5px;
 }
 
+
+.result a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.result .well {
+  transition: all 0.5s ease;
+}
+.result .well:hover {
+  /*background-color: #aaa;*/
+  /* styles from Bootstrap's <input type="text"> */
+  /*border-color: #66afe9;*/
+  border-color: #e3e3e3;
+  outline: 0;
+  /*-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);*/
+  /*box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);*/
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(200,200,200,0.6);
+}
 .result img {
   /* margin-top: -43px; /* move it back above the header, negative line-height+margin-bottom */
+  transition: all 0.5s ease;
   filter: saturate(0%);
   -webkit-filter: saturate(0%);
   -ms-filter: saturate(0%);
