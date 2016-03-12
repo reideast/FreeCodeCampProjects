@@ -1,0 +1,42 @@
+body, button {
+  font-family: Consolas, monospace;
+}
+
+
+.result a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.result .well {
+  transition: all 0.5s ease;
+}
+.result .well:hover {
+  /*background-color: #aaa;*/
+  /* styles from Bootstrap's <input type="text"> */
+  /*border-color: #66afe9;*/
+  border-color: #e3e3e3;
+  outline: 0;
+  /*-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);*/
+  /*box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);*/
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(200,200,200,0.6);
+}
+.result img {
+  /* margin-top: -43px; /* move it back above the header, negative line-height+margin-bottom */
+  transition: all 0.5s ease;
+  filter: saturate(0%);
+  -webkit-filter: saturate(0%);
+  -ms-filter: saturate(0%);
+}
+.result .well:hover img {
+  filter: initial;
+  -webkit-filter: initial;
+  -ms-filter: initial;
+}
+
+.resultImgBox {
+  margin: 0 0 10px 10px;
+  width: 100px;
+  /*height: 100px;*/
+  /*background-color: white;*/
+}
