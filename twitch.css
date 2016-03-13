@@ -2,6 +2,65 @@ body, button {
   font-family: Consolas, monospace;
 }
 
+/*
+  at std. container widths:
+  column widths:
+  col-sm-2: 95px
+  col-md-2: 161.656px
+  col-lg-2: 195px
+*/
+
+.channelContainer {
+  /*background-color: rgba(0,80,80,0.55);*/
+  background-color: #33bbbb;
+}
+
+.iconContainer img{
+  /*padding: 10px;*/
+  height: 100%;
+  width: 100%;
+  padding: 10px 25px; /* 10px square, plus 15px for bootstrap's left and right padding */
+}
+
+.titleContainer h3 {
+  color: #eee;
+}
+.titleContainer h3 small {
+  color: #c3efef;
+  /*color: hsl(180,57.1%,46.7%);*/
+}
+
+/*// use this style to set the height of .squareContent equal to the width of the container:
+// <container>
+//   <div class="squareDummy"></div>
+//   <div class="squareContent">
+//     ...content...
+//   </div>
+// </container>*/
+.squareDummy {
+  margin-top: 100%;
+}
+.squareContent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+}
+@mixin vCenter {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  > *:first-child { /* or .verticalCenter > *:first-child ?? */ 
+    margin-top: 0;
+  }
+  > *:last-child {
+    margin-bottom: 0;
+  }
+}
+
+
 
 .result a {
   color: inherit;
