@@ -1,12 +1,59 @@
 $(document).ready(function() {
   console.log("**** page refresh ****")
+  $('#statusTabs a').click(function (evnt) {
+    evnt.preventDefault();
+    $(this).tab('show'); //this would also switch Bootstrap's tab area, but I haven't created a properly bound tab area
+    // console.log("click binding function");
+    // console.log(this);
+    // console.log(evnt);
+    filterChannels(this.dataset["showwhat"]);
+  })
 });
+
+function filterChannels(showWhat) {
+  var channelElements = $("#channels").children();
+  //console.log(channelElements);
+  //.channelContainer, .streaming, .offline
+  if (showWhat === "all") {
+    $(".channelContainer").slideDown(500);
+  } else if (showWhat === "online") {
+    $(".streaming").slideDown(500);
+    $(".offline").slideUp(500);
+  } else if (showWhat === "offline") {
+    $(".streaming").slideUp(500);
+    $(".offline").slideDown(500);
+  }
+  
+  //show all elements first (and if showWhat == all)
+  // channelElements.css("display", "block");
+  // channelElements.slideDown(500);
+  
+  // // for (var i = 0; i < channelElements.length; i++) {
+  // channelElements.each(function(i, item) {
+  //   // console.log(channelElements[i]);
+  //   // console.log(channelElements[i].classList);
+  //   // if (!channelElements[i].classList.contains("streaming"))
+  //   //   channelElements[i].style.display = "none";
+  //   if (!item.classList.contains("streaming"))
+  //     $(item).slideUp(500);
+  // });
+  
+  // if (showWhat === "online") {
+  //   channelElements.filter(function(item) {
+  //     console.log(item);
+  //     if (item.classList.indexOf("streaming") !== -1)
+  //       return false; //does not have class .streaming
+  //     else
+  //       return true; //has class .streaming
+  //   }); //.css("display", "none");
+  // }
+}
 
 // fetch Free Code Camp's Twitch channel data:
 // https://github.com/justintv/Twitch-API
 // https://github.com/justintv/Twitch-API/blob/master/v3_resources/streams.md#get-streamschannel
 
-var possibleChannels = ["ESL_SC2", "OgamingSC2", "twitch", "brunofin", "comster404", "test_channel", "test_channel2", "riotgames", "playhearthstone", "freecodecamp", "storbeck", "terakilobyte", "habathcx", "RobotCaleb", "thomasballinger", "noobs2ninjas", "beohoff"];
+var possibleChannels = ["ESL_SC2", "twitch", "OgamingSC2", "brunofin", "comster404", "test_channel", "test_channel2", "riotgames", "playhearthstone", "freecodecamp", "storbeck", "terakilobyte", "habathcx", "RobotCaleb", "thomasballinger", "noobs2ninjas", "beohoff"];
 var channels = {}; //to be filled by $.Promise.done()
 
 //asynchnous function foundation:
@@ -57,11 +104,12 @@ function getOneChannelInfoAsync(currChannelName) {
   var deferred = $.Deferred();
   // console.log("before getJSON call: " + currChannelName);
   $.getJSON(getUserURL(currChannelName), function(data) {
-    console.log("inside getJSON call: " + currChannelName);
-    console.log(data);
+    // console.log("inside getJSON call: " + currChannelName);
+    // console.log(data);
     if ("error" in data)  {
-      console.log("Channel not found: " + currChannelName);
+      console.log("Channel API call returned error: " + currChannelName);
       var curr = {
+        "isError": true,
         "id": currChannelName,
         "display_name": currChannelName,
         "name": currChannelName,
@@ -82,7 +130,8 @@ function getOneChannelInfoAsync(currChannelName) {
         "status": data.status,
         "url": data.url,
         "views": data.views,
-        "isStreaming": false
+        "isStreaming": false,
+        "isError": false
       };
       deferred.resolve(curr); 
     }
@@ -108,18 +157,19 @@ function getStreamsURL(streamsArr) {
 /*
 {
   freecodecamp: {
-    id: 79776140,
-    name: "freecodecamp",
-    display_name: "FreeCodeCamp",
-    logo: "https://static-cdn.jtvnw.net/jtv_user_pictures/freecodecamp-profile_image-d9514f2df0962329-300x300.png",
-    bio: "...",
-    
-    isStreaming: true,
-    game: "Creative",
-    profile_banner: "https://static-cdn.jtvnw.net/jtv_user_pictures/freecodecamp-profile_banner-6f5e3445ff474aec-480.png",
-    status: "@fraziern struggles with React and CSS #programming",
-    url: "https://secure.twitch.tv/freecodecamp",
-    viewers: 21
+    id: 30220059
+    name: "esl_sc2"
+    display_name: "ESL_SC2"
+    game: "StarCraft II"
+    status: "RERUN: HyuN vs. Oz - Grand Final - WCS America 2014 Season 1 - StarCraft 2"
+    logo: "https://static-cdn.jtvnw.net/jtv_user_pictures/esl_sc2-profile_image-d6db9488cec97125-300x300.jpeg"
+    profile_banner: "https://static-cdn.jtvnw.net/jtv_user_pictures/esl_sc2-profile_banner-f8295b33d1846e75-480.jpeg"
+    url: "https://secure.twitch.tv/esl_sc2"
+    views: 57458963
+
+    isStreaming: true
+    viewers: 622
+    isError: false
   },
   ...
 }
@@ -128,6 +178,8 @@ function showChannelInfo() {
   var defaultRow = '<div class="row channelContainer">' +
                      '<div class="col-sm-2 iconContainer">' +
                        '<div class="imgCenter">' +
+                         '<div class="iconGeneric"><i class="glyphicon glyphicon-user"></i></div>' +
+                        //  '<div class="iconGeneric text-center"><i class="fa fa-user"></i></div>' +
                          '<img class="img-rounded" src="http://placehold.it/75x75" width="75" height="75">' +
                        '</div>' +
                      '</div>' +
@@ -140,23 +192,50 @@ function showChannelInfo() {
                        '</h4>' +
                      '</div>' +
                    '</div>';
+  $(".loadingIcon").fadeOut(1000);
   $("#channels").empty();
-  Object.keys(channels).forEach(function(name) {
+  var channelKeys = Object.keys(channels);
+  channelKeys.sort(function(a, b) {
+    if (channels[a] !== channels[b]) {
+      if (channels[a].isStreaming)
+        return -1;
+      else if (channels[a].isError)
+        return 1;
+      else if (channels[b].isStreaming)
+        return 1;
+    } else {
+      return 0;
+    }
+  });
+  var rowCounter = 0; //used by $.fadeIn() to introduce a delay to animate in sequence
+  channelKeys.forEach(function(name) {
     var currRow = $(defaultRow);
     currRow.attr("id", channels[name].name);
-    $("#channels").append(currRow);
+    currRow.hide().appendTo("#channels").delay(rowCounter++ * 100).fadeIn(500); //animate in sequence
     $("#" + channels[name].name + " h3").html(channels[name].display_name);
+    
     if (channels[name].logo) {
       $("#" + channels[name].name + " .iconContainer img").attr("src", channels[name].logo);
+      $("#" + channels[name].name + " .iconContainer img").css("display", "initial");
+      $("#" + channels[name].name + " .iconGeneric").css("display", "none");
     } else {
-      $("#" + channels[name].name + " .iconContainer img").css("display", "none");
-      $("#" + channels[name].name + " .iconContainer").css("background-color", "gray");
+    }
+    if (channels[name].status) {
+      $("#" + channels[name].name + " h4").html(channels[name].status);
+    } else {
+      $("#" + channels[name].name + " h4").html("");
     }
     if (channels[name].isStreaming) {
-      $("#" + channels[name].name + " h4").html(channels[name].status);
       $("#" + channels[name].name).addClass("streaming");
+      $("#" + channels[name].name + " h3").html($("#" + channels[name].name + " h3").html() + " <small><em>Streaming - " + channels[name].game + "</em></small>");
     } else {
-      $("#" + channels[name].name + " h4").html("Offline");
+      $("#" + channels[name].name).addClass("offline");
+      $("#" + channels[name].name + " h3").html($("#" + channels[name].name + " h3").html() + " <small><em>Offline</em></small>");
+      // $("#" + channels[name].name + " h4").html("Offline");
+    }
+    if (channels[name].isError) {
+      $("#" + channels[name].name).addClass("deleted");
+      $("#" + channels[name].name + " .iconGeneric").css("color", "#ccc");
     }
   });
 }
