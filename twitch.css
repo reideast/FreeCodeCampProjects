@@ -18,6 +18,10 @@ body, button {
 }
 
 .channelContainer {
+  background-color: hsl(180,40%,65%);
+  border-radius: 6px;
+}
+.streaming {
   /*background-color: rgba(0,80,80,0.55);*/
   background-color: #33bbbb;
 }
@@ -37,7 +41,7 @@ body, button {
 .titleContainer h3 {
   color: #eee;
 }
-.titleContainer h3 small {
+.titleContainer h4 {
   color: #c3efef;
   /*color: hsl(180,57.1%,46.7%);*/
 }

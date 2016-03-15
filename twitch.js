@@ -6,7 +6,7 @@ $(document).ready(function() {
 // https://github.com/justintv/Twitch-API
 // https://github.com/justintv/Twitch-API/blob/master/v3_resources/streams.md#get-streamschannel
 
-var possibleChannels = ["twitch", "brunofin", "comster404", "test_channel", "test_channel2", "riotgames", "playhearthstone", "freecodecamp", "storbeck", "terakilobyte", "habathcx", "RobotCaleb", "thomasballinger", "noobs2ninjas", "beohoff"];
+var possibleChannels = ["ESL_SC2", "OgamingSC2", "twitch", "brunofin", "comster404", "test_channel", "test_channel2", "riotgames", "playhearthstone", "freecodecamp", "storbeck", "terakilobyte", "habathcx", "RobotCaleb", "thomasballinger", "noobs2ninjas", "beohoff"];
 var channels = {}; //to be filled by $.Promise.done()
 
 //asynchnous function foundation:
@@ -57,7 +57,8 @@ function getOneChannelInfoAsync(currChannelName) {
   var deferred = $.Deferred();
   // console.log("before getJSON call: " + currChannelName);
   $.getJSON(getUserURL(currChannelName), function(data) {
-    // console.log("inside getJSON call: " + currChannelName);
+    console.log("inside getJSON call: " + currChannelName);
+    console.log(data);
     if ("error" in data)  {
       console.log("Channel not found: " + currChannelName);
       var curr = {
@@ -75,7 +76,12 @@ function getOneChannelInfoAsync(currChannelName) {
         "display_name": data.display_name,
         "name": data.name,
         "logo": data.logo,
-        "bio": data.bio,
+        //"bio": data.bio,
+        "game": data.game,
+        "profile_banner": data.profile_banner,
+        "status": data.status,
+        "url": data.url,
+        "views": data.views,
         "isStreaming": false
       };
       deferred.resolve(curr); 
@@ -93,7 +99,8 @@ function getAllStreamsInfoAsync(streamsArray) {
 }
 
 function getUserURL(username) {
-  return "https://api.twitch.tv/kraken/users/" + username + "?api_version=3&callback=?";
+  // return "https://api.twitch.tv/kraken/users/" + username + "?api_version=3&callback=?";
+  return "https://api.twitch.tv/kraken/channels/" + username + "?api_version=3&callback=?";
 }
 function getStreamsURL(streamsArr) {
   return "https://api.twitch.tv/kraken/streams?channel=" + streamsArr.join(",") + "&api_version=3&callback=?";
@@ -118,5 +125,38 @@ function getStreamsURL(streamsArr) {
 }
 */
 function showChannelInfo() {
-  console.log("now ready to show info");
+  var defaultRow = '<div class="row channelContainer">' +
+                     '<div class="col-sm-2 iconContainer">' +
+                       '<div class="imgCenter">' +
+                         '<img class="img-rounded" src="http://placehold.it/75x75" width="75" height="75">' +
+                       '</div>' +
+                     '</div>' +
+                     '<div class="col-sm-10 titleContainer">' +
+                       '<h3>' +
+                         'Channel Name' +
+                       '</h3>' +
+                       '<h4>' +
+                         'Status Text' +
+                       '</h4>' +
+                     '</div>' +
+                   '</div>';
+  $("#channels").empty();
+  Object.keys(channels).forEach(function(name) {
+    var currRow = $(defaultRow);
+    currRow.attr("id", channels[name].name);
+    $("#channels").append(currRow);
+    $("#" + channels[name].name + " h3").html(channels[name].display_name);
+    if (channels[name].logo) {
+      $("#" + channels[name].name + " .iconContainer img").attr("src", channels[name].logo);
+    } else {
+      $("#" + channels[name].name + " .iconContainer img").css("display", "none");
+      $("#" + channels[name].name + " .iconContainer").css("background-color", "gray");
+    }
+    if (channels[name].isStreaming) {
+      $("#" + channels[name].name + " h4").html(channels[name].status);
+      $("#" + channels[name].name).addClass("streaming");
+    } else {
+      $("#" + channels[name].name + " h4").html("Offline");
+    }
+  });
 }
