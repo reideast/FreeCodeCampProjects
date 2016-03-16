@@ -1,5 +1,25 @@
+// Twitch API: https://github.com/justintv/Twitch-API
 
-var possibleChannels = ["ESL_SC2", "twitch", "OgamingSC2", "brunofin", "comster404", "test_channel", "test_channel2", "riotgames", "playhearthstone", "freecodecamp", "storbeck", "terakilobyte", "habathcx", "RobotCaleb", "thomasballinger", "noobs2ninjas", "beohoff"];
+var possibleChannels = 
+  [
+    "freecodecamp", 
+    "ESL_SC2", 
+    "twitch", 
+    "OgamingSC2", 
+    "brunofin", 
+    "comster404", 
+    "test_channel", 
+    "test_channel2", 
+    "riotgames", 
+    "playhearthstone", 
+    "storbeck", 
+    "terakilobyte", 
+    "habathcx", 
+    "RobotCaleb", 
+    "thomasballinger",
+    "noobs2ninjas", 
+    "beohoff"
+  ];
 
 var channels = {}; //to be filled by $.Promise.done()
 
