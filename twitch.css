@@ -1,0 +1,170 @@
+body, button {
+  font-family: Consolas, monospace;
+}
+
+/*
+  http://www.colorhexa.com/33bbbb
+
+  at std. container widths:
+  750
+  970
+  1170
+  column widths:
+  col-sm-2: 95px
+  col-md-2: 161.656px
+  col-lg-2: 195px
+*/
+
+@media (min-width: 768px) {
+  .container { /* #containerMain, #channels { */
+    width: 750px; /* lock Bootstrap's fixed width container at "sm" size */
+  }
+  .channelContainer {
+    max-height: 95px;
+  }
+}
+.container > .channelContainer:first-child {
+  margin-top: 0;
+}
+.loadingIcon {
+  display: none; /* hide initially */
+  font-size: 75px;
+  font-weight: normal;
+  z-index: -1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+  /* http://stackoverflow.com/questions/6805482/css3-transition-animation-on-load */
+  /*animation-name: loadingIconAppear;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 0.5s;*/
+}
+/*@keyframes loadingIconAppear {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}*/
+
+.navbar-header {
+  font-size: 36px;
+  width: 100%
+}
+#twitchRefresh {
+  margin-right: initial;
+  float: right;
+}
+
+.channelContainer {
+  display: block;
+  background-color: hsl(180,40%,65%);
+  border-radius: 6px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  overflow-y: hidden;
+}
+@media (max-width: 767px) {
+  .channelContainer:hover, .channelContainer:focus {
+    text-decoration: none;
+  }
+  .channelContainer {
+    text-align: center;
+  }
+  .navbar-header {
+    font-size: 24px;
+  }
+  .titleContainer h3 {
+    margin-top: 0;
+  }
+  .titleContainer h3 small {
+    color: inherit;
+  }
+}
+.streaming {
+  /*background-color: rgba(0,80,80,0.55);*/
+  background-color: #33bbbb;
+}
+.deleted {
+  background-color: hsl(180,20%,89%);
+}
+.iconContainer .imgCenter {
+  width: 75px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin: 0 auto;
+}
+.iconContainer img {
+  display: none;
+  /*border: 4px solid teal;*/
+  box-shadow: 0px 0px 10px -3px teal;
+  width: 75px;
+  height: 75px;
+}
+.iconGeneric {
+  box-shadow: 0px 0px 10px -3px teal;
+  width: 75px;
+  height: 75px;
+  border-radius: 6px;
+  /*background-color: #c3efef;*/
+  background-color: hsl(180,20%,89%);
+  color: #555;
+  font-size: 75px;
+  overflow: hidden;
+}
+.iconGeneric > i {
+  vertical-align: top;
+}
+
+.titleContainer h3 {
+  font-size: 24px;
+  color: #eee;
+}
+.titleContainer h3 > small {
+  color: #eee;
+}
+.titleContainer h4 {
+  font-size: 16px;
+  color: #c3efef;
+  /*color: hsl(180,57.1%,46.7%);*/
+}
+.deleted h3, .deleted h3 > small {
+  color: #333;
+}
+.deleted h4 {
+  color: #888;
+}
+
+/*// use this style to set the height of .squareContent equal to the width of the container:
+// <container>
+//   <div class="squareDummy"></div>
+//   <div class="squareContent">
+//     ...content...
+//   </div>
+// </container>*/
+.squareDummy {
+  margin-top: 100%;
+}
+.squareContent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+}
+.verticalCenter {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.verticalCenter > *:first-child { /* or .verticalCenter > *:first-child ?? */ 
+  margin-top: 0;
+}
+.verticalCenter > *:last-child {
+  margin-bottom: 0;
+}
