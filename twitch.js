@@ -1,5 +1,39 @@
+
+var possibleChannels = ["ESL_SC2", "twitch", "OgamingSC2", "brunofin", "comster404", "test_channel", "test_channel2", "riotgames", "playhearthstone", "freecodecamp", "storbeck", "terakilobyte", "habathcx", "RobotCaleb", "thomasballinger", "noobs2ninjas", "beohoff"];
+
+var channels = {}; //to be filled by $.Promise.done()
+
+// fastest way to create large static blocks of DOM objects: http://stackoverflow.com/questions/9614932/best-way-to-create-large-static-dom-elements-in-javascript
+var defaultRow = 
+  '<a class="row channelContainer" target="_blank">' +
+    '<div class="col-sm-2 iconContainer">' +
+      '<div class="imgCenter">' +
+        '<div class="iconGeneric"><i class="glyphicon glyphicon-user"></i></div>' +
+        '<img class="img-rounded" src="http://placehold.it/75x75" width="75" height="75">' +
+      '</div>' +
+    '</div>' +
+    '<div class="col-sm-10 titleContainer">' +
+      '<h3> <br class="visible-xs-block"><em><small></small></em></h3>' +
+      '<h4></h4>' +
+    '</div>' +
+  '</a>';
+  
+function getUserURL(username) {
+  // return "https://api.twitch.tv/kraken/users/" + username + "?api_version=3&callback=?";
+  return "https://api.twitch.tv/kraken/channels/" + username + "?api_version=3&callback=?";
+}
+function getStreamsURL(streamsArr) {
+  return "https://api.twitch.tv/kraken/streams?channel=" + streamsArr.join(",") + "&api_version=3&callback=?";
+}
+
 $(document).ready(function() {
   console.log("**** page refresh ****")
+  
+  refreshTwitchInfo();
+  
+  $("#twitchRefresh").on("click", refreshTwitchInfo);
+  
+  // register events for Bootstrap tabs
   $('#statusTabs a').click(function (evnt) {
     evnt.preventDefault();
     $(this).tab('show'); //this would also switch Bootstrap's tab area, but I haven't created a properly bound tab area
@@ -23,52 +57,26 @@ function filterChannels(showWhat) {
     $(".streaming").slideUp(500);
     $(".offline").slideDown(500);
   }
-  
-  //show all elements first (and if showWhat == all)
-  // channelElements.css("display", "block");
-  // channelElements.slideDown(500);
-  
-  // // for (var i = 0; i < channelElements.length; i++) {
-  // channelElements.each(function(i, item) {
-  //   // console.log(channelElements[i]);
-  //   // console.log(channelElements[i].classList);
-  //   // if (!channelElements[i].classList.contains("streaming"))
-  //   //   channelElements[i].style.display = "none";
-  //   if (!item.classList.contains("streaming"))
-  //     $(item).slideUp(500);
-  // });
-  
-  // if (showWhat === "online") {
-  //   channelElements.filter(function(item) {
-  //     console.log(item);
-  //     if (item.classList.indexOf("streaming") !== -1)
-  //       return false; //does not have class .streaming
-  //     else
-  //       return true; //has class .streaming
-  //   }); //.css("display", "none");
-  // }
 }
 
-// fetch Free Code Camp's Twitch channel data:
-// https://github.com/justintv/Twitch-API
-// https://github.com/justintv/Twitch-API/blob/master/v3_resources/streams.md#get-streamschannel
+function refreshTwitchInfo() {
+  $("#channels").children().slideUp(300);
+  $(".loadingIcon").fadeIn(300);
+  
+  //asynchnous function foundation:
+  //use .map on the array of strings, calling the function which returns a $.Promise object on EACH ONE
+  var channelInfo_Promise_array = possibleChannels.map(function (currChannelName) {
+    return getOneChannelInfoAsync(currChannelName); //starts the async AJAX REST call, and returns a single $.Promise object 
+  });
+  // var streamsInfo_Promise = getAllStreamsInfoAsync(possibleChannels);
+  channelInfo_Promise_array.push(getAllStreamsInfoAsync(possibleChannels));
+  //all async calls have been started, and channelInfo_Promise_array now contains an array of $.Promise objects
 
-var possibleChannels = ["ESL_SC2", "twitch", "OgamingSC2", "brunofin", "comster404", "test_channel", "test_channel2", "riotgames", "playhearthstone", "freecodecamp", "storbeck", "terakilobyte", "habathcx", "RobotCaleb", "thomasballinger", "noobs2ninjas", "beohoff"];
-var channels = {}; //to be filled by $.Promise.done()
-
-//asynchnous function foundation:
-//use .map on the array of strings, calling the function which returns a $.Promise object on EACH ONE
-var channelInfo_Promise_array = possibleChannels.map(function (currChannelName) {
-  return getOneChannelInfoAsync(currChannelName); //starts the async AJAX REST call, and returns a single $.Promise object 
-});
-// var streamsInfo_Promise = getAllStreamsInfoAsync(possibleChannels);
-channelInfo_Promise_array.push(getAllStreamsInfoAsync(possibleChannels));
-//all async calls have been started, and channelInfo_Promise_array now contains an array of $.Promise objects
-
-// https://api.jquery.com/jquery.when/#jQuery-when-deferreds and http://stackoverflow.com/a/17595453/5271224
-//use $.when to "group" all the $.Promise.done() expectations, and wait for ALL of them to be .done()
-//use .apply() to apply ALL the functions to .when (a similar function to .call(), but for arrays of functions)
-$.when.apply($, channelInfo_Promise_array).then(saveAggregateChannelInfo);
+  // https://api.jquery.com/jquery.when/#jQuery-when-deferreds and http://stackoverflow.com/a/17595453/5271224
+  //use $.when to "group" all the $.Promise.done() expectations, and wait for ALL of them to be .done()
+  //use .apply() to apply ALL the functions to .when (a similar function to .call(), but for arrays of functions)
+  $.when.apply($, channelInfo_Promise_array).then(saveAggregateChannelInfo);
+}
 
 function saveAggregateChannelInfo() {
   // console.log("all functions done");
@@ -147,14 +155,8 @@ function getAllStreamsInfoAsync(streamsArray) {
   return deferred.promise();
 }
 
-function getUserURL(username) {
-  // return "https://api.twitch.tv/kraken/users/" + username + "?api_version=3&callback=?";
-  return "https://api.twitch.tv/kraken/channels/" + username + "?api_version=3&callback=?";
-}
-function getStreamsURL(streamsArr) {
-  return "https://api.twitch.tv/kraken/streams?channel=" + streamsArr.join(",") + "&api_version=3&callback=?";
-}
 /*
+example object after being built by saveAggregateChannelInfo()
 {
   freecodecamp: {
     id: 30220059
@@ -174,27 +176,18 @@ function getStreamsURL(streamsArr) {
   ...
 }
 */
+
+// function to take var channels and display it in the DOM
+// requirements: a completely built channels object
 function showChannelInfo() {
-  var defaultRow = '<div class="row channelContainer">' +
-                     '<div class="col-sm-2 iconContainer">' +
-                       '<div class="imgCenter">' +
-                         '<div class="iconGeneric"><i class="glyphicon glyphicon-user"></i></div>' +
-                        //  '<div class="iconGeneric text-center"><i class="fa fa-user"></i></div>' +
-                         '<img class="img-rounded" src="http://placehold.it/75x75" width="75" height="75">' +
-                       '</div>' +
-                     '</div>' +
-                     '<div class="col-sm-10 titleContainer">' +
-                       '<h3>' +
-                         'Channel Name' +
-                       '</h3>' +
-                       '<h4>' +
-                         'Status Text' +
-                       '</h4>' +
-                     '</div>' +
-                   '</div>';
-  $(".loadingIcon").fadeOut(1000);
+  //remove previous contents of channel
+  $(".loadingIcon").fadeOut(500);
   $("#channels").empty();
+  
+  //grab keys so we can use Object like an array:
   var channelKeys = Object.keys(channels);
+  
+  //sort like: Streaming -> Offline -> Deleted
   channelKeys.sort(function(a, b) {
     if (channels[a] !== channels[b]) {
       if (channels[a].isStreaming)
@@ -207,34 +200,34 @@ function showChannelInfo() {
       return 0;
     }
   });
+  
+  //create entities and add them to DOM one by one 
   var rowCounter = 0; //used by $.fadeIn() to introduce a delay to animate in sequence
   channelKeys.forEach(function(name) {
-    var currRow = $(defaultRow);
+    var currRow = $(defaultRow); //turn string into a elements
     currRow.attr("id", channels[name].name);
+    currRow.attr("href", channels[name].url);
     currRow.hide().appendTo("#channels").delay(rowCounter++ * 100).fadeIn(500); //animate in sequence
-    $("#" + channels[name].name + " h3").html(channels[name].display_name);
-    
-    if (channels[name].logo) {
-      $("#" + channels[name].name + " .iconContainer img").attr("src", channels[name].logo);
-      $("#" + channels[name].name + " .iconContainer img").css("display", "initial");
-      $("#" + channels[name].name + " .iconGeneric").css("display", "none");
+    if (channels[name].isStreaming) {
+      $("#" + channels[name].name).addClass("streaming");
+      $("#" + channels[name].name + " h3").html(channels[name].display_name + $("#" + channels[name].name + " h3").html());
+      $("#" + channels[name].name + " h3 small").html("Streaming - " + channels[name].game);
     } else {
+      $("#" + channels[name].name).addClass("offline");
+      $("#" + channels[name].name + " h3").html(channels[name].display_name + " <small><em>Offline</em></small>");
+      // $("#" + channels[name].name + " h4").html("Offline");
     }
     if (channels[name].status) {
       $("#" + channels[name].name + " h4").html(channels[name].status);
-    } else {
-      $("#" + channels[name].name + " h4").html("");
-    }
-    if (channels[name].isStreaming) {
-      $("#" + channels[name].name).addClass("streaming");
-      $("#" + channels[name].name + " h3").html($("#" + channels[name].name + " h3").html() + " <small><em>Streaming - " + channels[name].game + "</em></small>");
-    } else {
-      $("#" + channels[name].name).addClass("offline");
-      $("#" + channels[name].name + " h3").html($("#" + channels[name].name + " h3").html() + " <small><em>Offline</em></small>");
-      // $("#" + channels[name].name + " h4").html("Offline");
-    }
+    } //else 2nd line of box will just be blank
+    if (channels[name].logo) {
+      $("#" + channels[name].name + " .iconContainer img").attr("src", channels[name].logo);
+      $("#" + channels[name].name + " .iconContainer img").css("display", "initial"); //restore default
+      $("#" + channels[name].name + " .iconGeneric").css("display", "none");
+    } // else "blank user" icon is displayed by default
     if (channels[name].isError) {
       $("#" + channels[name].name).addClass("deleted");
+      $("#" + channels[name].name + " h4").html("<em>Channel Deleted</em>");
       $("#" + channels[name].name + " .iconGeneric").css("color", "#ccc");
     }
   });

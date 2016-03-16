@@ -25,6 +25,7 @@ body, button {
   margin-top: 0;
 }
 .loadingIcon {
+  display: none; /* hide initially */
   font-size: 75px;
   font-weight: normal;
   z-index: -1;
@@ -33,28 +34,51 @@ body, button {
   left: 50%;
   transform: translate(-50%, -50%);
   
-  
   /* http://stackoverflow.com/questions/6805482/css3-transition-animation-on-load */
-  animation-name: loadingIconAppear;
+  /*animation-name: loadingIconAppear;
   animation-iteration-count: 1;
   animation-timing-function: ease-in;
-  animation-duration: 0.5s;
+  animation-duration: 0.5s;*/
 }
-@keyframes loadingIconAppear {
+/*@keyframes loadingIconAppear {
   0% {
     opacity: 0;
   }
   100% {
     opacity: 1;
   }
+}*/
+
+.navbar-header {
+  font-size: 36px;
+  width: 100%
+}
+#twitchRefresh {
+  margin-right: initial;
+  float: right;
 }
 
 .channelContainer {
+  display: block;
   background-color: hsl(180,40%,65%);
   border-radius: 6px;
   margin-top: 5px;
   margin-bottom: 5px;
   overflow-y: hidden;
+}
+@media (max-width: 767px) {
+  .channelContainer {
+    text-align: center;
+  }
+  .navbar-header {
+    font-size: 24px;
+  }
+  .titleContainer h3 {
+    margin-top: 0;
+  }
+  .titleContainer h3 small {
+    color: inherit;
+  }
 }
 .streaming {
   /*background-color: rgba(0,80,80,0.55);*/
@@ -95,10 +119,19 @@ body, button {
   font-size: 24px;
   color: #eee;
 }
+.titleContainer h3 > small {
+  color: #eee;
+}
 .titleContainer h4 {
   font-size: 16px;
   color: #c3efef;
   /*color: hsl(180,57.1%,46.7%);*/
+}
+.deleted h3, .deleted h3 > small {
+  color: #333;
+}
+.deleted h4 {
+  color: #888;
 }
 
 /*// use this style to set the height of .squareContent equal to the width of the container:
