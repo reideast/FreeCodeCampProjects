@@ -14,7 +14,6 @@ body, button {
   col-md-2: 161.656px
   col-lg-2: 195px
 */
-
 @media (min-width: 768px) {
   .container { /* #containerMain, #channels { */
     width: 750px; /* lock Bootstrap's fixed width container at "sm" size */
@@ -67,6 +66,7 @@ body, button {
   margin-top: 5px;
   margin-bottom: 5px;
   overflow-y: hidden;
+  height: 95px;
 }
 @media (max-width: 767px) {
   .channelContainer:hover, .channelContainer:focus {
@@ -79,10 +79,14 @@ body, button {
     font-size: 24px;
   }
   .titleContainer h3 {
-    margin-top: 0;
+    margin-top: 5px;
   }
   .titleContainer h3 small {
     color: inherit;
+  }
+  .iconContainer {
+    position: absolute;
+    opacity: 0.5;
   }
 }
 .streaming {

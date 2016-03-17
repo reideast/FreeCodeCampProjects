@@ -3,22 +3,22 @@
 var possibleChannels = 
   [
     "freecodecamp", 
-    "ESL_SC2", 
-    "twitch", 
-    "OgamingSC2", 
-    "brunofin", 
-    "comster404", 
-    "test_channel", 
-    "test_channel2", 
-    "riotgames", 
-    "playhearthstone", 
     "storbeck", 
     "terakilobyte", 
     "habathcx", 
     "RobotCaleb", 
     "thomasballinger",
     "noobs2ninjas", 
-    "beohoff"
+    "beohoff",
+    "twitch", 
+    "ESL_SC2", 
+    "OgamingSC2", 
+    "riotgames", 
+    "playhearthstone", 
+    "brunofin", 
+    "comster404", 
+    "test_channel", 
+    "test_channel2" 
   ];
 
 var channels = {}; //to be filled by $.Promise.done()
