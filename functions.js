@@ -471,3 +471,73 @@ console.log("***************");
 // *************************************************************
 // *************************************************************
 
+function checkCashRegister(price, cash, cashInDrawer) {
+  //greedy, greedy (OK for US coins w/o 50¢ piece)
+  var changeToGive = cash * 100 - price * 100;
+  if (changeToGive < 0) {
+    return "Not enough cash provided";
+  }
+  
+  var changeArr = [];
+  var drawerTotal = 0;
+  //console.log("denoms loop, change=" + changeToGive);
+  for (var currDenom = 0; currDenom < denoms.length; ++ currDenom) {
+    var denomCID = cashInDrawer.find(function(item) { return item[0] === denoms[currDenom][1]; })[1] * 100;
+    var available = Math.floor(denomCID / (denoms[currDenom][0] * 100));
+    var desired = Math.floor(changeToGive / (denoms[currDenom][0] * 100));
+    var actual = desired;
+    if (desired > available) {
+      actual = available;
+    }
+    //console.log("changeToGive=" + changeToGive + " ¢=" + denomCID + " n=" + available + " best=" + desired + " actual=" + actual);
+    var actualValue = actual * denoms[currDenom][0];
+    if (actual > 0) {
+      changeArr.push([denoms[currDenom][1], actualValue]);
+    }
+    changeToGive -= actualValue * 100;
+    drawerTotal += denomCID - actualValue * 100;
+  }
+  
+  //console.log("changeToGive=" + changeToGive);
+  if (changeToGive > 0) {
+    return "Insufficient Funds";
+  } else if (drawerTotal <= 0) {
+    return "Closed";
+  } else {
+    //console.log(changeArr);
+    return changeArr;
+  }
+}
+
+//a "key" to reference American currency denominations
+//I was going to use an object, but an array is needed to guarantee order so I can loop through for the greedy algorithm
+//also, can access in either direction: .find by [0] to get string and by [1] to get numeric value
+//var needle = "TWENTY";
+//var numberValue = denoms.find(function(item) { return item[1] === needle; })[0]; //will accessing [] directly work?
+var denoms = [
+  [100.00, "ONE HUNDRED"],
+   [20.00, "TWENTY"],
+   [10.00, "TEN"],
+    [5.00, "FIVE"],
+    [1.00, "ONE"],
+    [0.25, "QUARTER"],
+    [0.10, "DIME"],
+    [0.05, "NICKEL"],
+    [0.01, "PENNY"]
+];
+
+// Example cash-in-drawer array:
+// [["PENNY", 1.01],
+// ["NICKEL", 2.05],
+// ["DIME", 3.10],
+// ["QUARTER", 4.25],
+// ["ONE", 90.00],
+// ["FIVE", 55.00],
+// ["TEN", 20.00],
+// ["TWENTY", 60.00],
+// ["ONE HUNDRED", 100.00]]
+
+console.log("*** START ***");
+//checkCashRegister(19.50, 20.00, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.10], ["QUARTER", 4.25], ["ONE", 90.00], ["FIVE", 55.00], ["TEN", 20.00], ["TWENTY", 60.00], ["ONE HUNDRED", 100.00]]);
+checkCashRegister(3.26, 100.00, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.10], ["QUARTER", 4.25], ["ONE", 90.00], ["FIVE", 55.00], ["TEN", 20.00], ["TWENTY", 60.00], ["ONE HUNDRED", 100.00]]);
+console.log("*************");
