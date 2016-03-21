@@ -468,11 +468,11 @@ console.log("***************");
 
 
 // *************************************************************
-// *************************************************************
+// ***************** Change Making Problem *********************
 // *************************************************************
 
 function checkCashRegister(price, cash, cashInDrawer) {
-  //greedy, greedy (OK for US coins w/o 50¢ piece)
+  //greedy (OK since not asking for optimal (fewest coins) solution) see: "Canonical Coin Systems for CHANGE-MAKING Problems" http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=5254395
   var changeToGive = cash * 100 - price * 100;
   if (changeToGive < 0) {
     return "Not enough cash provided";
@@ -541,3 +541,61 @@ console.log("*** START ***");
 //checkCashRegister(19.50, 20.00, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.10], ["QUARTER", 4.25], ["ONE", 90.00], ["FIVE", 55.00], ["TEN", 20.00], ["TWENTY", 60.00], ["ONE HUNDRED", 100.00]]);
 checkCashRegister(3.26, 100.00, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.10], ["QUARTER", 4.25], ["ONE", 90.00], ["FIVE", 55.00], ["TEN", 20.00], ["TWENTY", 60.00], ["ONE HUNDRED", 100.00]]);
 console.log("*************");
+
+// *************************************************************
+// ********* Update an Array With a Similar Array **************
+// *************************************************************
+
+function updateInventory(curInv, newInv) {
+  //ideas:
+  // convert curInv to Object, add/update from newInv, then use Object.keys(myObj).sort() to shove back into an array alphabetically
+  // start with an empty Array, add from cur or new??
+  
+  var invObj = {};
+  for (var i = 0; i < curInv.length; ++i) {
+    invObj[curInv[i][1]] = curInv[i][0];
+  }
+  for (i = 0; i < newInv.length; ++i) {
+    if (newInv[i][1] in invObj) {
+      invObj[newInv[i][1]] += newInv[i][0];
+    } else {
+      invObj[newInv[i][1]] = newInv[i][0];
+    }
+  }
+  var updatedInv = [];
+  var invKeys = Object.keys(invObj).sort();
+  for (i = 0; i < invKeys.length; ++i) {
+    updatedInv.push([invObj[invKeys[i]], invKeys[i]]);
+  }
+  return updatedInv;
+}
+
+//// Example inventory lists
+//var curInv = [
+//    [21, "Bowling Ball"],
+//    [2, "Dirty Sock"],
+//    [1, "Hair Pin"],
+//    [5, "Microphone"]
+//];
+//
+//var newInv = [
+//    [2, "Hair Pin"],
+//    [3, "Half-Eaten Apple"],
+//    [67, "Bowling Ball"],
+//    [7, "Toothpaste"]
+//];
+//
+//updateInventory(curInv, newInv);
+
+updateInventory([[21, "Bowling Ball"], [2, "Dirty Sock"], [1, "Hair Pin"], [5, "Microphone"]], [[2, "Hair Pin"], [3, "Half-Eaten Apple"], [67, "Bowling Ball"], [7, "Toothpaste"]]);
+
+
+// *************************************************************
+// *************************************************************
+// *************************************************************
+
+
+
+// *************************************************************
+// *************************************************************
+// *************************************************************
