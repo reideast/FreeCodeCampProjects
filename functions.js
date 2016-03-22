@@ -791,10 +791,176 @@ permAlone('aab');
 // permAlone("zzzzzzzz") should return 0.
 
 // *************************************************************
-// *************************************************************
+// ********************* Date Range ****************************
 // *************************************************************
 
+//a clearly formatted date class:
+//strDate must be in format "YYYY-MM-DD"
+var DateClass = function(strDate) {
+  var bits = strDate.split("-");
+  if (bits[0].length === 4) {
+    this.year = parseInt(bits[0]);
+  } else {
+    console.log("Invalid year format: " + strDate);
+    return undefined;
+  }
+  if (bits[1].length === 2) {
+    this.month = parseInt(bits[1]);
+    if (this.month < 1 && this.month > 12) {
+      console.log("Invalid month: " + strDate);
+      return undefined;
+    }
+  } else {
+    console.log("Invalid month format: " + strDate);
+    return undefined;
+  }
+  if (bits[2].length === 2) {
+    this.day = parseInt(bits[2]);
+    if (this.day < 1 && this.day > 31) {
+      //TODO: add logic for month-specific days
+      console.log("Invalid day: " + strDate);
+      return undefined;
+    }
+  } else {
+    console.log("Invalid day format: " + strDate);
+    return undefined;
+  }
+  
+  this.dayOfYear = this.day;
+  for (var currMonth = 1; currMonth < this.month; ++currMonth) {
+    this.dayOfYear += DateClass.prototype.monthVal(currMonth, this.year);
+  }
+};
 
+DateClass.prototype.monthVal = function(month, year) {
+  switch(month) {
+    case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+      return 31;
+    case 4: case 6: case 9: case 11:
+      return 30;
+    case 2:
+      if (DateClass.prototype.isLeapYear(year)) {
+        return 29;
+      }
+      return 28;
+    default:
+      return undefined;
+  }
+};
+DateClass.prototype.isLeapYear = function(year) {
+  return ((year % 4 === 0 && year % 100 !== 0) || 
+        (year % 400 === 0));
+};
+
+DateClass.prototype.toString = function() {
+  return this.year + "-" + this.month + "-" + this.day;
+};
+
+DateClass.prototype.monthName = function() {
+  switch (this.month) {
+    case 1: return "January";
+    case 2: return "February";
+    case 3: return "March";
+    case 4: return "April";
+    case 5: return "May";
+    case 6: return "June";
+    case 7: return "July";
+    case 8: return "August";
+    case 9: return "September";
+    case 10: return "October";
+    case 11: return "November";
+    case 12: return "December";
+    default: return "Invalid month";
+  }
+};
+
+DateClass.prototype.dayName = function() {
+  if (Math.floor(this.day / 10) === 1) {
+    return this.day + "th";
+  } else {
+    switch (this.day % 10) {
+      case 1: return this.day + "st";
+      case 2: return this.day + "nd";
+      case 3: return this.day + "rd";
+      default: return this.day + "th";
+    }
+  }
+};
+
+function makeFriendlyDates(arr) {
+  console.log(arr[0] + " through " + arr[1]);
+  var dates = [new DateClass(arr[0]), new DateClass(arr[1])];
+  
+  //if start==end, problem defines return values as a single-element array with formatted date
+  //if (arr[0] === arr[1]) {
+  //  var str = [dates[0].monthName() + " " + dates[0].dayName()];
+  //  if (dates[0].year !== new Date().getFullYear()) {
+  //    str[0] += ", " + dates[0].year;
+  //  }
+  //  console.log("Final results: " + str[0]);
+  //  return str;
+  //}
+  
+  var returnStr = [
+    dates[0].monthName() + " " + dates[0].dayName(), 
+    dates[1].dayName()
+  ];
+  
+  if (dates[0].year === dates[1].year) {
+    if (dates[0].month !== dates[1].month) {
+      returnStr[1] = dates[1].monthName() + " " + returnStr[1];
+    }
+    if (dates[0].year !== new Date().getFullYear()) {
+      returnStr[0] += ", " + dates[0].year;
+    }
+  } else {
+    if (dates[1].year === dates[0].year + 1) {
+      var daysLeftInYear0 = (DateClass.prototype.isLeapYear(dates[0].year) ? 366 : 365) - dates[0].dayOfYear;
+      if (dates[1].dayOfYear + daysLeftInYear0 < 365) {
+        returnStr[1] = dates[1].monthName() + " " + returnStr[1];
+      } else {
+        returnStr[1] = dates[1].monthName() + " " + returnStr[1] + ", " + dates[1].year;
+      }
+      
+      if (dates[0].year !== new Date().getFullYear()) {
+        returnStr[0] += ", " + dates[0].year;
+      }
+    } else {
+      //range is greater than one year
+      //  so display year for ending
+      returnStr[1] = dates[1].monthName() + " " + returnStr[1] + ", " + dates[1].year;
+      
+      //always display beginning year
+      //if (dates[0].year !== new Date().getFullYear()) {
+      returnStr[0] += ", " + dates[0].year;
+      //}
+    }
+  }
+  
+  
+  //dates.forEach(function(item) {
+  //  console.log(item.monthName() + " " + item.dayName() + ", " + item.year);
+  //});
+  //console.log(date0); //chrome's JS engine doesn't use .toString() for console.log!
+  //console.log('' + date1); //forces chrome to use my toString()
+  
+  //if start==end, problem defines return values as a single-element array with formatted date
+  if (arr[0] === arr[1]) {
+    returnStr.pop();
+  }
+  
+  console.log("Final results: " + returnStr);
+  return returnStr;
+}
+
+makeFriendlyDates(['2016-07-01', '2016-07-04']);
+//makeFriendlyDates(["2016-07-01", "2016-07-04"]) should return ["July 1st","4th"].
+//makeFriendlyDates(["2016-12-01", "2017-02-03"]) should return ["December 1st","February 3rd"].
+//makeFriendlyDates(["2016-12-01", "2018-02-03"]) should return ["December 1st, 2016","February 3rd, 2018"].
+//makeFriendlyDates(["2017-03-01", "2017-05-05"]) should return ["March 1st, 2017","May 5th"]
+//makeFriendlyDates(["2018-01-13", "2018-01-13"]) should return ["January 13th, 2018"].
+//makeFriendlyDates(["2022-09-05", "2023-09-04"]) should return ["September 5th, 2022","September 4th"].
+//makeFriendlyDates(["2022-09-05", "2023-09-05"]) should return ["September 5th, 2022","September 5th, 2023"].
 
 // *************************************************************
 // *************************************************************
