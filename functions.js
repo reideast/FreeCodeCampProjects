@@ -591,6 +591,206 @@ updateInventory([[21, "Bowling Ball"], [2, "Dirty Sock"], [1, "Hair Pin"], [5, "
 
 
 // *************************************************************
+// ********************** Permutations *************************
+// *************************************************************
+
+function factorial(n) {
+  var product = 1;
+  for (var i = 1; i <= n; ++i) {
+    product *= i;
+  }
+  return product;
+}
+
+function permAlone(str) {
+  /* Idea for figuring out permutations
+  new method: ("aabb")=8
+  P(4,4) = 24
+  "a" group: (aa)(b)(b) = P(3,3) * P(a.len, a.len); b the same
+  P(4,4) - P(3,3)*P(2,2) - P(3,3)*P(2,2) + ??
+  24 - 12 - 12 + ??
+  if counting both groups: (aa)(bb) = P(2,2) = 2
+  P("a".len) + P("b".len) = 4
+  24 - 12 - 12 + 2*4
+  =8, desired result
+  */
+  
+  console.log(str);
+  var groups = {};
+  for (var i = 0; i < str.length; ++i) {
+    if (str[i] in groups)
+      ++groups[str[i]];
+    else
+      groups[str[i]] = 1;
+  }
+  console.log(groups);
+  var keys = Object.keys(groups);
+  console.log(keys);
+  
+  var totalPermutations = factorial(str.length);
+  console.log("totalPermutations:" + totalPermutations);
+  
+  var totalGroups = keys.length;
+  var multiGroupCount = 0;
+  var sumPermutationsOfContinousGroups = 0;
+  for (i = 0; i < keys.length; ++i) {
+    if (groups[keys[i]] > 1) {
+      ++multiGroupCount;
+      console.log("Multi-group:" + keys[i]);
+      //amount to subtract from totalPermutations:
+      var nWithThisCharGrouped = str.length - groups[keys[i]] + 1;
+      console.log("nWithThisCharGrouped:" + nWithThisCharGrouped);
+      console.log("subtracting:" + (factorial(nWithThisCharGrouped) * factorial(groups[keys[i]])));
+      totalPermutations -= factorial(nWithThisCharGrouped) * factorial(groups[keys[i]]);
+      
+      sumPermutationsOfContinousGroups += factorial(groups[keys[i]]);
+    }
+  }
+  //add back in permutations that have overlapping groups:
+  if (multiGroupCount > 1) {
+  console.log("adding back:" + (sumPermutationsOfContinousGroups * factorial(totalGroups)));
+  totalPermutations += sumPermutationsOfContinousGroups * factorial(totalGroups);
+  }  
+  console.log("FINAL:" + totalPermutations);
+  return totalPermutations;
+  
+  
+  //figure out TOTAL # of permutations without repetition (don't care about consecutive letters):
+  // P(n, r) = number permutations choose r of them -> P(str.length, str.length)
+  // P(x, x) = x!
+  /*
+  aabcdef n = 7, 7! = 5040
+  expected answer = 3600
+  diff = 1440
+  question to answer is is: how many permutations w/o rep where two items are next to each other?
+  theory: is the situation now: n = 6, r = 6? ie. (aa)(b)(c)(d)(e)(f) == 6 items
+  P(6,6) = 720
+  720 * 2 = 1440.
+  maybe * 2 b/c each (aa) actually is (a1,a2) AND (a2,a1)
+  so, * P(2,2)
+  
+  n = total str.length, groups = # of groups of unique chars
+  P(n,n) - (P(group.len)) * (P(#groups, #groups))
+  
+  checking: ("aab")=2
+  P(3, 3) = 6
+  need to get: 4
+  # of groups: 2
+  P(2, 2) = 2
+  P(n,n) - (P(group.len)) * (P(#groups, #groups)) = P(3,3) - P(2,2) * P(2,2) = 6 - 2*2 = 2
+  
+  
+  checking: ("aabb")=8
+  P(4,4) = 24
+  need to get -16
+  # of groups: (aa)(bb) = 2
+  P(2,2) = 2
+  16/2 = 8
+  2 groups, 4 chars?
+  ("aAbB")
+  aAbB
+  aABb
+  AabB
+  AaBb
+  bBaA
+  bBAa
+  BbAa
+  BbaA
+  
+  abBA
+  aBbA
+  AbBa
+  ABba
+  baAB
+  bAaB
+  BaAb
+  BAab
+  
+  abAB
+  aBAb
+  AbaB
+  ABab
+  baBA
+  bABa
+  BabA
+  BAba
+  ***********
+  group "a": 2 chars, together in 12 (8+4) of the total permutations
+  consider this: ("aAbB") --> (aA)(b)(B) --> 3 groups --> P(3,3)=6
+    for group "b", also P(3,3)=6
+    multiply by 2 (size of group) because for each "aa", there is an "aA" and "Aa"
+  overlap situation, ie. permutations where both "a" and "b" groups are contiuous: 8 for each
+  unique situtaion, ie. where only that group is continuous: 4 for each
+  
+  
+  ******
+  new method: ("aabb")=8
+  P(4,4) = 24
+  "a" group: (aa)(b)(b) = P(3,3) * P(a.len, a.len); b the same
+  P(4,4) - P(3,3)*P(2,2) - P(3,3)*P(2,2) + ??
+  24 - 12 - 12 + ??
+  if counting both groups: (aa)(bb) = P(2,2) = 2
+  P("a".len) + P("b".len) = 4
+  24 - 12 - 12 + 2*4
+  =8, desired result
+  
+  
+  checking: ("abfdefa")->("aaffbde")=2640
+  P(7,7) = 5040
+  need to get -2400
+  # of groups: (aa)(ff)(b)(d)(e) = 5
+  P(5,5) = 120
+  2400/120 = 20
+  5 * 4? 5 groups, 4 chars?
+  chars in repeating groups: 4
+  P(4,4) = 24
+  - chars = 20 * P(5,5)
+  
+  
+  P(n,n) - (P(group.len)) * (P(#groups, #groups))
+  continuous exclusions from "a" group, as if f's were different chars: P(2,2) * P(6,6) = 1440
+  same for "f": 1440
+  "subtract permutations as if this group was the only repeated character group"
+  1440 * 2 need to get 2400, difference is 480
+  if counting both "a" and "f", # of groups is 5, P(5,5) = 120
+  P(group"a".len) + (+ or *?) P(group"f".len) = 4
+  120 * 4 = 480
+  5040 - 1440 - 1440 + 480 == 2640
+  "add back in permutations counting ALL repeated character groups * permutations of the length of EACH repeated char group"
+  
+  
+  
+  checking: ("aaa")=0
+  P(3,3) = 6
+  need to get -6
+  # of groups: (aaa) = 1
+  P(1,1) = 1
+  6/1 = 6
+  1 groups, 3 chars ??? huh???
+  P(3,3) - (P(3,3) * P(1,1)) + nothing, since there's only one group
+  
+  checking: ("zzzzzzzz")=0
+  P(8,8) = 40320
+  need to get - 40320
+  # of groups (zzzzzzzzz) = 1
+  P(1,1) = 1
+  chars in repeating group #1: 8
+    P(8,8) = 40320
+  P(8,8) - P(8,8) * P(1,1) + 0 = 0
+  
+  */
+}
+
+permAlone('aab');
+// permAlone("aab") should return a number.
+// permAlone("aab") should return 2.
+// permAlone("aaa") should return 0.
+// permAlone("aabb") should return 8.
+// permAlone("abcdefa") should return 3600.
+// permAlone("abfdefa") should return 2640.
+// permAlone("zzzzzzzz") should return 0.
+
+// *************************************************************
 // *************************************************************
 // *************************************************************
 
