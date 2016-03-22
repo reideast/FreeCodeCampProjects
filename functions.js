@@ -963,5 +963,37 @@ makeFriendlyDates(['2016-07-01', '2016-07-04']);
 //makeFriendlyDates(["2022-09-05", "2023-09-05"]) should return ["September 5th, 2022","September 5th, 2023"].
 
 // *************************************************************
+// ******************* Getters and Setters *********************
+// *************************************************************
+
+var Person = function(firstAndLast) {
+  var _first = "";
+  var _last = "";
+
+  var nameArr = firstAndLast.split(" ");
+  _first = nameArr[0];
+  _last = nameArr[1];
+
+  this.getFirstName = function() { return _first; };
+  this.setFirstName = function(first) { _first = first; };
+  this.getLastName = function() { return _last; };
+  this.setLastName = function(last) { _last = last; };
+  this.getFullName = function() { return _first + " " + _last; };
+  this.setFullName = function(firstAndLast) {
+    var nameArr = firstAndLast.split(" ");
+    _first = nameArr[0];
+    _last = nameArr[1];
+  };
+};
+
+var bob = new Person('Bob Ross');
+bob.getFullName();
+
+
+// *************************************************************
+// *************************************************************
+// *************************************************************
+
+// *************************************************************
 // *************************************************************
 // *************************************************************
