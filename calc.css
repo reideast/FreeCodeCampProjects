@@ -1,0 +1,140 @@
+body {
+  font-family: "Source Sans Pro", sans-serif; }
+
+svg {
+  fill: currentColor;
+  vertical-align: bottom; }
+
+#calcBox {
+  background-color: #3C3C36;
+  width: 318px;
+  border: 2px outset #3C3C36;
+  border-radius: 8px;
+  margin-top: 10px;
+  margin-bottom: 10px; }
+
+#logoRow {
+  color: #909289;
+  padding-top: 20px;
+  padding-bottom: 10px; }
+
+#logo {
+  background-color: #32302B;
+  border: 2px groove #3C3C36;
+  border-radius: 2px;
+  height: 37px;
+  width: 135px;
+  padding-left: 3px;
+  padding-right: 3px;
+  margin-left: 25px;
+  padding-top: 3px;
+  padding-bottom: 3px; }
+
+#logo svg {
+  height: 26px;
+  width: 35px; }
+
+#logo h6 {
+  margin: 0 0 0 3px; }
+
+#screenBox {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  background-color: #51514C;
+  color: white; }
+
+#screenLogo h5 {
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: 15px;
+  margin-bottom: 5px; }
+
+#LCDborder {
+  background-color: #58595A;
+  padding: 10px 3px;
+  border: 1px inset #58595A; }
+
+#LCD {
+  font-family: VT323, Consolas, monospace;
+  background-color: #6B836B;
+  color: #0B2327;
+  padding-top: 10px;
+  padding-left: 3px;
+  padding-right: 3px; }
+
+.LCDrow {
+  line-height: 1.2;
+  font-size: 1.8em;
+  margin-left: -3px;
+  margin-right: -3px; }
+
+.LCDrow > div {
+  padding-left: 3px;
+  padding-right: 3px; }
+
+#row1, #row2 {
+  padding-left: 8px; }
+
+#keysBox {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background-color: #433C38;
+  color: #D5D3CF;
+  border-right: 2px inset #212121;
+  border-bottom: 2px inset #212121;
+  border-left: 2px inset #999;
+  margin-bottom: 15px;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  padding-left: 5px;
+  padding-right: 5px; }
+
+#keysBox > div {
+  height: 46px;
+  margin-right: -5px;
+  margin-left: -5px; }
+
+#keysBox > div > div {
+  padding-left: 5px;
+  padding-right: 5px; }
+
+#keysBox button {
+  background-color: #212121;
+  border: 2px outset #212121;
+  border-radius: 3px;
+  font-size: 1em;
+  padding: 0;
+  width: 30px;
+  margin-left: 3px;
+  margin-right: 3px;
+  height: 100%; }
+
+#keysBox button:active {
+  border: 2px inset #212121; }
+
+#keysBox button:focus {
+  outline: gray auto 5px; }
+
+#keysBox aside {
+  font-size: 0.8em;
+  color: #FC8C4A;
+  text-align: center;
+  width: 34px; }
+
+button#btnEnter {
+  width: 76px; }
+
+aside#asideEnter {
+  width: 76px; }
+
+aside#asideHidden {
+  color: #433C38; }
+
+#btnOrange > div {
+  background-color: #FC8C4A;
+  width: 90%;
+  height: 16px;
+  margin: 2px auto; }
+
+small {
+  font-size: 80%; }

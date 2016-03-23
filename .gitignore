@@ -1,0 +1,9 @@
+#git ignore for FCC Projects
+.notes/
+.sass-cache/
+.vscode/
+node_modules/
+gulpfile.js
+package.json
+.dropbox
+desktop.ini
