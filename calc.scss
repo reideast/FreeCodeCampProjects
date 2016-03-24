@@ -1,3 +1,6 @@
+/* Background pattern from subtlepatterns.com */
+
+
 $calcBG: #3C3C36;
 $silverLogo: #909289;
 $logoBG: #32302B;
@@ -7,6 +10,7 @@ $LCDsubBorder: #58595A;
 $LCDbg: #6B836B;
 $LCDtext: #0B2327;
 $buttonBezel: #433C38;
+$buttonBezelTopRow: #51514C;
 $buttonBG: #212121;
 $buttonText: #D5D3CF;
 $buttonOrange: #FC8C4A;
@@ -18,9 +22,14 @@ svg {
   fill: currentColor;
   vertical-align: bottom;
 }
+small {
+  font-size: 80%;
+}
 
 #calcBox {
   background-color: $calcBG;
+  /* background-image: url(http://dev.andreweast.net/FreeCodeCamp/pattern_colored_ticks_@2X.png); */
+  background-image: url(pattern_colored_ticks_@2X.png);
   width: 318px;
   border: 2px outset $calcBG;
   border-radius: 8px;
@@ -157,7 +166,16 @@ aside#asideHidden {
   height: 16px;
   margin: 2px auto;
 }
+// #topRow {
+//   background-color: $buttonBezelTopRow;
+// }
+#sqrtLine {
+  border-top: 1px solid $buttonText;
+}
 
-small {
-  font-size: 80%;
+.col-fifth {
+  width: 20%; // 1/5th, similair to Bootstrap's 1/12th grid columns
+  float: left;
+  position: relative;
+  min-height: 1px;
 }

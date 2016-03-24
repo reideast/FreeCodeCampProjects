@@ -1,3 +1,4 @@
+/* Background pattern from subtlepatterns.com */
 body {
   font-family: "Source Sans Pro", sans-serif; }
 
@@ -5,8 +6,13 @@ svg {
   fill: currentColor;
   vertical-align: bottom; }
 
+small {
+  font-size: 80%; }
+
 #calcBox {
   background-color: #3C3C36;
+  /* background-image: url(http://dev.andreweast.net/FreeCodeCamp/pattern_colored_ticks_@2X.png); */
+  background-image: url(pattern_colored_ticks_@2X.png);
   width: 318px;
   border: 2px outset #3C3C36;
   border-radius: 8px;
@@ -136,5 +142,11 @@ aside#asideHidden {
   height: 16px;
   margin: 2px auto; }
 
-small {
-  font-size: 80%; }
+#sqrtLine {
+  border-top: 1px solid #D5D3CF; }
+
+.col-fifth {
+  width: 20%;
+  float: left;
+  position: relative;
+  min-height: 1px; }
