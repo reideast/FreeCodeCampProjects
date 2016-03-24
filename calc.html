@@ -65,7 +65,7 @@
       </div>
       <div class="col-xs-2">
         <aside>y<sup>𝓍</sup></aside>
-        <button><sup>1</sup>/<sub>𝓍</sub></button>
+        <button><sup>1</sup>∕<sub>𝓍</sub></button>
       </div>
       <div class="col-xs-2">
         <aside>𝓍<sup>2</sup></aside>
@@ -95,7 +95,7 @@
       </div>
       <div class="col-xs-2">
         <aside>&pi;</aside>
-        <button>R<span style="vertical-align: 2px;"> ↓</span></button>
+        <button>R ↓</button>
       </div>
       <div class="col-xs-2">
         <aside>ASIN</aside>
@@ -117,7 +117,7 @@
       </div>
       <div class="col-xs-2">
         <aside><small>LAST 𝓍</small></aside>
-        <button>𝓍<!--⇆--><small>≷</small>y</button>
+        <button>𝓍<!--≷--><small>⇆</small>y</button>
       </div>
       <div class="col-xs-2">
         <aside><small>MODES</small></aside>
@@ -129,93 +129,93 @@
       </div>
       <div class="col-xs-2">
         <aside><small>CLEAR</small></aside>
-        <button>⬅</button>
+        <button><span id="bkspArrow">⬅</span></button>
       </div>
     </div>
     <div class="row">
-      <div class="col-xs-2">
+      <div class="col-fifth">
         <aside>BST</aside>
         <button>▲</button>
       </div>
-      <div class="col-xs-2">
+      <div class="col-fifth">
         <aside><small>SOLVER</small></aside>
         <button>7</button>
       </div>
-      <div class="col-xs-2">
+      <div class="col-fifth">
         <aside>∫ f(𝓍)</aside>
         <button>8</button>
       </div>
-      <div class="col-xs-2">
+      <div class="col-fifth">
         <aside><small>MATRIX</small></aside>
         <button>9</button>
       </div>
-      <div class="col-xs-2">
+      <div class="col-fifth">
         <aside><small>STAT</small></aside>
         <button>÷</button>
       </div>
     </div>
     <div class="row">
-      <div class="col-xs-2">
+      <div class="col-fifth">
         <aside>SST</aside>
         <button>▼</button>
       </div>
-      <div class="col-xs-2">
+      <div class="col-fifth">
         <aside><small>BASE</small></aside>
         <button>4</button>
       </div>
-      <div class="col-xs-2">
+      <div class="col-fifth">
         <aside><small>CONVERT</small></aside>
         <button>5</button>
       </div>
-      <div class="col-xs-2">
+      <div class="col-fifth">
         <aside><small>FLAGS</small></aside>
         <button>6</button>
       </div>
-      <div class="col-xs-2">
+      <div class="col-fifth">
         <aside><small>PROB</small></aside>
         <button>×</button>
       </div>
     </div>
     <div class="row">
-      <div class="col-xs-2">
+      <div class="col-fifth">
         <aside id="asideHidden">_</aside>
         <button id="btnOrange"><div></div></button>
       </div>
-      <div class="col-xs-2">
+      <div class="col-fifth">
         <aside><small>ASSIGN</small></aside>
         <button>1</button>
       </div>
-      <div class="col-xs-2">
+      <div class="col-fifth">
         <aside><small>CUSTOM</small></aside>
         <button>2</button>
       </div>
-      <div class="col-xs-2">
+      <div class="col-fifth">
         <aside><small>PGM.FCM</small/></aside>
         <button>3</button>
       </div>
-      <div class="col-xs-2">
+      <div class="col-fifth">
         <aside><small>PRINT</small></aside>
         <button>−</button>
       </div>
     </div>
     <div class="row">
-      <div class="col-xs-2">
-        <aside>OFF</aside>
-        <button>EXIT</button>
+      <div class="col-fifth">
+        <aside><!-- OFF --><span id="diagStyle">DIAG</span></aside>
+        <button id="btnExit">EXIT</button>
       </div>
-      <div class="col-xs-2">
+      <div class="col-fifth">
         <aside><small>TOP.FCN</small></aside>
         <button>0</button>
       </div>
-      <div class="col-xs-2">
+      <div class="col-fifth">
         <aside><small>SHOW</small></aside>
         <button>.</button>
       </div>
-      <div class="col-xs-2">
+      <div class="col-fifth">
         <aside><small>PRGM</small></aside>
         <button>R/S</button>
       </div>
-      <div class="col-xs-2">
+      <div class="col-fifth">
         <aside><small>CATALOG</small></aside>
         <button>+</button>
       </div>
@@ -223,6 +223,14 @@
   </div><!-- #keysBox -->
   
 </div><!-- #caclBox -->
+
+<div id="diagBox">
+  <header>DIAGNOSTIC DATA</header>
+  <p><label>T: <input type="text"></label></p>
+  <p><label>Z: <input type="text"></label></p>
+  <p><label>Y: <input type="text"></label></p>
+  <p><label>X: <input type="text"></label></p>
+</div> 
 
 <!-- Here follows the HIDDEN svg definitions -->
 <svg style="display:none;" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">

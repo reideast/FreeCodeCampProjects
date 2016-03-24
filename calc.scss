@@ -32,7 +32,7 @@ small {
   background-image: url(pattern_colored_ticks_@2X.png);
   width: 318px;
   border: 2px outset $calcBG;
-  border-radius: 8px;
+  border-radius: 12px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
@@ -105,8 +105,8 @@ small {
 }
 
 #keysBox {
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
   background-color: $buttonBezel;
   color: $buttonText;
   border-right: 2px inset $buttonBG;
@@ -151,6 +151,19 @@ small {
   text-align: center;
   width: 34px;
 }
+.col-fifth {
+  width: 20%; // 1/5th, similair to Bootstrap's 1/12th grid columns
+  float: left;
+  position: relative;
+  min-height: 1px;
+}
+#keysBox .col-fifth button {
+  width: 39.25px;
+}
+#keysBox .col-fifth aside {
+  width: 43.25px;
+}
+
 button#btnEnter { //note: "eleent#id" is necessary here to override specificty of "#parent element"
   width: 76px;
 }
@@ -172,10 +185,40 @@ aside#asideHidden {
 #sqrtLine {
   border-top: 1px solid $buttonText;
 }
+// #bkspArrow {
+//   font-size: 150%;
+//   line-height: 20px;
+// }
+#diagStyle {
+  font-family: Consolas, monospace;
+}
 
-.col-fifth {
-  width: 20%; // 1/5th, similair to Bootstrap's 1/12th grid columns
-  float: left;
-  position: relative;
-  min-height: 1px;
+#diagBox {
+  display: none;
+  header {
+    background-color: $LCDborder;
+    text-align: center;
+    color: $LCDborderLogo;
+    padding: 5px 0;
+  }
+  p {
+    margin: 5px;
+    padding-left: 3px;
+    background-color: $LCDbg;
+  }
+  input {
+    background-color: $LCDbg;
+    border: none;
+    font-family: VT323, Consolas, monospace;
+    font-size: 120%;
+    color: $LCDtext;
+  }
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  border: 2px solid $calcBG;
+  border-radius: 8px;
+  background-color: $silverLogo;
+  font-size: 120%;
+  color: $LCDtext;
 }

@@ -15,7 +15,7 @@ small {
   background-image: url(pattern_colored_ticks_@2X.png);
   width: 318px;
   border: 2px outset #3C3C36;
-  border-radius: 8px;
+  border-radius: 12px;
   margin-top: 10px;
   margin-bottom: 10px; }
 
@@ -82,8 +82,8 @@ small {
   padding-left: 8px; }
 
 #keysBox {
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
   background-color: #433C38;
   color: #D5D3CF;
   border-right: 2px inset #212121;
@@ -127,6 +127,18 @@ small {
   text-align: center;
   width: 34px; }
 
+.col-fifth {
+  width: 20%;
+  float: left;
+  position: relative;
+  min-height: 1px; }
+
+#keysBox .col-fifth button {
+  width: 39.25px; }
+
+#keysBox .col-fifth aside {
+  width: 43.25px; }
+
 button#btnEnter {
   width: 76px; }
 
@@ -145,8 +157,31 @@ aside#asideHidden {
 #sqrtLine {
   border-top: 1px solid #D5D3CF; }
 
-.col-fifth {
-  width: 20%;
-  float: left;
-  position: relative;
-  min-height: 1px; }
+#diagStyle {
+  font-family: Consolas, monospace; }
+
+#diagBox {
+  display: none;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  border: 2px solid #3C3C36;
+  border-radius: 8px;
+  background-color: #909289;
+  font-size: 120%;
+  color: #0B2327; }
+  #diagBox header {
+    background-color: #51514C;
+    text-align: center;
+    color: white;
+    padding: 5px 0; }
+  #diagBox p {
+    margin: 5px;
+    padding-left: 3px;
+    background-color: #6B836B; }
+  #diagBox input {
+    background-color: #6B836B;
+    border: none;
+    font-family: VT323, Consolas, monospace;
+    font-size: 120%;
+    color: #0B2327; }
