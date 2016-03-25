@@ -69,15 +69,15 @@
       </div>
       <div class="col-xs-2">
         <aside>𝓍<sup>2</sup></aside>
-        <button>√<span id="sqrtLine">𝓍</span></button>
+        <button class="btnOpUnary" data-op="sqrt">√<span id="sqrtLine">𝓍</span></button>
       </div>
       <div class="col-xs-2">
         <aside>10<sup>𝓍</sup></aside>
-        <button>LOG</button>
+        <button class="btnOpUnary" data-op="log">LOG</button>
       </div>
       <div class="col-xs-2">
         <aside>e<sup>𝓍</sup></aside>
-        <button>LN</button>
+        <button class="btnOpUnary" data-op="ln">LN</button>
       </div>
       <div class="col-xs-2">
         <aside>GTO</aside>
@@ -95,19 +95,19 @@
       </div>
       <div class="col-xs-2">
         <aside>&pi;</aside>
-        <button>R ↓</button>
+        <button id="btnRollDown">R ↓</button>
       </div>
       <div class="col-xs-2">
         <aside>ASIN</aside>
-        <button>SIN</button>
+        <button class="btnOpUnary" data-op="sin">SIN</button>
       </div>
       <div class="col-xs-2">
         <aside>ACOS</aside>
-        <button>COS</button>
+        <button class="btnOpUnary" data-op="cos">COS</button>
       </div>
       <div class="col-xs-2">
         <aside>ATAN</aside>
-        <button>TAN</button>
+        <button class="btnOpUnary" data-op="tan">TAN</button>
       </div>
     </div>
     <div class="row">
@@ -117,11 +117,11 @@
       </div>
       <div class="col-xs-2">
         <aside><small>LAST 𝓍</small></aside>
-        <button>𝓍<!--≷--><small>⇆</small>y</button>
+        <button id="btnSwapXY">𝓍<!--≷--><small>⇆</small>y</button>
       </div>
       <div class="col-xs-2">
         <aside><small>MODES</small></aside>
-        <button>+/−</button>
+        <button id="btnNegation">+/−</button>
       </div>
       <div class="col-xs-2">
         <aside><small>DISP</small></aside>
@@ -129,7 +129,7 @@
       </div>
       <div class="col-xs-2">
         <aside><small>CLEAR</small></aside>
-        <button><span id="bkspArrow">⬅</span></button>
+        <button id="btnBksp"><span id="bkspArrow">⬅</span></button>
       </div>
     </div>
     <div class="row">
@@ -139,19 +139,19 @@
       </div>
       <div class="col-fifth">
         <aside><small>SOLVER</small></aside>
-        <button>7</button>
+        <button class="btnNum">7</button>
       </div>
       <div class="col-fifth">
         <aside>∫ f(𝓍)</aside>
-        <button>8</button>
+        <button class="btnNum">8</button>
       </div>
       <div class="col-fifth">
         <aside><small>MATRIX</small></aside>
-        <button>9</button>
+        <button class="btnNum">9</button>
       </div>
       <div class="col-fifth">
         <aside><small>STAT</small></aside>
-        <button>÷</button>
+        <button class="btnOpBinary">÷</button>
       </div>
     </div>
     <div class="row">
@@ -161,19 +161,19 @@
       </div>
       <div class="col-fifth">
         <aside><small>BASE</small></aside>
-        <button>4</button>
+        <button class="btnNum">4</button>
       </div>
       <div class="col-fifth">
         <aside><small>CONVERT</small></aside>
-        <button>5</button>
+        <button class="btnNum">5</button>
       </div>
       <div class="col-fifth">
         <aside><small>FLAGS</small></aside>
-        <button>6</button>
+        <button class="btnNum">6</button>
       </div>
       <div class="col-fifth">
         <aside><small>PROB</small></aside>
-        <button>×</button>
+        <button class="btnOpBinary">×</button>
       </div>
     </div>
     <div class="row">
@@ -183,19 +183,19 @@
       </div>
       <div class="col-fifth">
         <aside><small>ASSIGN</small></aside>
-        <button>1</button>
+        <button class="btnNum">1</button>
       </div>
       <div class="col-fifth">
         <aside><small>CUSTOM</small></aside>
-        <button>2</button>
+        <button class="btnNum">2</button>
       </div>
       <div class="col-fifth">
         <aside><small>PGM.FCM</small/></aside>
-        <button>3</button>
+        <button class="btnNum">3</button>
       </div>
       <div class="col-fifth">
         <aside><small>PRINT</small></aside>
-        <button>−</button>
+        <button class="btnOpBinary">−</button>
       </div>
     </div>
     <div class="row">
@@ -205,11 +205,11 @@
       </div>
       <div class="col-fifth">
         <aside><small>TOP.FCN</small></aside>
-        <button>0</button>
+        <button class="btnNum">0</button>
       </div>
       <div class="col-fifth">
         <aside><small>SHOW</small></aside>
-        <button>.</button>
+        <button class="btnNum">.</button>
       </div>
       <div class="col-fifth">
         <aside><small>PRGM</small></aside>
@@ -217,19 +217,20 @@
       </div>
       <div class="col-fifth">
         <aside><small>CATALOG</small></aside>
-        <button>+</button>
+        <button class="btnOpBinary">+</button>
       </div>
     </div>
   </div><!-- #keysBox -->
-  
 </div><!-- #caclBox -->
 
 <div id="diagBox">
   <header>DIAGNOSTIC DATA</header>
-  <p><label>T: <input type="text"></label></p>
-  <p><label>Z: <input type="text"></label></p>
-  <p><label>Y: <input type="text"></label></p>
-  <p><label>X: <input type="text"></label></p>
+  <p><label>T: <input id="stack3" type="text"></label></p>
+  <p><label>Z: <input id="stack2" type="text"></label></p>
+  <p><label>Y: <input id="stack1" type="text"></label></p>
+  <p><label>X: <input id="stack0" type="text"></label></p>
+  <hr>
+  <p><label>> <input id="entryReg" type="text"></label></p>
 </div> 
 
 <!-- Here follows the HIDDEN svg definitions -->

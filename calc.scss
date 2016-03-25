@@ -1,5 +1,6 @@
 /* Background pattern from subtlepatterns.com */
 
+$DEBUG: true; // false;
 
 $calcBG: #3C3C36;
 $silverLogo: #909289;
@@ -24,6 +25,46 @@ svg {
 }
 small {
   font-size: 80%;
+}
+button.disabled {
+  border: 2px inset $buttonBG;
+  color: #444;
+}
+
+#diagStyle {
+  font-family: Consolas, monospace;
+}
+#diagBox {
+  display: none;
+  @if $DEBUG {
+    display: initial;
+  }
+  header {
+    background-color: $LCDborder;
+    text-align: center;
+    color: $LCDborderLogo;
+    padding: 5px 0;
+  }
+  p {
+    margin: 5px;
+    padding-left: 3px;
+    background-color: $LCDbg;
+  }
+  input {
+    background-color: $LCDbg;
+    border: none;
+    font-family: VT323, Consolas, monospace;
+    font-size: 120%;
+    color: $LCDtext;
+  }
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  border: 2px solid $calcBG;
+  border-radius: 8px;
+  background-color: $silverLogo;
+  font-size: 120%;
+  color: $LCDtext;
 }
 
 #calcBox {
@@ -168,7 +209,7 @@ button#btnEnter { //note: "eleent#id" is necessary here to override specificty o
   width: 76px;
 }
 aside#asideEnter {
-  width: 76px;
+  width: 82px; //btnEnter's width of 76px + 3*2 margins
 }
 aside#asideHidden {
   color: $buttonBezel;
@@ -189,36 +230,6 @@ aside#asideHidden {
 //   font-size: 150%;
 //   line-height: 20px;
 // }
-#diagStyle {
-  font-family: Consolas, monospace;
-}
-
-#diagBox {
-  display: none;
-  header {
-    background-color: $LCDborder;
-    text-align: center;
-    color: $LCDborderLogo;
-    padding: 5px 0;
-  }
-  p {
-    margin: 5px;
-    padding-left: 3px;
-    background-color: $LCDbg;
-  }
-  input {
-    background-color: $LCDbg;
-    border: none;
-    font-family: VT323, Consolas, monospace;
-    font-size: 120%;
-    color: $LCDtext;
-  }
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  border: 2px solid $calcBG;
-  border-radius: 8px;
-  background-color: $silverLogo;
-  font-size: 120%;
-  color: $LCDtext;
+.btnNum {
+  font-weight: bold;
 }
