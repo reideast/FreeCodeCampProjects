@@ -2,6 +2,7 @@ var DEBUG = true;
 
 $(document).ready(function() {
   var stack = new RPNStack();
+  var trigModeDegrees = true; 
   
   $("button").addClass("disabled");
   
@@ -49,6 +50,9 @@ $(document).ready(function() {
       case "sqrt":
         result = Math.sqrt(stack.pop());
         break;
+      case "inverse":
+        result = 1 / stack.pop();
+        break;
       case "ln":
         //TODO: check for NaN results of the log functions, ie. log(negative)
         result = Math.log(stack.pop()); //in JS, Math.log(x) means ln(x)
@@ -57,13 +61,13 @@ $(document).ready(function() {
         result = Math.log10(stack.pop());
         break;
       case "sin":
-        result = Math.sin(stack.pop());
+        result = Math.sin((trigModeDegrees) ? (stack.pop() * (Math.PI / 180)) : stack.pop());
         break;
       case "cos":
-        result = Math.cos(stack.pop());
+        result = Math.cos((trigModeDegrees) ? (stack.pop() * (Math.PI / 180)) : stack.pop());
         break;
       case "tan":
-        result = Math.tan(stack.pop());
+        result = Math.tan((trigModeDegrees) ? (stack.pop() * (Math.PI / 180)) : stack.pop());
         break;
       default:
     }
@@ -86,6 +90,13 @@ $(document).ready(function() {
   $("#btnBksp").on("click", function() {
     stack.bksp();
   }).removeClass("disabled");
+  
+  $("#btnStore").on("click", function() {
+    stack.sto();
+  }).removeClass("disabled");
+  $("#btnRecall").on("click", function() {
+    stack.rcl();
+  }).removeClass("disabled");
 });
 
 var RPNStack = function() {
@@ -93,7 +104,10 @@ var RPNStack = function() {
   var _stack = [0,0,0,0]; // X, Y, Z, T
   var _entryRegister = "";
   var _hasDecimal = false;
+  var _hasExponent = false;
   var _wasLastEntryHardCommit = false; //controls if new input onto the entryRegister should NOT push the stack up. ie. after [ENTER]
+  var _mem = 0;
+  
   
   function debugLog(func) {
     console.log(func + ":" + _stack[0] + "," + _stack[1] + "," + _stack[2] + "," + _stack[3] + "," + _entryRegister);
@@ -131,6 +145,11 @@ var RPNStack = function() {
     for (var i = 0; i < _stack.length; ++i)
       $("#stack" + i).val(_stack[i]);
     
+    if (_mem === 0)
+      $("#indicatorMem").hide();
+    else
+      $("#indicatorMem").show();
+    
     if (DEBUG) debugLog("refresh");
   }
   
@@ -150,6 +169,12 @@ var RPNStack = function() {
       else
         _entryRegister += ".";
       _hasDecimal = true;
+    } else if (digit[0] === "E" && !_hasExponent) {
+      if (_entryRegister === "")
+        _entryRegister = "1e";
+      else
+        _entryRegister += "e";
+      _hasExponent = true;
     }
     if (DEBUG) debugLog("addEReg");
     refresh();
@@ -160,6 +185,7 @@ var RPNStack = function() {
       _stack[0] = Number.parseFloat(_entryRegister);
       _entryRegister = "";
       _hasDecimal = false;
+      _hasExponent = false;
     }
     if (DEBUG) debugLog("commitEReg");
   }
@@ -219,6 +245,19 @@ var RPNStack = function() {
     if (DEBUG) debugLog("backspace");
     refresh();
   };
+  
+  this.sto = function() {
+    this.commitEntryRegister();
+    _mem = _stack[0];
+    if (DEBUG) debugLog("sto mem=" + _mem);
+    refresh(); //also shows/hides indicatorMem
+  }
+  this.rcl = function() {
+    this.commitEntryRegister();
+    this.push(_mem);
+    if (DEBUG) debugLog("rcl mem=" + _mem);
+    refresh();
+  }
   
   refresh();
 };

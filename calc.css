@@ -96,6 +96,7 @@ button.disabled {
 
 #LCD {
   font-family: VT323, Consolas, monospace;
+  font-variant: small-caps;
   background-color: #6B836B;
   color: #0B2327;
   padding-top: 10px;

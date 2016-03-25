@@ -123,7 +123,8 @@ button.disabled {
 }
 
 #LCD {
-  font-family: VT323, Consolas, monospace; 
+  font-family: VT323, Consolas, monospace;
+  font-variant: small-caps;
   background-color: $LCDbg;
   color: $LCDtext;
   padding-top: 10px;

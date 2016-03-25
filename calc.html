@@ -65,7 +65,7 @@
       </div>
       <div class="col-xs-2">
         <aside>y<sup>𝓍</sup></aside>
-        <button><sup>1</sup>∕<sub>𝓍</sub></button>
+        <button class="btnOpUnary" data-op="inverse"><sup>1</sup>∕<sub>𝓍</sub></button>
       </div>
       <div class="col-xs-2">
         <aside>𝓍<sup>2</sup></aside>
@@ -87,11 +87,11 @@
     <div class="row">
       <div class="col-xs-2">
         <aside><small>COMPLEX</small></aside>
-        <button>STO</button>
+        <button id="btnStore">STO</button>
       </div>
       <div class="col-xs-2">
         <aside>%</aside>
-        <button>RCL</button>
+        <button id="btnRecall">RCL</button>
       </div>
       <div class="col-xs-2">
         <aside>&pi;</aside>
@@ -125,7 +125,7 @@
       </div>
       <div class="col-xs-2">
         <aside><small>DISP</small></aside>
-        <button>E</button>
+        <button class="btnNum">E</button>
       </div>
       <div class="col-xs-2">
         <aside><small>CLEAR</small></aside>
