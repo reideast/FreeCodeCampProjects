@@ -1,19 +1,41 @@
 var DEBUG = true;
 
 $(document).ready(function() {
-  var stack = new RPNStack();
-  var trigModeDegrees = true; 
-  
   $("button").addClass("disabled");
   
-  $("#btnExit").on("click", function() { $("#diagBox").toggle(); }).removeClass("disabled");
+  var stack = new RPNStack();
+  var trigModeDegrees = true;
+  var shiftMode = false;
+  var shiftToggle = function() {
+    shiftMode = (shiftMode) ? false : true;
+    $("#indicatorOrange").toggle(shiftMode);
+  };
+  var shiftOff = function() {
+    shiftMode = false;
+    $("#indicatorOrange").toggle(shiftMode);
+  }
+  
+  $("#btnOrange").on("click", function() {
+    shiftToggle();
+  }).removeClass("disabled");
+  
+  $("#btnExit").on("click", function() { 
+    if (shiftMode)
+      $("#diagBox").toggle(); 
+    else
+      ; // exit functionality
+    shiftOff();
+  }).removeClass("disabled");
   
   $(".btnNum").on("click", function() { 
     stack.addToEntryRegister(this.innerHTML); 
+    shiftOff();
   }).removeClass("disabled");
+  
   $("#btnEnter").on("click", function() { 
     stack.commitEntryRegister();
     stack.keyEnter();
+    shiftOff();
   }).removeClass("disabled");
   
   $(".btnOpBinary").on("click", function() {
@@ -42,6 +64,7 @@ $(document).ready(function() {
         console.log("btnOpBinary passed bad operator: " + this.innerHTML);
     }
     stack.push(result);
+    shiftOff();
   }).removeClass("disabled");
   
   $(".btnOpUnary").on("click", function() {
@@ -72,31 +95,43 @@ $(document).ready(function() {
       default:
     }
     stack.push(result);
+    shiftOff();
   }).removeClass("disabled");
   
   $("#btnRollDown").on("click", function() { 
     //TODO: this also needs to (conditionally?) commit eRegister
     stack.rollStackDown();
+    shiftOff();
   }).removeClass("disabled");
   
   $("#btnNegation").on("click", function() {
     stack.negation();
+    shiftOff();
   }).removeClass("disabled");
   
   $("#btnSwapXY").on("click", function() {
     stack.swap();
+    shiftOff();
   }).removeClass("disabled");
   
   $("#btnBksp").on("click", function() {
     stack.bksp();
+    shiftOff();
   }).removeClass("disabled");
   
   $("#btnStore").on("click", function() {
     stack.sto();
+    shiftOff();
   }).removeClass("disabled");
   $("#btnRecall").on("click", function() {
     stack.rcl();
+    shiftOff();
   }).removeClass("disabled");
+  
+  //this function must be after all other event binding to allow jQuery to call them in that order!
+  // $("button").on("click", function() { 
+  //   shiftOff();
+  //  });
 });
 
 var RPNStack = function() {
@@ -111,6 +146,26 @@ var RPNStack = function() {
   
   function debugLog(func) {
     console.log(func + ":" + _stack[0] + "," + _stack[1] + "," + _stack[2] + "," + _stack[3] + "," + _entryRegister);
+  }
+  
+  var refresh = function() {
+    if (_entryRegister === "") {
+      $("#row1").text(_stack[0]);
+    } else {
+      $("#row1").text(_entryRegister + "_");
+    }
+    $("#row2").text(_stack[1]);
+    
+    $("#entryReg").val(_entryRegister);
+    for (var i = 0; i < _stack.length; ++i)
+      $("#stack" + i).val(_stack[i]);
+    
+    if (_mem === 0)
+      $("#indicatorMem").hide();
+    else
+      $("#indicatorMem").show();
+    
+    if (DEBUG) debugLog("refresh");
   }
   
   this.pop = function() {
@@ -132,26 +187,6 @@ var RPNStack = function() {
     if (DEBUG) debugLog("push");
     refresh();
   };
-  
-  var refresh = function() {
-    if (_entryRegister === "") {
-      $("#row1").text(_stack[0]);
-    } else {
-      $("#row1").text(_entryRegister + "_");
-    }
-    $("#row2").text(_stack[1]);
-    
-    $("#entryReg").val(_entryRegister);
-    for (var i = 0; i < _stack.length; ++i)
-      $("#stack" + i).val(_stack[i]);
-    
-    if (_mem === 0)
-      $("#indicatorMem").hide();
-    else
-      $("#indicatorMem").show();
-    
-    if (DEBUG) debugLog("refresh");
-  }
   
   this.addToEntryRegister = function(digit) {
     console.log("addToEntryReg("+digit+")");

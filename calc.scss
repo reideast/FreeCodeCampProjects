@@ -127,10 +127,31 @@ button.disabled {
   font-variant: small-caps;
   background-color: $LCDbg;
   color: $LCDtext;
-  padding-top: 10px;
+  padding-top: 15px;
   padding-left: 3px;
   padding-right: 3px;
 }
+
+.indicator {
+  display: none;
+  color: $LCDbg;
+  background-color: $LCDtext;
+  border-radius: 2px;
+  font-size: 0.9em;
+  line-height: 0.9;
+  padding: 2px 4px;
+  margin-top: -11px;
+  position: absolute;
+}
+#indicatorMem {
+  margin-left: 176px
+}
+#indicatorOrange {
+  margin-left: 39px;
+  color: $buttonOrange;
+  padding: 2px 6px 0 6px;
+}
+
 .LCDrow {
   line-height: 1.2;
   font-size: 1.8em;
