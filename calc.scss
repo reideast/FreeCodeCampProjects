@@ -149,7 +149,11 @@ button.disabled {
 #indicatorOrange {
   margin-left: 39px;
   color: $buttonOrange;
-  padding: 2px 6px 0 6px;
+  padding: 1px 5px;
+}
+#indicatorArrowSymbol {
+  width: 12px;
+  height: 13px;
 }
 
 .LCDrow {

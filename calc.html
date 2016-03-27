@@ -47,7 +47,7 @@
     <div id="LCDborder">
       <div id="LCD" class="container-fluid">
         <div id="indicatorMem" class="indicator">MEM</div>
-        <div id="indicatorOrange" class="indicator">⬏</div>
+        <div id="indicatorOrange" class="indicator"><svg id="indicatorArrowSymbol"><use xlink:href="#unicode-arrow"></use></svg><!-- ⬏ --></div>
         <div class="LCDrow row">
           <div id="row2prefix" class="col-xs-1 rowPrefix">y:</div>
           <div id="row2" class="col-xs-11 rowNumbers">0</div>
@@ -66,19 +66,19 @@
         <button>∑+</button>
       </div>
       <div class="col-xs-2">
-        <aside>y<sup>𝓍</sup></aside>
-        <button class="btnOpUnary" data-op="inverse"><sup>1</sup>∕<sub>𝓍</sub></button>
+        <aside>y<sup>x<!-- 𝓍 --></sup></aside>
+        <button class="btnOpUnary" data-op="inverse"><sup>1</sup>∕<sub>x<!-- 𝓍 --></sub></button>
       </div>
       <div class="col-xs-2">
-        <aside>𝓍<sup>2</sup></aside>
-        <button class="btnOpUnary" data-op="sqrt">√<span id="sqrtLine">𝓍</span></button>
+        <aside>x<!-- 𝓍 --><sup>2</sup></aside>
+        <button class="btnOpUnary" data-op="sqrt">√<span id="sqrtLine">x<!-- 𝓍 --></span></button>
       </div>
       <div class="col-xs-2">
-        <aside>10<sup>𝓍</sup></aside>
+        <aside>10<sup>x<!-- 𝓍 --></sup></aside>
         <button class="btnOpUnary" data-op="log">LOG</button>
       </div>
       <div class="col-xs-2">
-        <aside>e<sup>𝓍</sup></aside>
+        <aside>e<sup>x<!-- 𝓍 --></sup></aside>
         <button class="btnOpUnary" data-op="ln">LN</button>
       </div>
       <div class="col-xs-2">
@@ -118,8 +118,8 @@
         <button id="btnEnter">ENTER</button>
       </div>
       <div class="col-xs-2">
-        <aside class="disabledShift"><small>LAST 𝓍</small></aside>
-        <button id="btnSwapXY">𝓍<!--≷--><small>⇆</small>y</button>
+        <aside class="disabledShift"><small>LAST x<!-- 𝓍 --></small></aside>
+        <button id="btnSwapXY">x<!-- 𝓍 --><!--≷--><small>⇆</small>y</button>
       </div>
       <div class="col-xs-2">
         <aside class="disabledShift"><small>MODES</small></aside>
@@ -144,7 +144,7 @@
         <button class="btnNum">7</button>
       </div>
       <div class="col-fifth">
-        <aside class="disabledShift">∫ f(𝓍)</aside>
+        <aside class="disabledShift">∫ f(x<!-- 𝓍 -->)</aside>
         <button class="btnNum">8</button>
       </div>
       <div class="col-fifth">
@@ -253,6 +253,20 @@
       <path d="m386.3,154.95c0,39.8 -13.8,75.2 -41.4,106.4c-10.1,11.4 -18,17.2 -23.5,17.2c-2.1,0 -3.9,-0.8 -5.6,-2.3c-1.7,-1.5 -2.5,-3.3 -2.5,-5.3c0,-2.8 3.5,-7.6 10.6,-14.4c28.8,-27.6 43.2,-61.8 43.2,-102.7c0,-45.1 -14.9,-82 -44.8,-110.5c-6,-5.7 -9,-10.2 -9,-13.5c0,-2.2 0.8,-4.1 2.5,-5.8c1.6,-1.7 3.5,-2.5 5.7,-2.5c6.8,0 16.5,8.1 29.3,24.3c23.6,30.2 35.5,66.6 35.5,109.1z"
       id="svg_5" />
       <path d="m294,259.05l-174.7,0c-5.7,0 -10.4,-4.6 -10.4,-10.4s4.6,-10.4 10.4,-10.4l174.7,0c5.7,0 10.4,4.6 10.4,10.4s-4.7,10.4 -10.4,10.4z" id="svg_6" />
+    </g>
+  </symbol>
+</svg>
+<svg style="display:none;" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+  <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+  <symbol id="unicode-arrow" viewBox="0 0 260 120">
+    <g>
+      <title>Layer 1</title>
+      <rect x="0" y="100" width="220" height="20"/>
+      <rect x="200" y="0"  width="20" height="120"/>
+      <rect x="180" y="20" width="20" height="20"/>
+      <rect x="160" y="40" width="20" height="20"/>
+      <rect x="240" y="40" width="20" height="20"/>
+      <rect x="220" y="20" width="20" height="20"/>
     </g>
   </symbol>
 </svg>
