@@ -18,7 +18,6 @@ button.disabled {
 
 #diagBox {
   display: none;
-  display: initial;
   position: absolute;
   top: 10px;
   left: 10px;
@@ -180,6 +179,9 @@ button.disabled {
   color: #FC8C4A;
   text-align: center;
   width: 34px; }
+
+#keysBox aside.disabledShift {
+  color: #964412; }
 
 .col-fifth {
   width: 20%;

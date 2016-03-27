@@ -32,9 +32,13 @@ $(document).ready(function() {
     shiftOff();
   }).removeClass("disabled");
   
-  $("#btnEnter").on("click", function() { 
-    stack.commitEntryRegister();
-    stack.keyEnter();
+  $("#btnEnter").on("click", function() {
+    if (!shiftMode) {
+      stack.commitEntryRegister();
+      stack.keyEnter();
+    } else {
+      //key "ALPHA" not implemented
+    }
     shiftOff();
   }).removeClass("disabled");
   
@@ -71,36 +75,71 @@ $(document).ready(function() {
     stack.commitEntryRegister();
     switch (this.dataset.op) {
       case "sqrt":
-        result = Math.sqrt(stack.pop());
+        if (shiftMode) {
+          var base = stack.pop();
+          result = base * base; 
+        } else {
+          result = Math.sqrt(stack.pop());
+        }
         break;
       case "inverse":
-        result = 1 / stack.pop();
+        if (shiftMode) {
+          var exponent = stack.pop();
+          result = Math.pow(stack.pop(), exponent);
+        } else {
+          result = 1 / stack.pop();
+        }
         break;
       case "ln":
-        //TODO: check for NaN results of the log functions, ie. log(negative)
-        result = Math.log(stack.pop()); //in JS, Math.log(x) means ln(x)
+        if (shiftMode) {
+          result = Math.pow(Math.E, stack.pop());
+        } else {
+          //TODO: check for NaN results of the log functions, ie. log(negative)
+          result = Math.log(stack.pop()); //in JS, Math.log(x) means ln(x)
+        }
         break;
       case "log":
-        result = Math.log10(stack.pop());
+        if (shiftMode) {
+          result = Math.pow(10, stack.pop());
+        } else {
+          result = Math.log10(stack.pop());
+        }
         break;
       case "sin":
-        result = Math.sin((trigModeDegrees) ? (stack.pop() * (Math.PI / 180)) : stack.pop());
+        if (!shiftMode) {
+          result = Math.sin((trigModeDegrees) ? (stack.pop() * (Math.PI / 180)) : stack.pop());
+        } else {
+          result = Math.asin((trigModeDegrees) ? (stack.pop() * (Math.PI / 180)) : stack.pop());
+        }
         break;
       case "cos":
-        result = Math.cos((trigModeDegrees) ? (stack.pop() * (Math.PI / 180)) : stack.pop());
+        if (!shiftMode) {
+          result = Math.cos((trigModeDegrees) ? (stack.pop() * (Math.PI / 180)) : stack.pop());
+        } else {
+          result = Math.acos((trigModeDegrees) ? (stack.pop() * (Math.PI / 180)) : stack.pop());
+        }
         break;
       case "tan":
-        result = Math.tan((trigModeDegrees) ? (stack.pop() * (Math.PI / 180)) : stack.pop());
-        break;
+        if (!shiftMode) {
+          result = Math.tan((trigModeDegrees) ? (stack.pop() * (Math.PI / 180)) : stack.pop());
+        } else {
+          result = Math.atan((trigModeDegrees) ? (stack.pop() * (Math.PI / 180)) : stack.pop());
+        }
+      break;
       default:
     }
     stack.push(result);
     shiftOff();
   }).removeClass("disabled");
   
-  $("#btnRollDown").on("click", function() { 
-    //TODO: this also needs to (conditionally?) commit eRegister
-    stack.rollStackDown();
+  $("#btnRollDown").on("click", function() {
+    if (!shiftMode) {
+      //TODO: this also needs to (conditionally?) commit eRegister
+      stack.rollStackDown();
+    } else {
+      stack.commitEntryRegister();
+      stack.push(Math.PI);
+    }
     shiftOff();
   }).removeClass("disabled");
   
@@ -120,11 +159,24 @@ $(document).ready(function() {
   }).removeClass("disabled");
   
   $("#btnStore").on("click", function() {
-    stack.sto();
+    if (!shiftMode) {
+      stack.sto();
+    } else {
+      //button "COMPLEX" not implemeted
+    }
     shiftOff();
   }).removeClass("disabled");
   $("#btnRecall").on("click", function() {
-    stack.rcl();
+    if (!shiftMode) {
+      stack.rcl();
+    } else {
+      stack.commitEntryRegister();
+      var percent = stack.pop();
+      var total = stack.pop();
+      var part = percent * total / 100;
+      stack.push(total); //HP 42s leaves the total on the stack
+      stack.push(part);
+    }
     shiftOff();
   }).removeClass("disabled");
   
@@ -157,13 +209,15 @@ var RPNStack = function() {
     $("#row2").text(_stack[1]);
     
     $("#entryReg").val(_entryRegister);
+    $("#diagMem").val(_mem);
     for (var i = 0; i < _stack.length; ++i)
       $("#stack" + i).val(_stack[i]);
     
-    if (_mem === 0)
-      $("#indicatorMem").hide();
-    else
-      $("#indicatorMem").show();
+    if (_mem === 0) {
+      $("#indicatorMem, #showDiagMem").hide();
+    } else {
+      $("#indicatorMem, #showDiagMem").show();
+    }
     
     if (DEBUG) debugLog("refresh");
   }

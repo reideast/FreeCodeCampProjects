@@ -62,7 +62,7 @@
   <div id="keysBox" class="container-fluid">
     <div id="topRow" class="row">
       <div class="col-xs-2">
-        <aside>∑−</aside>
+        <aside class="disabledShift">∑−</aside>
         <button>∑+</button>
       </div>
       <div class="col-xs-2">
@@ -82,13 +82,13 @@
         <button class="btnOpUnary" data-op="ln">LN</button>
       </div>
       <div class="col-xs-2">
-        <aside>GTO</aside>
+        <aside class="disabledShift">GTO</aside>
         <button>XEQ</button>
       </div>
     </div>
     <div class="row">
       <div class="col-xs-2">
-        <aside><small>COMPLEX</small></aside>
+        <aside class="disabledShift"><small>COMPLEX</small></aside>
         <button id="btnStore">STO</button>
       </div>
       <div class="col-xs-2">
@@ -114,67 +114,67 @@
     </div>
     <div class="row">
       <div class="col-xs-4">
-        <aside id="asideEnter">ALPHA</aside>
+        <aside id="asideEnter" class="disabledShift">ALPHA</aside>
         <button id="btnEnter">ENTER</button>
       </div>
       <div class="col-xs-2">
-        <aside><small>LAST 𝓍</small></aside>
+        <aside class="disabledShift"><small>LAST 𝓍</small></aside>
         <button id="btnSwapXY">𝓍<!--≷--><small>⇆</small>y</button>
       </div>
       <div class="col-xs-2">
-        <aside><small>MODES</small></aside>
+        <aside class="disabledShift"><small>MODES</small></aside>
         <button id="btnNegation">+/−</button>
       </div>
       <div class="col-xs-2">
-        <aside><small>DISP</small></aside>
+        <aside class="disabledShift"><small>DISP</small></aside>
         <button class="btnNum">E</button>
       </div>
       <div class="col-xs-2">
-        <aside><small>CLEAR</small></aside>
+        <aside class="disabledShift"><small>CLEAR</small></aside>
         <button id="btnBksp"><span id="bkspArrow">⬅</span></button>
       </div>
     </div>
     <div class="row">
       <div class="col-fifth">
-        <aside>BST</aside>
+        <aside class="disabledShift">BST</aside>
         <button>▲</button>
       </div>
       <div class="col-fifth">
-        <aside><small>SOLVER</small></aside>
+        <aside class="disabledShift"><small>SOLVER</small></aside>
         <button class="btnNum">7</button>
       </div>
       <div class="col-fifth">
-        <aside>∫ f(𝓍)</aside>
+        <aside class="disabledShift">∫ f(𝓍)</aside>
         <button class="btnNum">8</button>
       </div>
       <div class="col-fifth">
-        <aside><small>MATRIX</small></aside>
+        <aside class="disabledShift"><small>MATRIX</small></aside>
         <button class="btnNum">9</button>
       </div>
       <div class="col-fifth">
-        <aside><small>STAT</small></aside>
+        <aside class="disabledShift"><small>STAT</small></aside>
         <button class="btnOpBinary">÷</button>
       </div>
     </div>
     <div class="row">
       <div class="col-fifth">
-        <aside>SST</aside>
+        <aside class="disabledShift">SST</aside>
         <button>▼</button>
       </div>
       <div class="col-fifth">
-        <aside><small>BASE</small></aside>
+        <aside class="disabledShift"><small>BASE</small></aside>
         <button class="btnNum">4</button>
       </div>
       <div class="col-fifth">
-        <aside><small>CONVERT</small></aside>
+        <aside class="disabledShift"><small>CONVERT</small></aside>
         <button class="btnNum">5</button>
       </div>
       <div class="col-fifth">
-        <aside><small>FLAGS</small></aside>
+        <aside class="disabledShift"><small>FLAGS</small></aside>
         <button class="btnNum">6</button>
       </div>
       <div class="col-fifth">
-        <aside><small>PROB</small></aside>
+        <aside class="disabledShift"><small>PROB</small></aside>
         <button class="btnOpBinary">×</button>
       </div>
     </div>
@@ -184,19 +184,19 @@
         <button id="btnOrange"><div></div></button>
       </div>
       <div class="col-fifth">
-        <aside><small>ASSIGN</small></aside>
+        <aside class="disabledShift"><small>ASSIGN</small></aside>
         <button class="btnNum">1</button>
       </div>
       <div class="col-fifth">
-        <aside><small>CUSTOM</small></aside>
+        <aside class="disabledShift"><small>CUSTOM</small></aside>
         <button class="btnNum">2</button>
       </div>
       <div class="col-fifth">
-        <aside><small>PGM.FCM</small/></aside>
+        <aside class="disabledShift"><small>PGM.FCM</small/></aside>
         <button class="btnNum">3</button>
       </div>
       <div class="col-fifth">
-        <aside><small>PRINT</small></aside>
+        <aside class="disabledShift"><small>PRINT</small></aside>
         <button class="btnOpBinary">−</button>
       </div>
     </div>
@@ -206,24 +206,27 @@
         <button id="btnExit">EXIT</button>
       </div>
       <div class="col-fifth">
-        <aside><small>TOP.FCN</small></aside>
+        <aside class="disabledShift"><small>TOP.FCN</small></aside>
         <button class="btnNum">0</button>
       </div>
       <div class="col-fifth">
-        <aside><small>SHOW</small></aside>
+        <aside class="disabledShift"><small>SHOW</small></aside>
         <button class="btnNum">.</button>
       </div>
       <div class="col-fifth">
-        <aside><small>PRGM</small></aside>
+        <aside class="disabledShift"><small>PRGM</small></aside>
         <button>R/S</button>
       </div>
       <div class="col-fifth">
-        <aside><small>CATALOG</small></aside>
+        <aside class="disabledShift"><small>CATALOG</small></aside>
         <button class="btnOpBinary">+</button>
       </div>
     </div>
   </div><!-- #keysBox -->
 </div><!-- #caclBox -->
+<footer>
+  <p class="text-center"><small>Project created from scratch by <a href="http://andreweast.net" target="_none">Andrew Reid East</a></small></p>
+</footer>
 
 <div id="diagBox">
   <header>DIAGNOSTIC DATA</header>
@@ -233,6 +236,10 @@
   <p><label>X: <input id="stack0" type="text"></label></p>
   <hr>
   <p><label>> <input id="entryReg" type="text"></label></p>
+  <div id="showDiagMem">
+    <hr>
+    <p><label>m: <input type="text" id="diagMem"></label></p>
+  </div>
 </div> 
 
 <!-- Here follows the HIDDEN svg definitions -->

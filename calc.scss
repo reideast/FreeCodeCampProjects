@@ -1,6 +1,6 @@
 /* Background pattern from subtlepatterns.com */
 
-$DEBUG: true; // false;
+$DEBUG: false;
 
 $calcBG: #3C3C36;
 $silverLogo: #909289;
@@ -213,6 +213,10 @@ button.disabled {
   color: $buttonOrange;
   text-align: center;
   width: 34px;
+}
+#keysBox aside.disabledShift {
+  color: #964412; //#933903;
+  // filter: saturate(50%);
 }
 .col-fifth {
   width: 20%; // 1/5th, similair to Bootstrap's 1/12th grid columns
