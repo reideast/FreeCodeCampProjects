@@ -991,8 +991,34 @@ bob.getFullName();
 
 
 // *************************************************************
+// ***************** Array Process/Reduce **********************
 // *************************************************************
-// *************************************************************
+
+function pairwise(arr, target) {
+  console.log("pairwise: " + arr + " => " + target);
+  
+  var isPaired = Array(arr.length);
+  var sum = 0;
+  arr.reduce(function(_, item, currIndex) {
+    for (var i = currIndex + 1; i < arr.length; ++i) {
+      if (isPaired[currIndex] !== true && 
+          isPaired[i] !== true && 
+          item + arr[i] === target) {
+        console.log("Paired! arr["+currIndex+"]="+item + " & arr["+i+"]="+arr[i]);
+        sum += currIndex + i;
+        isPaired[i] = true;
+        break;
+      }
+    }
+    //return 0;
+  }, 0);
+  
+  console.log("final result: " + sum);
+  return sum;
+}
+
+pairwise([1,4,2,3,0,5], 7);
+
 
 // *************************************************************
 // *************************************************************

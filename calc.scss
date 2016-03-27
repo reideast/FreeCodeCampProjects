@@ -1,0 +1,265 @@
+/* Background pattern from subtlepatterns.com */
+
+$DEBUG: false;
+
+$calcBG: #3C3C36;
+$silverLogo: #909289;
+$logoBG: #32302B;
+$LCDborder: #51514C;
+$LCDborderLogo: white;
+$LCDsubBorder: #58595A;
+$LCDbg: #6B836B;
+$LCDtext: #0B2327;
+$buttonBezel: #433C38;
+$buttonBezelTopRow: #51514C;
+$buttonBG: #212121;
+$buttonText: #D5D3CF;
+$buttonOrange: #FC8C4A;
+
+body {
+  font-family: "Source Sans Pro", sans-serif;
+}
+svg {
+  fill: currentColor;
+  vertical-align: bottom;
+}
+small {
+  font-size: 80%;
+}
+button.disabled {
+  border: 2px inset $buttonBG;
+  color: #444;
+}
+
+#diagStyle {
+  font-family: Consolas, monospace;
+}
+#diagBox {
+  display: none;
+  @if $DEBUG {
+    display: initial;
+  }
+  header {
+    background-color: $LCDborder;
+    text-align: center;
+    color: $LCDborderLogo;
+    padding: 5px 0;
+  }
+  p {
+    margin: 5px;
+    padding-left: 3px;
+    background-color: $LCDbg;
+  }
+  input {
+    background-color: $LCDbg;
+    border: none;
+    font-family: VT323, Consolas, monospace;
+    font-size: 120%;
+    color: $LCDtext;
+  }
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  border: 2px solid $calcBG;
+  border-radius: 8px;
+  background-color: $silverLogo;
+  font-size: 120%;
+  color: $LCDtext;
+}
+
+#calcBox {
+  background-color: $calcBG;
+  /* background-image: url(http://dev.andreweast.net/FreeCodeCamp/calc_pattern_colored_ticks_@2X.png); */
+  background-image: url(calc_pattern_colored_ticks_@2X.png);
+  width: 318px;
+  border: 2px outset $calcBG;
+  border-radius: 12px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#logoRow {
+  color: $silverLogo;
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+#logo {
+  background-color: $logoBG;
+  border: 2px groove $calcBG;
+  border-radius: 2px;
+  height: 37px;
+  width: 135px;
+  padding-left: 3px;
+  padding-right: 3px;
+  margin-left: 25px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+#logo svg{
+  height: 26px;
+  width: 35px;
+}
+#logo h6 {
+  margin: 0 0 0 3px;
+}
+
+#screenBox {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  background-color: $LCDborder;
+  color: $LCDborderLogo;
+}
+#screenLogo h5 {
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+#LCDborder {
+  background-color: $LCDsubBorder;
+  padding: 10px 3px;
+  border: 1px inset $LCDsubBorder; 
+}
+
+#LCD {
+  font-family: VT323, Consolas, monospace;
+  font-variant: small-caps;
+  background-color: $LCDbg;
+  color: $LCDtext;
+  padding-top: 15px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+.indicator {
+  display: none;
+  color: $LCDbg;
+  background-color: $LCDtext;
+  border-radius: 2px;
+  font-size: 0.9em;
+  line-height: 0.9;
+  padding: 2px 4px;
+  margin-top: -11px;
+  position: absolute;
+}
+#indicatorMem {
+  margin-left: 176px
+}
+#indicatorOrange {
+  margin-left: 39px;
+  color: $buttonOrange;
+  padding: 1px 5px;
+}
+#indicatorArrowSymbol {
+  width: 12px;
+  height: 13px;
+}
+
+.LCDrow {
+  line-height: 1.2;
+  font-size: 1.8em;
+  //background-color: rgba(50,50,50,0.5);
+  margin-left: -3px;
+  margin-right: -3px;
+}
+.LCDrow > div {
+  padding-left: 3px;
+  padding-right: 3px;
+}
+#row1, #row2 {
+  padding-left: 8px;
+}
+
+#keysBox {
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  background-color: $buttonBezel;
+  color: $buttonText;
+  border-right: 2px inset $buttonBG;
+  border-bottom: 2px inset $buttonBG;
+  border-left: 2px inset #999;
+  margin-bottom: 15px;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+#keysBox > div {
+  height: 46px;
+  margin-right: -5px;
+  margin-left: -5px;
+}
+#keysBox > div > div {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+#keysBox button {
+  background-color: $buttonBG;
+  border: 2px outset $buttonBG;
+  border-radius: 3px;
+  font-size: 1em;
+  padding: 0;
+  width: 30px;
+  margin-left: 3px;
+  margin-right: 3px;
+  height: 100%;
+}
+#keysBox button:active {
+  border: 2px inset $buttonBG;
+}
+#keysBox button:focus {
+  outline: gray auto 5px;
+  //outline: none;
+}
+#keysBox aside {
+  font-size: 0.8em;
+  color: $buttonOrange;
+  text-align: center;
+  width: 34px;
+}
+#keysBox aside.disabledShift {
+  color: #964412; //#933903;
+  // filter: saturate(50%);
+}
+.col-fifth {
+  width: 20%; // 1/5th, similair to Bootstrap's 1/12th grid columns
+  float: left;
+  position: relative;
+  min-height: 1px;
+}
+#keysBox .col-fifth button {
+  width: 39.25px;
+}
+#keysBox .col-fifth aside {
+  width: 43.25px;
+}
+
+button#btnEnter { //note: "eleent#id" is necessary here to override specificty of "#parent element"
+  width: 76px;
+}
+aside#asideEnter {
+  width: 82px; //btnEnter's width of 76px + 3*2 margins
+}
+aside#asideHidden {
+  color: $buttonBezel;
+}
+#btnOrange > div {
+  background-color: $buttonOrange;
+  width: 90%;
+  height: 16px;
+  margin: 2px auto;
+}
+// #topRow {
+//   background-color: $buttonBezelTopRow;
+// }
+#sqrtLine {
+  border-top: 1px solid $buttonText;
+}
+// #bkspArrow {
+//   font-size: 150%;
+//   line-height: 20px;
+// }
+.btnNum {
+  font-weight: bold;
+}
