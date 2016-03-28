@@ -5,6 +5,7 @@ $(document).ready(function() {
   
   var stack = new RPNStack();
   var trigModeDegrees = true;
+  
   var shiftMode = false;
   var shiftToggle = function() {
     shiftMode = (shiftMode) ? false : true;
@@ -14,7 +15,6 @@ $(document).ready(function() {
     shiftMode = false;
     $("#indicatorOrange").toggle(shiftMode);
   }
-  
   $("#btnOrange").on("click", function() {
     shiftToggle();
   }).removeClass("disabled");
@@ -23,7 +23,7 @@ $(document).ready(function() {
     if (shiftMode)
       $("#diagBox").toggle(); 
     else
-      ; // exit functionality
+      ; // exit functionality?
     shiftOff();
   }).removeClass("disabled");
   
@@ -134,7 +134,7 @@ $(document).ready(function() {
   
   $("#btnRollDown").on("click", function() {
     if (!shiftMode) {
-      //TODO: this also needs to (conditionally?) commit eRegister
+      //TODO: this also needs to (conditionally?) commit eRegister!
       stack.rollStackDown();
     } else {
       stack.commitEntryRegister();
@@ -186,6 +186,14 @@ $(document).ready(function() {
   //  });
 });
 
+//An object that simulate's the HP-42S internal memory.
+//Has three registers:
+//  1. An "Entry Register", which stores a string (to allow LTR entry), and is validated after entry is committed
+//  2. The 4-item stack. X & Y, which are show on the LCD, and Z & T above.
+//     The stack copies the top item "T" down if the stack is popped()
+//  3. A single memory location
+//Use the "DIAG" function on the "Exit" key to view all the memory locations.
+//To separate functionality and maintain privacy within this object, all GUI functions are outside this class, as if the hardware was sending button commands to a processor & memory IC
 var RPNStack = function() {
   //using C#-style underscore to designate Private variables
   var _stack = [0,0,0,0]; // X, Y, Z, T
@@ -200,7 +208,9 @@ var RPNStack = function() {
     console.log(func + ":" + _stack[0] + "," + _stack[1] + "," + _stack[2] + "," + _stack[3] + "," + _entryRegister);
   }
   
+  //Pushes the registers "onto the GUI busses", to use the hardware term
   var refresh = function() {
+    //LCD locations
     if (_entryRegister === "") {
       $("#row1").text(_stack[0]);
     } else {
@@ -208,16 +218,18 @@ var RPNStack = function() {
     }
     $("#row2").text(_stack[1]);
     
-    $("#entryReg").val(_entryRegister);
-    $("#diagMem").val(_mem);
-    for (var i = 0; i < _stack.length; ++i)
-      $("#stack" + i).val(_stack[i]);
-    
+    //Memory idicator on the LCD
     if (_mem === 0) {
       $("#indicatorMem, #showDiagMem").hide();
     } else {
       $("#indicatorMem, #showDiagMem").show();
     }
+    
+    //DIAG text boxes
+    $("#entryReg").val(_entryRegister);
+    $("#diagMem").val(_mem);
+    for (var i = 0; i < _stack.length; ++i)
+      $("#stack" + i).val(_stack[i]);
     
     if (DEBUG) debugLog("refresh");
   }
@@ -242,14 +254,18 @@ var RPNStack = function() {
     refresh();
   };
   
+  //Add a single digit to the Entry Register(or decimal or "E" for scientific notation)
   this.addToEntryRegister = function(digit) {
-    console.log("addToEntryReg("+digit+")");
+    if (DEBUG) console.log("addToEntryReg("+digit+")");
+    //Preserve the value in x
+    //  unless the last keystroke was "ENTER", then don't push the stack up.
     if (_entryRegister === "") {
       if (!_wasLastEntryHardCommit)
         this.push(0);
       else
         _wasLastEntryHardCommit = false;
     }
+    
     if (digit[0] >= "0" && digit[0] <= "9") {
       _entryRegister += digit[0];
     } else if (digit[0] === "." && !_hasDecimal) {
@@ -265,23 +281,20 @@ var RPNStack = function() {
         _entryRegister += "e";
       _hasExponent = true;
     }
+    
     if (DEBUG) debugLog("addEReg");
     refresh();
   }
   this.commitEntryRegister = function() {
-    // push(Number.parseFloat(_entryRegister));
     if (_entryRegister !== "") {
-      _stack[0] = Number.parseFloat(_entryRegister);
+      _stack[0] = parseFloat(_entryRegister);
       _entryRegister = "";
       _hasDecimal = false;
       _hasExponent = false;
     }
     if (DEBUG) debugLog("commitEReg");
   }
-  // this.commitNumber = function(num) {
-  //   //push onto stack WITHOUT moving stack
-  //   _stack[0] = num;
-  // }
+  
   this.rollStackDown = function() {
     //rotate the whole stack, erase no values;
     var temp = _stack[0];
@@ -298,6 +311,7 @@ var RPNStack = function() {
     _wasLastEntryHardCommit = true;
     if (DEBUG) debugLog("enter");
   };
+  
   this.negation = function() {
     if (_entryRegister !== "") {
       if (_entryRegister[0] === "-")
@@ -310,6 +324,7 @@ var RPNStack = function() {
     if (DEBUG) debugLog("negation");
     refresh();
   };
+  
   this.swap = function() {
     this.commitEntryRegister();
     var temp = _stack[0];
@@ -318,9 +333,10 @@ var RPNStack = function() {
     if (DEBUG) debugLog("swapX&Y");
     refresh();
   };
+  
   this.bksp = function () {
     if (_entryRegister !== "") {
-      //TODO: check how clearing the entryRegister interacts with _wasLastEntryHardCommit ie. should it flip _wasLastEntryHardCommit (try on real calc)
+      //TODO: check how clearing the entryRegister interacts with _wasLastEntryHardCommit ie. should it flip _wasLastEntryHardCommit? (try on real calc)
       if (_entryRegister.length === 1) {
         _entryRegister = "";
       } else {
@@ -348,5 +364,6 @@ var RPNStack = function() {
     refresh();
   }
   
+  //Part of constructor: call refresh() after all private variables are set.
   refresh();
 };

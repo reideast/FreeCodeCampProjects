@@ -20,7 +20,7 @@ body {
   font-family: "Source Sans Pro", sans-serif;
 }
 svg {
-  fill: currentColor;
+  fill: currentColor; /* Lets SVG take on parent element's text color */
   vertical-align: bottom;
 }
 small {
@@ -69,8 +69,8 @@ button.disabled {
 
 #calcBox {
   background-color: $calcBG;
-  /* background-image: url(http://dev.andreweast.net/FreeCodeCamp/calc_pattern_colored_ticks_@2X.png); */
-  background-image: url(calc_pattern_colored_ticks_@2X.png);
+  background-image: url(http://dev.andreweast.net/FreeCodeCamp/pattern_colored_ticks_@2X.png);
+  //background-image: url(pattern_colored_ticks_@2X.png);
   width: 318px;
   border: 2px outset $calcBG;
   border-radius: 12px;

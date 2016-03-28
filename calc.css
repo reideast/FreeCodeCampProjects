@@ -4,6 +4,7 @@ body {
 
 svg {
   fill: currentColor;
+  /* Lets SVG take on parent element's text color */
   vertical-align: bottom; }
 
 small {
@@ -44,8 +45,7 @@ button.disabled {
 
 #calcBox {
   background-color: #3C3C36;
-  /* background-image: url(http://dev.andreweast.net/FreeCodeCamp/pattern_colored_ticks_@2X.png); */
-  background-image: url(pattern_colored_ticks_@2X.png);
+  background-image: url(http://dev.andreweast.net/FreeCodeCamp/pattern_colored_ticks_@2X.png);
   width: 318px;
   border: 2px outset #3C3C36;
   border-radius: 12px;
