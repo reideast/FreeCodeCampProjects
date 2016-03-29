@@ -1,0 +1,71 @@
+@import url(https://fonts.googleapis.com/css?family=Libre+Baskerville);
+body {
+  font-family: "Libre Baskerville";
+  background-color: #eee;
+  background-image: url("http://dev.andreweast.net/FreeCodeCamp/symphony.png"); }
+
+#pageContainer {
+  background-color: #718484;
+  min-width: 320px;
+  height: calc(3em + 50px + 60px);
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px; }
+
+#clockContainer {
+  width: 320px;
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%); }
+
+#digitalContainer {
+  font-size: 3em;
+  border-top: 2px solid #333;
+  margin-top: 10px; }
+
+#analogContainer {
+  width: 320px;
+  position: absolute;
+  border-top: 2px solid #333; }
+
+#barWorkContainer, #barBreakContainer {
+  padding-top: 10px;
+  height: 50px;
+  position: absolute;
+  top: 0; }
+
+#barWorkContainer {
+  width: calc(25 / 30 * 100%);
+  left: 0;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px; }
+
+#barBreakContainer {
+  width: calc(5 / 30 * 100%);
+  right: 0;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px; }
+
+#barWork, #barBreak {
+  height: 100%;
+  position: absolute; }
+
+#barWork {
+  width: 100%;
+  background-color: #008040;
+  right: 0;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px; }
+
+#barBreak {
+  width: 100%;
+  background-color: teal;
+  left: 0;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px; }
+
+#controlsContainer {
+  display: none;
+  position: relative;
+  top: calc(50px + 20px); }

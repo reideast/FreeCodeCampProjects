@@ -1,0 +1,88 @@
+$colorBarWork: #008040;
+$colorBarBreak: teal;
+$barOutline: #333;
+$colorPage: #eee;
+$colorContainer: #718484;
+$fontClock: "Libre Baskerville";
+$borderRadius: 8px;
+$barHeight: 50px;
+
+@import url(https://fonts.googleapis.com/css?family=Libre+Baskerville);
+body {
+  font-family: $fontClock;
+  background-color: $colorPage;
+  background-image: url("http://dev.andreweast.net/FreeCodeCamp/symphony.png");
+}
+#pageContainer {
+  background-color: $colorContainer;
+  min-width: 320px;
+  //height: 12em;
+  height: calc(3em + #{$barHeight} + 60px);
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: $borderRadius;
+}
+#clockContainer {
+  width: 320px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+#digitalContainer {
+  font-size: 3em;
+  border-top: 2px solid $barOutline;
+  margin-top: 10px;
+}
+
+#analogContainer {
+  width: 320px;
+  position: absolute;
+  border-top: 2px solid $barOutline;
+}
+
+#barWorkContainer, #barBreakContainer {
+  //border: 1px dotted $barOutline;
+  padding-top: 10px;
+  height: $barHeight;
+  position: absolute;
+  top: 0;
+}
+#barWorkContainer {
+  width: calc(25 / 30 * 100%);
+  left: 0;
+  //border-right: none;
+  border-top-left-radius: $borderRadius;
+  border-bottom-left-radius: $borderRadius;
+}
+#barBreakContainer {
+  width: calc(5 / 30 * 100%);
+  right: 0;
+  //border-left: none;
+  border-top-right-radius: $borderRadius;
+  border-bottom-right-radius: $borderRadius;
+}
+
+#barWork, #barBreak {
+  height: 100%;
+  position: absolute;
+}
+#barWork {
+  width: 100%;
+  background-color: $colorBarWork;
+  right: 0;
+  border-top-left-radius: $borderRadius;
+  border-bottom-left-radius: $borderRadius;
+}
+#barBreak {
+  width: 100%;
+  background-color: $colorBarBreak;
+  left: 0;
+  border-top-right-radius: $borderRadius;
+  border-bottom-right-radius: $borderRadius;
+}
+
+#controlsContainer {
+  display: none;
+  position: relative;
+  top: calc(#{$barHeight} + 20px);
+}
