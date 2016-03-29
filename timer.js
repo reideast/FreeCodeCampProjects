@@ -5,5 +5,5 @@ var currWork = WORK;
 var currBreak = BREAK;
 
 $(document).ready(function() {
-  console.log("testing");
+  console.log("testing 1 2 3");
 });
