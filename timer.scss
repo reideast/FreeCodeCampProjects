@@ -41,8 +41,8 @@ body {
 }
 
 #barWorkContainer, #barBreakContainer {
-  //border: 1px dotted $barOutline;
-  padding-top: 10px;
+  border: 3px solid $barOutline;
+  margin-top: 10px;
   height: $barHeight;
   position: absolute;
   top: 0;
@@ -50,7 +50,7 @@ body {
 #barWorkContainer {
   width: calc(25 / 30 * 100%);
   left: 0;
-  //border-right: none;
+  border-right: none;
   border-top-left-radius: $borderRadius;
   border-bottom-left-radius: $borderRadius;
 }
@@ -65,6 +65,15 @@ body {
 #barWork, #barBreak {
   height: 100%;
   position: absolute;
+}
+#barWork:before, #barBreak:before {
+  background-image: url("http://dev.andreweast.net/FreeCodeCamp/symphonyTransparent.png");
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  content: "";
 }
 #barWork {
   width: 100%;
