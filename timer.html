@@ -10,7 +10,7 @@
 
 
   <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'>
-  <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+  <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css'>
 
   <link rel="stylesheet" href="timer.css">
 
@@ -36,8 +36,19 @@
           <div id="barBreak"></div>
         </div>
       </div>
-      <div id="controlsContainer">
-        start/stop, chg time, run continuously
+      <div id="controlsContainer" class="container-fixed">
+        <div class="col-xs-3">
+          <button id="btnStart" class="btn btn-default" type="button"><i class="fa fa-2x fa-play-circle-o"></i></button>
+        </div>
+        <div class="col-xs-3">
+          <button id="btnReset" class="btn btn-default" type="button"><i class="fa fa-2x fa-stop-circle-o"></i></button>
+        </div>
+        <div class="col-xs-3">
+          chg time
+        </div>
+        <div class="col-xs-3">
+          run continuously
+        </div>
       </div>
     </div>
   </div>

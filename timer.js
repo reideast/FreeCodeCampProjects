@@ -1,16 +1,32 @@
 $(document).ready(function () {
   resetTimer();
-  // $("#btnStart").on("click", function() {
-    var intervalID = window.setInterval(updateTimer, 1000);
-  // });
+  $("#btnStart").on("click", function() {
+    if (intervalID === undefined) {
+      intervalID = window.setInterval(updateTimer, 1000);
+      $("#btnStart").html('<i class="fa fa-2x fa-pause-circle-o"></i>');
+    } else {
+      window.clearInterval(intervalID);
+      $("#btnStart").html('<i class="fa fa-2x fa-pause-circle"></i>');
+      intervalID = undefined;
+    }
+  });
+  
+  $("#btnReset").on("click", function() {
+    $("#btnStart").html('<i class="fa fa-2x fa-play-circle-o"></i>');
+    if (intervalID !== undefined) {
+      window.clearInterval(intervalID);
+      intervalID = undefined;
+    }
+    resetTimer();
+  });
 });
 
-var DEBUG = true;
 var WORK = 5 * 60; //25 min
 var BREAK = 1 * 60; //5 min
 var currWork = WORK;
 var currBreak = BREAK;
 var working = true;
+var intervalID;
 
 function resetTimer() {
   currWork = WORK;

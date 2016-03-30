@@ -77,6 +77,5 @@ body {
   border-bottom-right-radius: 8px; }
 
 #controlsContainer {
-  display: none;
   position: relative;
   top: calc(50px + 20px); }
