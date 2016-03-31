@@ -6,6 +6,7 @@ $colorContainer: #718484;
 $fontClock: "Libre Baskerville";
 $borderRadius: 8px;
 $barHeight: 50px;
+$pageWidth: 300px;
 
 @import url(https://fonts.googleapis.com/css?family=Libre+Baskerville);
 body {
@@ -13,36 +14,64 @@ body {
   background-color: $colorPage;
   background-image: url("http://dev.andreweast.net/FreeCodeCamp/symphony.png");
 }
+
+h1 {
+  font-size: 4em;
+}
+
 #pageContainer {
   background-color: $colorContainer;
-  min-width: 320px;
+  min-width: $pageWidth;
+  @media (max-width: 320px) {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
   //height: 12em;
-  height: calc(3em + #{$barHeight} + 60px);
-  margin-top: 10px;
-  margin-bottom: 10px;
+  height: calc(3em + #{$barHeight} + 60px + 60px);
+  margin-top: 20px;
+  margin-bottom: 20px;
   border-radius: $borderRadius;
 }
 #clockContainer {
-  width: 320px;
+  width: $pageWidth;
+  @media (max-width: 320px) {
+    width: $pageWidth - 20px;
+  }
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
 }
 #digitalContainer {
+  height: 1.42857em; //equal to line-height of 3em children, defined by Bootstrap
   font-size: 3em;
   border-top: 2px solid $barOutline;
-  margin-top: 10px;
+  margin-top: 15px;
+}
+#min, #colon, #sec {
+  position: absolute;
+}
+#min {
+  right: 54%;
+}
+#colon {
+  left: 49%;
+}
+#sec {
+  left: 55%;
 }
 
 #analogContainer {
-  width: 320px;
+  width: $pageWidth;
+  @media (max-width: 320px) {
+    width: $pageWidth - 20px;
+  }
   position: absolute;
   border-top: 2px solid $barOutline;
 }
 
 #barWorkContainer, #barBreakContainer {
-  border: 3px solid $barOutline;
-  margin-top: 10px;
+  border: 2px solid $barOutline;
+  margin-top: 15px;
   height: $barHeight;
   position: absolute;
   top: 0;
@@ -93,5 +122,5 @@ body {
 #controlsContainer {
   // display: none;
   position: relative;
-  top: calc(#{$barHeight} + 20px);
+  top: calc(#{$barHeight} + 30px);
 }

@@ -1,18 +1,20 @@
+var DEBUG = true;
+
 $(document).ready(function () {
   resetTimer();
   $("#btnStart").on("click", function() {
     if (intervalID === undefined) {
       intervalID = window.setInterval(updateTimer, 1000);
-      $("#btnStart").html('<i class="fa fa-2x fa-pause-circle-o"></i>');
+      $("#btnStart").html('<i class="fa fa-2x fa-pause"></i>');
     } else {
       window.clearInterval(intervalID);
-      $("#btnStart").html('<i class="fa fa-2x fa-pause-circle"></i>');
+      $("#btnStart").html('<i class="fa fa-2x fa-play"></i>');
       intervalID = undefined;
     }
   });
   
   $("#btnReset").on("click", function() {
-    $("#btnStart").html('<i class="fa fa-2x fa-play-circle-o"></i>');
+    $("#btnStart").html('<i class="fa fa-2x fa-play"></i>');
     if (intervalID !== undefined) {
       window.clearInterval(intervalID);
       intervalID = undefined;
@@ -21,7 +23,7 @@ $(document).ready(function () {
   });
 });
 
-var WORK = 5 * 60; //25 min
+var WORK = 1 * 60; //25 min
 var BREAK = 1 * 60; //5 min
 var currWork = WORK;
 var currBreak = BREAK;
@@ -43,8 +45,7 @@ function resetAnalog() {
 }
 
 function updateTimer() {
-  console.log("currWork=" + currWork);
-  console.log("currBreak=" + currBreak);
+  if (DEBUG) console.log("currWork=" + currWork +"\n" + "currBreak=" + currBreak);
   if (working) {
     --currWork;
     currBreak = BREAK * (1 - (currWork / WORK)); //for display purposes only
@@ -87,4 +88,6 @@ function updateDigital() {
 function updateAnalog() {
   $("#barWork").css("width", (currWork / WORK) * 100 + "%");
   $("#barBreak").css("width", (currBreak / BREAK) * 100 + "%");
+  // $("#barWork").animate({width: (currWork / WORK) * 100 + "%"}, 1000);
+  // $("#barBreak").animate({width: (currBreak / BREAK) * 100 + "%"}, 1000);
 }

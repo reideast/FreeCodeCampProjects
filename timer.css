@@ -4,34 +4,60 @@ body {
   background-color: #eee;
   background-image: url("http://dev.andreweast.net/FreeCodeCamp/symphony.png"); }
 
+h1 {
+  font-size: 4em; }
+
 #pageContainer {
   background-color: #718484;
-  min-width: 320px;
-  height: calc(3em + 50px + 60px);
-  margin-top: 10px;
-  margin-bottom: 10px;
+  min-width: 300px;
+  height: calc(3em + 50px + 60px + 60px);
+  margin-top: 20px;
+  margin-bottom: 20px;
   border-radius: 8px; }
+  @media (max-width: 320px) {
+    #pageContainer {
+      margin-left: 10px;
+      margin-right: 10px; } }
 
 #clockContainer {
-  width: 320px;
+  width: 300px;
   position: absolute;
   left: 50%;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%); }
+  @media (max-width: 320px) {
+    #clockContainer {
+      width: 280px; } }
 
 #digitalContainer {
+  height: 1.42857em;
   font-size: 3em;
   border-top: 2px solid #333;
-  margin-top: 10px; }
+  margin-top: 15px; }
+
+#min, #colon, #sec {
+  position: absolute; }
+
+#min {
+  right: 54%; }
+
+#colon {
+  left: 49%; }
+
+#sec {
+  left: 55%; }
 
 #analogContainer {
-  width: 320px;
+  width: 300px;
   position: absolute;
   border-top: 2px solid #333; }
+  @media (max-width: 320px) {
+    #analogContainer {
+      width: 280px; } }
 
 #barWorkContainer, #barBreakContainer {
-  border: 3px solid #333;
-  margin-top: 10px;
+  border: 2px solid #333;
+  margin-top: 15px;
   height: 50px;
   position: absolute;
   top: 0; }
@@ -78,4 +104,4 @@ body {
 
 #controlsContainer {
   position: relative;
-  top: calc(50px + 20px); }
+  top: calc(50px + 30px); }
