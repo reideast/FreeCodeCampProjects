@@ -27,7 +27,7 @@ h1 {
     margin-right: 10px;
   }
   //height: 12em;
-  height: calc(3em + #{$barHeight} + 60px + 60px);
+  height: calc(3em + #{$barHeight} + 60px + 80px);
   margin-top: 20px;
   margin-bottom: 20px;
   border-radius: $borderRadius;
@@ -119,8 +119,30 @@ h1 {
   border-bottom-right-radius: $borderRadius;
 }
 
+.barValue {
+  z-index: 10;
+  position: absolute;
+  font-size: 1em;
+  line-height: 1;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%; //prevents word wrap
+  white-space: nowrap;
+  overflow: hidden;
+}
+.btn-spinner {
+  padding: 0 7px;
+  //line-height: 0;
+  border: 0;
+  background: 0;
+}
+
 #controlsContainer {
-  // display: none;
   position: relative;
   top: calc(#{$barHeight} + 30px);
+  border-top: 2px solid $barOutline;
+  padding-top: 10px;
+  border-bottom: 2px solid $barOutline;
+  padding-bottom: 50px;
 }

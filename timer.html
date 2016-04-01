@@ -34,23 +34,27 @@
       <div id="analogContainer">
         <div id="barWorkContainer">
           <div id="barWork"></div>
+          <div class="barValue">
+            <div><button data-linked-control="#workValue" data-spinner-delta="1" class="btn-spinner btn btn-default"><i class="fa fa-caret-up"></i></button></div>
+            <div><span id="workValue">25</span> min</div>
+            <div><button data-linked-control="#workValue" data-spinner-delta="-1"  id="btnWorkValueDown" class="btn-spinner btn btn-default"><i class="fa fa-caret-down"></i></button></div>
+          </div>
         </div>
         <div id="barBreakContainer">
           <div id="barBreak"></div>
+          <div class="barValue">
+            <div><button data-linked-control="#breakValue" data-spinner-delta="1" class="btn-spinner btn btn-default"><i class="fa fa-caret-up"></i></button></div>
+            <div><span id="breakValue">5</span> min</div>
+            <div><button data-linked-control="#breakValue" data-spinner-delta="-1"  class="btn-spinner btn btn-default"><i class="fa fa-caret-down"></i></button></div>
+          </div>
         </div>
       </div>
       <div id="controlsContainer" class="container-fixed">
-        <div class="col-xs-3">
-          <button id="btnStart" class="btn btn-default" type="button"><i class="fa fa-2x fa-play"></i></button>
+        <div class="col-xs-6">
+          <button id="btnStart" class="btn btn-default" type="button"><i class="fa fa-2x fa-fw fa-play"></i></button>
         </div>
-        <div class="col-xs-3">
-          <button id="btnReset" class="btn btn-default" type="button"><i class="fa fa-2x fa-stop"></i></button>
-        </div>
-        <div class="col-xs-3">
-          chg time
-        </div>
-        <div class="col-xs-3">
-          run continuously
+        <div class="col-xs-6">
+          <button id="btnReset" class="btn btn-default" type="button"><i class="fa fa-2x fa-fw fa-refresh"></i></button>
         </div>
       </div>
     </div>
