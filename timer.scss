@@ -1,0 +1,154 @@
+/* Background texture provided by Subtle Patterns: http://subtlepatterns.com/ */ 
+
+$colorBarWork: teal;
+$colorBarBreak: #008040;
+$barOutline: #333;
+$colorPage: #eee;
+$colorContainer: #718484;
+$fontClock: "Libre Baskerville";
+$borderRadius: 8px;
+$barHeight: 50px;
+$pageWidth: 300px;
+
+@import url(https://fonts.googleapis.com/css?family=Libre+Baskerville);
+body {
+  font-family: $fontClock;
+  background-color: $colorPage;
+  background-image: url("http://dev.andreweast.net/FreeCodeCamp/symphony.png");
+}
+
+h1 {
+  font-size: 3.5em;
+}
+
+#pageContainer {
+  background-color: $colorContainer;
+  min-width: $pageWidth;
+  @media (max-width: 320px) {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  //height: 12em;
+  height: calc(3em + #{$barHeight} + 60px + 80px);
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-radius: $borderRadius;
+}
+#clockContainer {
+  width: $pageWidth;
+  @media (max-width: 320px) {
+    width: $pageWidth - 20px;
+  }
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+#digitalContainer {
+  height: 1.42857em; //equal to line-height of 3em children, defined by Bootstrap
+  font-size: 3em;
+  border-top: 2px solid $barOutline;
+  margin-top: 15px;
+}
+#min, #colon, #sec {
+  position: absolute;
+}
+#min {
+  right: 54%;
+}
+#colon {
+  left: 49%;
+}
+#sec {
+  left: 55%;
+}
+
+#analogContainer {
+  width: $pageWidth;
+  @media (max-width: 320px) {
+    width: $pageWidth - 20px;
+  }
+  position: absolute;
+  border-top: 2px solid $barOutline;
+}
+
+#barWorkContainer, #barBreakContainer {
+  border: 2px solid $barOutline;
+  margin-top: 15px;
+  height: $barHeight;
+  position: absolute;
+  top: 0;
+}
+#barWorkContainer {
+  width: calc(25 / 30 * 100%);
+  left: 0;
+  border-right: none;
+  border-top-left-radius: $borderRadius;
+  border-bottom-left-radius: $borderRadius;
+}
+#barBreakContainer {
+  width: calc(5 / 30 * 100%);
+  right: 0;
+  //border-left: none;
+  border-top-right-radius: $borderRadius;
+  border-bottom-right-radius: $borderRadius;
+}
+
+#barWork, #barBreak {
+  height: 100%;
+  position: absolute;
+}
+#barWork:before, #barBreak:before {
+  background-image: url("http://dev.andreweast.net/FreeCodeCamp/symphonyTransparent.png");
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  content: "";
+}
+#barWork {
+  width: 100%;
+  background-color: $colorBarWork;
+  right: 0;
+  border-top-left-radius: $borderRadius;
+  border-bottom-left-radius: $borderRadius;
+}
+#barBreak {
+  width: 100%;
+  background-color: $colorBarBreak;
+  left: 0;
+  border-top-right-radius: $borderRadius;
+  border-bottom-right-radius: $borderRadius;
+}
+
+.barValue {
+  z-index: 10;
+  position: absolute;
+  font-size: 1em;
+  line-height: 1;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%; //prevents word wrap
+  white-space: nowrap;
+  overflow: hidden;
+}
+.btn-spinner {
+  padding: 0 7px;
+  //line-height: 0;
+  border: 0;
+  background: 0;
+}
+
+#controlsContainer {
+  position: relative;
+  top: calc(#{$barHeight} + 30px);
+  border-top: 2px solid $barOutline;
+  padding-top: 10px;
+  border-bottom: 2px solid $barOutline;
+  padding-bottom: 50px;
+}
+#btnStart, #btnReset {
+  background-color: $colorContainer;
+  border: 1px solid;
+}

@@ -1,0 +1,134 @@
+/* Background texture provided by Subtle Patterns: http://subtlepatterns.com/ */
+@import url(https://fonts.googleapis.com/css?family=Libre+Baskerville);
+body {
+  font-family: "Libre Baskerville";
+  background-color: #eee;
+  background-image: url("http://dev.andreweast.net/FreeCodeCamp/symphony.png"); }
+
+h1 {
+  font-size: 3.5em; }
+
+#pageContainer {
+  background-color: #718484;
+  min-width: 300px;
+  height: calc(3em + 50px + 60px + 80px);
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px; }
+  @media (max-width: 320px) {
+    #pageContainer {
+      margin-left: 10px;
+      margin-right: 10px; } }
+
+#clockContainer {
+  width: 300px;
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%); }
+  @media (max-width: 320px) {
+    #clockContainer {
+      width: 280px; } }
+
+#digitalContainer {
+  height: 1.42857em;
+  font-size: 3em;
+  border-top: 2px solid #333;
+  margin-top: 15px; }
+
+#min, #colon, #sec {
+  position: absolute; }
+
+#min {
+  right: 54%; }
+
+#colon {
+  left: 49%; }
+
+#sec {
+  left: 55%; }
+
+#analogContainer {
+  width: 300px;
+  position: absolute;
+  border-top: 2px solid #333; }
+  @media (max-width: 320px) {
+    #analogContainer {
+      width: 280px; } }
+
+#barWorkContainer, #barBreakContainer {
+  border: 2px solid #333;
+  margin-top: 15px;
+  height: 50px;
+  position: absolute;
+  top: 0; }
+
+#barWorkContainer {
+  width: calc(25 / 30 * 100%);
+  left: 0;
+  border-right: none;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px; }
+
+#barBreakContainer {
+  width: calc(5 / 30 * 100%);
+  right: 0;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px; }
+
+#barWork, #barBreak {
+  height: 100%;
+  position: absolute; }
+
+#barWork:before, #barBreak:before {
+  background-image: url("http://dev.andreweast.net/FreeCodeCamp/symphonyTransparent.png");
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  content: ""; }
+
+#barWork {
+  width: 100%;
+  background-color: teal;
+  right: 0;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px; }
+
+#barBreak {
+  width: 100%;
+  background-color: #008040;
+  left: 0;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px; }
+
+.barValue {
+  z-index: 10;
+  position: absolute;
+  font-size: 1em;
+  line-height: 1;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden; }
+
+.btn-spinner {
+  padding: 0 7px;
+  border: 0;
+  background: 0; }
+
+#controlsContainer {
+  position: relative;
+  top: calc(50px + 30px);
+  border-top: 2px solid #333;
+  padding-top: 10px;
+  border-bottom: 2px solid #333;
+  padding-bottom: 50px; }
+
+#btnStart, #btnReset {
+  background-color: #718484;
+  border: 1px solid; }
