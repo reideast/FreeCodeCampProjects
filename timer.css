@@ -1,3 +1,4 @@
+/* Background texture provided by Subtle Patterns: http://subtlepatterns.com/ */
 @import url(https://fonts.googleapis.com/css?family=Libre+Baskerville);
 body {
   font-family: "Libre Baskerville";
@@ -5,7 +6,7 @@ body {
   background-image: url("http://dev.andreweast.net/FreeCodeCamp/symphony.png"); }
 
 h1 {
-  font-size: 4em; }
+  font-size: 3.5em; }
 
 #pageContainer {
   background-color: #718484;
@@ -90,14 +91,14 @@ h1 {
 
 #barWork {
   width: 100%;
-  background-color: #008040;
+  background-color: teal;
   right: 0;
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px; }
 
 #barBreak {
   width: 100%;
-  background-color: teal;
+  background-color: #008040;
   left: 0;
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px; }
@@ -127,3 +128,7 @@ h1 {
   padding-top: 10px;
   border-bottom: 2px solid #333;
   padding-bottom: 50px; }
+
+#btnStart, #btnReset {
+  background-color: #718484;
+  border: 1px solid; }

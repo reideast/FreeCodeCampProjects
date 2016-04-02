@@ -1,5 +1,7 @@
-$colorBarWork: #008040;
-$colorBarBreak: teal;
+/* Background texture provided by Subtle Patterns: http://subtlepatterns.com/ */ 
+
+$colorBarWork: teal;
+$colorBarBreak: #008040;
 $barOutline: #333;
 $colorPage: #eee;
 $colorContainer: #718484;
@@ -16,7 +18,7 @@ body {
 }
 
 h1 {
-  font-size: 4em;
+  font-size: 3.5em;
 }
 
 #pageContainer {
@@ -145,4 +147,8 @@ h1 {
   padding-top: 10px;
   border-bottom: 2px solid $barOutline;
   padding-bottom: 50px;
+}
+#btnStart, #btnReset {
+  background-color: $colorContainer;
+  border: 1px solid;
 }
