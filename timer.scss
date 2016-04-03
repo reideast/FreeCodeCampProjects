@@ -4,7 +4,7 @@ $colorBarWork: teal;
 $colorBarBreak: #008040;
 $barOutline: #333;
 $colorPage: #eee;
-$colorContainer: #718484;
+$colorContainer: #a5b2b2;
 $fontClock: "Libre Baskerville";
 $borderRadius: 8px;
 $barHeight: 50px;
@@ -23,8 +23,9 @@ h1 {
 
 #pageContainer {
   background-color: $colorContainer;
-  min-width: $pageWidth;
+  width: $pageWidth + 20px;
   @media (max-width: 320px) {
+    width: $pageWidth;
     margin-left: 10px;
     margin-right: 10px;
   }

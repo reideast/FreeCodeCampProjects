@@ -26,7 +26,7 @@ $(document).ready(function () {
       window.clearInterval(intervalID);
       $("#btnStart").html('<i class="fa fa-2x fa-fw fa-play"></i>');
       intervalID = undefined;
-      toggleModifiers(true);
+      //don't turn the time modifiers back on until reset: toggleModifiers(true);
     }
   });
   

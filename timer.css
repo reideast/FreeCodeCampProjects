@@ -9,14 +9,15 @@ h1 {
   font-size: 3.5em; }
 
 #pageContainer {
-  background-color: #718484;
-  min-width: 300px;
+  background-color: #a5b2b2;
+  width: 320px;
   height: calc(3em + 50px + 60px + 80px);
   margin-top: 20px;
   margin-bottom: 20px;
   border-radius: 8px; }
   @media (max-width: 320px) {
     #pageContainer {
+      width: 300px;
       margin-left: 10px;
       margin-right: 10px; } }
 
@@ -130,5 +131,5 @@ h1 {
   padding-bottom: 50px; }
 
 #btnStart, #btnReset {
-  background-color: #718484;
+  background-color: #a5b2b2;
   border: 1px solid; }
