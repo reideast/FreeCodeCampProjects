@@ -1,4 +1,4 @@
-var size = 8;
+var size = 16;
 
 var chessboard = "";
 for (var i = 0; i < size; ++i) {
