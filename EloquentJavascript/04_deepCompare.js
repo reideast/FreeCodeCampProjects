@@ -21,9 +21,18 @@ function deepEqual(a, b) {
       }
     }
     return true;
+  } else if (typeof a === "array" && typeof b === "array") {
+    if (a.length === b.length) {
+      for (var i = 0; i < a.length; ++i) {
+        if (!deepEqual(a[i], b[i]))
+          return false;
+      }
+      return true;
+    } else {
+      return false;
+    }
   } else {
     //scalar variables for at least one argument
-    //also, could be array. note: problem did not ask me to examine arrays (which could be arrays of objects)
     return a === b;
   }
 }
