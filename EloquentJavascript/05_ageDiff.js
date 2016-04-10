@@ -54,21 +54,27 @@ ancestry.forEach(function(person) {
 });
 
 // Your code here.
-var ages = [];
-// var children = [];
-ancestry.forEach(function(person) {
-  if (byName[person.mother] != null) {
-    ages.push(person.born - byName[person.mother].born);
-    // children.push({
-    //   child: person.name,
-    //   born: person.born,
-    //   mother: byName[person.mother].name,
-    //   // mother: (byName[person.mother] != null) ? byName[person.mother].name : null,
-    //   motherBorn: byName[person.mother].born,
-    //   // motherBorn: (byName[person.mother] != null) ? byName[person.mother].born : null
-    // });
-  }
+// var peopleWithMothers = ancestry.filter(function(item) {
+//   return byName[item.mother] != null;
+// });
+var ages = ancestry.filter(function(item) {
+  return byName[item.mother] != null;
+}).map(function(item) {
+  return item.born - byName[item.mother].born;
 });
+// ancestry.forEach(function(person) {
+//   if (byName[person.mother] != null) {
+//     ages.push(person.born - byName[person.mother].born);
+//     // children.push({
+//     //   child: person.name,
+//     //   born: person.born,
+//     //   mother: byName[person.mother].name,
+//     //   // mother: (byName[person.mother] != null) ? byName[person.mother].name : null,
+//     //   motherBorn: byName[person.mother].born,
+//     //   // motherBorn: (byName[person.mother] != null) ? byName[person.mother].born : null
+//     // });
+//   }
+// });
 
 // console.log(JSON.stringify(children, null, 2));
 console.log(average(ages));
