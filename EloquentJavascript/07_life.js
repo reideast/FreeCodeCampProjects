@@ -441,12 +441,12 @@ SmartPlantEater.prototype.act = function(view) {
 
 // Your code here
 function Tiger() {
-  this.energy = 40;
+  this.energy = 70;
   this.direction = randomElement(directionNames);
 }
 Tiger.prototype.act = function(view) {
   var space = view.find(" ");
-  if (this.energy > 80 && space)
+  if (this.energy > 150 && space)
     return {type: "reproduce", direction: space};
   var prey = view.find("O");
   if (prey) {
