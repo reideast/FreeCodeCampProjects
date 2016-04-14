@@ -1,3 +1,11 @@
+function animateWorld(world) {
+  setInterval(function() {
+    console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+    world.turn();
+    console.log(world.toString());
+  }, 100);
+}
+
 var plan = ["############################",
             "#      #    #      o      ##",
             "#                          #",
@@ -67,6 +75,9 @@ function dirPlus(dir, n) {
   return directionNames[(index + n + 8) % 8];
 }
 
+// added for stats:
+var graph = ["_", "▄", "▒", "▓", "█"]; //[0,1,2,3,4] => 0-5%, 5-25%, 25-50%, 50-75%, 75-100%
+
 function randomElement(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
@@ -90,6 +101,17 @@ function World(map, legend) {
   this.grid = grid;
   this.legend = legend;
   
+  // added for stats:
+  this.currCritters = Object.create(null);
+  this.maxCritters = Object.create(null);
+  var keys = Object.keys(legend);
+  keys.forEach(function(key) {
+    if (key !== "#") {
+      this.currCritters[key] = 0;
+      this.maxCritters[key] = 0;
+    }
+  }, this);
+  
   map.forEach(function(line, y) {
     for (var x = 0; x < line.length; ++x) {
       grid.set(new Vector(x, y), elementFromChar(legend, line[x]));
@@ -97,14 +119,45 @@ function World(map, legend) {
   });
 }
 World.prototype.toString = function() {
+  // added for stats:
+  var keys = Object.keys(this.currCritters);
+  keys.forEach(function(key) {
+    this.currCritters[key] = 0;
+  }, this);
+  
   var output = "   ";
   for (var y = 0; y < this.grid.height; ++y) {
     for (var x = 0; x < this.grid.width; ++x) {
       var element = this.grid.get(new Vector(x, y));
-      output += charFromElement(element);
+      var char = charFromElement(element);
+      output += char;
+      // added for stats:
+      if (char !== " " && char !== "#") {
+        this.currCritters[char]++;
+      }
     }
     output += "\n   ";
   }
+  // added for stats:
+  keys.forEach(function(key) {
+    this.maxCritters[key] = Math.max(this.currCritters[key], this.maxCritters[key]);
+    output += key + ": ";
+    var percent = 100 * this.currCritters[key] / this.maxCritters[key];
+    var index = 0;
+    if (percent > 5)
+      index = Math.ceil(percent / 25);
+    output += graph[index];
+    // output += "[" + index + "]";
+    // output += " " + Math.floor(percent) + "% ";
+    // output += "(" + this.currCritters[key] + "/" + this.maxCritters[key] + ")";
+    output += " (" + this.currCritters[key] + ")";
+    
+    //output += graph[intVal];
+    
+    output += "   ";
+  }, this);
+  output += "\n";
+  
   return output;
 }
 World.prototype.turn = function() {
@@ -287,23 +340,27 @@ PlantEater.prototype.act = function(view) {
     return {type: "move", direction: space};
 }
 
-var valley = new LifelikeWorld(
-  ["############################",
-   "#####                 ######",
-   "##   ***                **##",
-   "#   *##**         **  O  *##",
-   "#    ***     O    ##**    *#",
-   "#       O         ##***    #",
-   "#                 ##**     #",
-   "#   O       #*             #",
-   "#*          #**       O    #",
-   "#***        ##**    O    **#",
-   "##****     ###***       *###",
-   "############################"],
-  {"#": Wall,
-   "O": PlantEater,
-   "*": Plant}
-);
+// var valley = new LifelikeWorld(
+//   ["############################",
+//    "#####                 ######",
+//    "##   ***                **##",
+//    "#   *##**         **  O  *##",
+//    "#    ***     O    ##**    *#",
+//    "#       O         ##***    #",
+//    "#                 ##**     #",
+//    "#   O       #*             #",
+//    "#*          #**       O    #",
+//    "#***        ##**    O    **#",
+//    "##****     ###***       *###",
+//    "############################"],
+//   {"#": Wall,
+//    "O": PlantEater,
+//    "*": Plant}
+// );
+// for (var i = 0; i < 25; ++i) {
+//   valley.turn();
+//   console.log(valley.toString());
+// }
 
 // Your code here
 //ignore this function. it forces critters to just pace back and forth along walls
@@ -364,20 +421,69 @@ SmartPlantEater.prototype.act = function(view) {
   }
 }
 
+// animateWorld(new LifelikeWorld(
+//   ["############################",
+//    "#####                 ######",
+//    "##   ***                **##",
+//    "#   *##**         **  O  *##",
+//    "#    ***     O    ##**    *#",
+//    "#       O         ##***    #",
+//    "#                 ##**     #",
+//    "#   O       #*             #",
+//    "#*          #**       O    #",
+//    "#***        ##**    O    **#",
+//    "##****     ###***       *###",
+//    "############################"],
+//   {"#": Wall,
+//    "O": SmartPlantEater,
+//    "*": Plant}
+// ));
+
+// Your code here
+function Tiger() {
+  this.energy = 40;
+  this.direction = randomElement(directionNames);
+}
+Tiger.prototype.act = function(view) {
+  var space = view.find(" ");
+  if (this.energy > 120 && space)
+    return {type: "reproduce", direction: space};
+  var prey = view.find("O");
+  if (prey) {
+    return {type: "eat", direction: prey};
+  }
+  if (space) {
+    if (view.look(this.direction) === " ") {
+      return {type: "move", direction: this.direction};
+    } else {
+      this.direction = space;
+      return {type: "move", direction: space};
+    }
+  }
+}
+
+
 animateWorld(new LifelikeWorld(
-  ["############################",
-   "#####                 ######",
-   "##   ***                **##",
-   "#   *##**         **  O  *##",
-   "#    ***     O    ##**    *#",
-   "#       O         ##***    #",
-   "#                 ##**     #",
-   "#   O       #*             #",
-   "#*          #**       O    #",
-   "#***        ##**    O    **#",
-   "##****     ###***       *###",
-   "############################"],
+  ["####################################################",
+   "#                 ####         ****              ###",
+   "#   *  @  ##                 ########       OO    ##",
+   "#   *    ##        O O                 ****       *#",
+   "#       ##*                        ##########     *#",
+   "#      ##***  *         ****                     **#",
+   "#* **  #  *  ***      #########                  **#",
+   "#* **  #      *               #   *              **#",
+   "#     ##              #   O   #  ***          ######",
+   "#*            @       #       #   *        O  #    #",
+   "#*                    #  ######                 ** #",
+   "###          ****          ***                  ** #",
+   "#       O                        @         O       #",
+   "#   *     ##  ##  ##  ##               ###      *  #",
+   "#   **         #              *       #####  O     #",
+   "##  **  O   O  #  #    ***  ***        ###      ** #",
+   "###               #   *****                    ****#",
+   "####################################################"],
   {"#": Wall,
-   "O": SmartPlantEater,
+   "@": Tiger,
+   "O": SmartPlantEater, // from previous exercise
    "*": Plant}
 ));
