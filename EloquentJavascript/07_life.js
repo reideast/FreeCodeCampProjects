@@ -154,7 +154,7 @@ World.prototype.toString = function() {
     
     //output += graph[intVal];
     
-    output += "   ";
+    output += "\n   ";
   }, this);
   output += "\n";
   
@@ -305,7 +305,7 @@ actionTypes.reproduce = function(critter, vector, action) {
   if (dest === null ||
       critter.energy <= 2 * baby.energy ||
       this.grid.get(dest) !== null) {
-    return false
+    return false;
   } else {
     critter.energy -= 2 * baby.energy;
     this.grid.set(dest, baby);
@@ -397,7 +397,7 @@ SmartPlantEater.prototype.act = function(view) {
   var plant = view.find("*");
   if (plant) {
     //only eat a plant if there's more plants nearby
-    if (view.findAll("*").length !== 1) {
+    if (view.findAll("*").length !== 1 || this.energy <= 5) {
       this.direction = plant; //SmartPlantEater will try to "follow the food" the next time it takes the "move" action
       return {type: "eat", direction: plant};
     }
@@ -446,7 +446,7 @@ function Tiger() {
 }
 Tiger.prototype.act = function(view) {
   var space = view.find(" ");
-  if (this.energy > 120 && space)
+  if (this.energy > 80 && space)
     return {type: "reproduce", direction: space};
   var prey = view.find("O");
   if (prey) {
