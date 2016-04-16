@@ -14,8 +14,11 @@ function Iterator() {
 }
 
 function ArraySeq(array) {
-  this.obj = array;
+  if (!(array instanceof Array)) {
+    throw new ArgumentException("Invalid array: " + array);
+  }
   this.pointer = -1;
+  this.obj = array;
 }
 ArraySeq.prototype = Object.create(Iterator.prototype);
 ArraySeq.prototype.reset = function() {
@@ -55,6 +58,17 @@ function logFive(iterator) {
     console.log(curr);
   }
 }
+
+
+
+// extend Error
+function ArgumentException(message) {
+  this.message = message;
+  this.stack = (new Error()).stack;
+}
+ArgumentException.prototype = Object.create(Error.prototype);
+ArgumentException.prototype.name = "ArgumentException";
+
 
 // logFive(new ArraySeq([1, 2]));
 // // → 1
