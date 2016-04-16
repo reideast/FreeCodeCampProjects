@@ -14,8 +14,11 @@ function Iterator() {
 }
 
 function ArraySeq(array) {
-  this.obj = array;
+  if (!(array instanceof Array)) {
+    throw new ArgumentException("Invalid array: " + array);
+  }
   this.pointer = -1;
+  this.obj = array;
 }
 ArraySeq.prototype = Object.create(Iterator.prototype);
 ArraySeq.prototype.reset = function() {
@@ -56,16 +59,27 @@ function logFive(iterator) {
   }
 }
 
-logFive(new ArraySeq([1, 2]));
-// → 1
-// → 2
-logFive(new ArraySeq([1, false, 2]));
-logFive(new ArraySeq([1, null, 2]));
-logFive(new ArraySeq([1, undefined, 2]));
-logFive(new RangeSeq(100, 1000));
-// → 100
-// → 101
-// → 102
-// → 103
-// → 104
-logFive(new RangeSeq(100, 102));
+
+
+// extend Error
+function ArgumentException(message) {
+  this.message = message;
+  this.stack = (new Error()).stack;
+}
+ArgumentException.prototype = Object.create(Error.prototype);
+ArgumentException.prototype.name = "ArgumentException";
+
+
+// logFive(new ArraySeq([1, 2]));
+// // → 1
+// // → 2
+// logFive(new ArraySeq([1, false, 2]));
+// logFive(new ArraySeq([1, null, 2]));
+// logFive(new ArraySeq([1, undefined, 2]));
+// logFive(new RangeSeq(100, 1000));
+// // → 100
+// // → 101
+// // → 102
+// // → 103
+// // → 104
+// logFive(new RangeSeq(100, 102));

@@ -7,3 +7,15 @@ gulpfile.js
 package.json
 .dropbox
 desktop.ini
+EloquentJavascript/jasmine/lib/jasmine-2.4.0/boot.js
+EloquentJavascript/jasmine/spec/PlayerSpec.js
+EloquentJavascript/jasmine/src/Player.js
+EloquentJavascript/jasmine/MIT.LICENSE
+EloquentJavascript/jasmine/lib/jasmine-2.4.0/console.js
+EloquentJavascript/jasmine/lib/jasmine-2.4.0/jasmine.js
+EloquentJavascript/jasmine/lib/jasmine-2.4.0/jasmine_favicon.png
+EloquentJavascript/jasmine/spec/SpecHelper.js
+EloquentJavascript/jasmine/src/Song.js
+EloquentJavascript/jasmine/lib/jasmine-2.4.0/jasmine.css
+EloquentJavascript/jasmine/jasmine.zip
+EloquentJavascript/jasmine/lib/jasmine-2.4.0/jasmine-html.js
