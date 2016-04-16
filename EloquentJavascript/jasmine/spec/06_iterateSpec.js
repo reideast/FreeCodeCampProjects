@@ -17,7 +17,7 @@ describe("ArraySeq", function() {
     var badFunc = function() {new ArraySeq(invalidArray[0])};
     expect(badFunc).toThrowError(ArgumentException);
     // never mind! do it this way, with bind()!
-    expect(ArraySeq.bind(null, invalidArray[0])).toThrow();
+    expect(ArraySeq.bind(undefined, invalidArray[0])).toThrow();
   });
   
   it ("iterates over the contained array, returning the same data", function() {
@@ -25,6 +25,17 @@ describe("ArraySeq", function() {
       var seq = new ArraySeq(testArray[test]);
       for (var i = 0; i < testArray[test].length; ++i) {
         expect(seq.getNext()).toBe(testArray[test][i]);
+      }
+    }
+  });
+  
+  it ("iterates over the contained data, stopping when the array is done", function() {
+    for (var test = 0; test < testArray.length; ++test) {
+      var seq = new ArraySeq(testArray[test]);
+      var i = 0;
+      var curr = undefined;
+      while (curr = seq.getNext()) {
+        expect(curr).toBe(testArray[test][i++]);
       }
     }
   });
