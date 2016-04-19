@@ -45,7 +45,7 @@ function parse(program) {
   return result.expr;
 }
 
-console.log(parse("+(a, 10)"));
+// console.log(parse("+(a, 10)"));
 // → {type: "apply",
 //    operator: {type: "word", name: "+"},
 //    args: [{type: "word", name: "a"},
@@ -167,4 +167,36 @@ run("do(define(pow, fun(base, exp,",
     "   print(pow(2, 10)))");
 // → 1024
 
+// Modify these definitions...
+topEnv["array"] = function(_) {
+  var arr = [];
+  for(var i = 0; i < arguments.length; ++i) {
+    arr.push(arguments[i]);
+  }
+  return arr;
+};
+
+topEnv["length"] = function(arr) {
+  return arr.length;
+};
+
+topEnv["element"] = function(arr, i) {
+  return arr[i];
+};
+
+// NOTE: refactored arugument to function sum() as "arr", not "array"
+// this is to separate it sematically from the Egg language construct "array"
+// Similarly, refactored local variable "sum" as "total", to separate it from the name of the function "sum()"
+// These changes are not necessary for the program to run, of course, but do make it much more readable. This is of great importance when trying to learn a whole new language within the confines of ~10 lines of code.
+run("do(define(sum, fun(arr,",
+    "     do(define(i, 0),",
+    "        define(total, 0),",
+    "        while(<(i, length(arr)),",
+    "          do(define(total, +(total, element(arr, i))),",
+    "             define(i, +(i, 1)))),",
+    "        total))),",
+    "   print(sum(array(1, 2, 3, 4))))");
+// → 6
+
+// console.log(JSON.stringify(parse("do(define(sum, fun(arr,     do(define(i, 0),        define(total, 0),       while(<(i, length(arr)),          do(define(total, +(total, element(arr, i))),             define(i, +(i, 1)))),       total))),  print(sum(array(1, 2, 3))))"), null, 2));
 
