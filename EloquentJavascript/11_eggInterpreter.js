@@ -119,6 +119,23 @@ specialForms["define"] = function(args, env) {
   env[args[0].name] = value;
   return value;
 };
+specialForms["set"] = function(args, env) {
+  // Your code here.
+  if (args.length != 2 || args[0].type != "word")
+    throw new SyntaxError("Bad use of set");
+  
+  var currEnv = env;
+  do {
+    // console.log("looking for \"" + args[0].name + "\" within " + JSON.stringify(currEnv, null, 2));
+    if (Object.prototype.hasOwnProperty.call(currEnv, args[0].name)) {
+      var value = evaluate(args[1], env);
+      currEnv[args[0].name] = value;
+      return value;
+    }
+  } while ((currEnv = Object.getPrototypeOf(currEnv)) !== null);
+  
+  throw new ReferenceError("Could not set " + args[0].name);
+};
 specialForms["fun"] = function(args, env) {
   if (!args.length)
     throw new SyntaxError("Functions need a body");
@@ -216,3 +233,12 @@ console.log(parse("a # one\n   # two\n()"));
 // → {type: "apply",
 //    operator: {type: "word", name: "a"},
 //    args: []}
+
+
+run("do(define(x, 4),",
+    "   define(setx, fun(val, set(x, val))),",
+    "   setx(50),",
+    "   print(x))");
+// → 50
+// run("set(quux, true)");
+// → Some kind of ReferenceError
