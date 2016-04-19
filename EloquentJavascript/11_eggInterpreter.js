@@ -13,10 +13,18 @@ function parseExpression(program) {
   return parseApply(expr, program.slice(match[0].length));
 }
 
+//modified skipSpace to ignore comments starting with "#"" up to a "\n" newline
 function skipSpace(string) {
-  var first = string.search(/\S/);
-  if (first == -1) return "";
-  return string.slice(first);
+  while (1) {
+    var first = string.search(/\S/);
+    if (first == -1) return "";
+    if (string[first] === "#") {
+      var newline = string.search("\n");
+      string = string.slice(newline + 1); //ok to go one past a match, since String.prototype.slice() is smart about indicies out-of-bounds
+    } else {
+      return string.slice(first);
+    }
+  }
 }
 
 function parseApply(expr, program) {
@@ -189,6 +197,7 @@ topEnv["element"] = function(arr, i) {
 // Similarly, refactored local variable "sum" as "total", to separate it from the name of the function "sum()"
 // These changes are not necessary for the program to run, of course, but do make it much more readable. This is of great importance when trying to learn a whole new language within the confines of ~10 lines of code.
 run("do(define(sum, fun(arr,",
+    "     # sum(array): takes an array and returns all elements with the +() operator applied",
     "     do(define(i, 0),",
     "        define(total, 0),",
     "        while(<(i, length(arr)),",
@@ -200,3 +209,10 @@ run("do(define(sum, fun(arr,",
 
 // console.log(JSON.stringify(parse("do(define(sum, fun(arr,     do(define(i, 0),        define(total, 0),       while(<(i, length(arr)),          do(define(total, +(total, element(arr, i))),             define(i, +(i, 1)))),       total))),  print(sum(array(1, 2, 3))))"), null, 2));
 
+//testing comments
+console.log(parse("# hello\nx"));
+// → {type: "word", name: "x"}
+console.log(parse("a # one\n   # two\n()"));
+// → {type: "apply",
+//    operator: {type: "word", name: "a"},
+//    args: []}
