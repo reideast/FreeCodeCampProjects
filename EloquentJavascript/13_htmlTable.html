@@ -1,0 +1,92 @@
+<body>
+  <h1>Table from JavaScript</h1>
+</body>
+
+<style>
+  /* Defines a cleaner look for tables */
+  table  { border-collapse: collapse; }
+  td, th { border: 1px solid black; padding: 3px 8px; }
+  th     { text-align: left; }
+</style>
+<script>
+var MOUNTAINS = [
+  {name: "Kilimanjaro", height: 5895, country: "Tanzania"},
+  {name: "Everest", height: 8848, country: "Nepal"},
+  {name: "Mount Fuji", height: 3776, country: "Japan"},
+  {name: "Mont Blanc", height: 4808, country: "Italy/France"},
+  {name: "Vaalserberg", height: 323, country: "Netherlands"},
+  {name: "Denali", height: 6168, country: "United States"},
+  {name: "Popocatepetl", height: 5465, country: "Mexico"}
+];
+
+document.body.appendChild(buildTable(dataTable(MOUNTAINS)));
+
+function buildTable(table) {
+  var tableNode = document.createElement("table");
+  var headerRow = document.createElement("tr");
+  table.headers.map(function(name) {
+    var cell = document.createElement("th");
+    var text = document.createTextNode(toTitleCase(name));
+    cell.appendChild(text);
+    headerRow.appendChild(cell);
+  });
+  tableNode.appendChild(document.createElement("thead").appendChild(headerRow));
+  
+  var tbody = document.createElement("tbody");
+  table.body.map(function(row) {
+    var tr = document.createElement("tr");
+    row.map(function(item) {
+      var cell = document.createElement("td");
+      if (typeof item === "number") cell.style.textAlign = "right";
+      cell.appendChild(document.createTextNode(item));
+      tr.appendChild(cell);
+    });
+    tbody.appendChild(tr);
+  });
+  tableNode.appendChild(tbody);
+  //if (typeof value == "number")
+  return tableNode;
+}
+
+function toTitleCase(str) {
+  return str.split(" ").map(function(item) {
+    switch (item) {
+      case "a":
+      case "an":
+      case "the":
+      case "and":
+      case "or":
+      case "but":
+      case "nor":
+      case "for":
+      case "of":
+      case "as":
+      case "at":
+      case "by":
+      case "in":
+      case "on":
+      case "to":
+      case "up":
+        return item;
+      default:
+        return item.slice(0,1).toUpperCase() + item.slice(1).toLowerCase(); 
+    }
+  }).join(" ");
+}
+
+// adapted function from Chapter 06
+function dataTable(data) {
+  var table = {};
+  var keys = Object.keys(data[0]);
+  table.headers = keys.map(function(name) {
+    return name;
+  });
+  table.body = data.map(function(row) {
+    return keys.map(function(name) {
+      return row[name];
+    });
+  });
+  return table;
+}
+
+</script>
