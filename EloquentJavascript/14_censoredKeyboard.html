@@ -1,0 +1,13 @@
+<input type="text">
+<script>
+  var field = document.querySelector("input");
+  // Your code here.
+  field.addEventListener("keypress", function(event) {
+    //113, 119, 120, 81, 87, 88
+    switch (event.charCode) {
+      case 81: case 87: case 88: case 113: case 119: case 120:
+        console.log("Censored character \"" + String.fromCharCode(event.charCode) + "\"");
+        event.preventDefault(); 
+    }
+  });
+</script>

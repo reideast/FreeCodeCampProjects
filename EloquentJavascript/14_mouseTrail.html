@@ -1,0 +1,59 @@
+<body>
+  <h1>Sparkles!</h1>
+</body>
+
+<style>
+  .trail { /* className for the trail elements */
+    position: absolute;
+    height: 6px; width: 6px;
+    border-radius: 3px;
+    background: teal;
+  }
+  body {
+    height: 300px;
+  }
+</style>
+
+<script>
+  // Your code here.
+  var max = 20;
+  var msUntilCollapse = 100, timeoutCollapse;
+  
+  var curr = 0;
+  var coordHist = []
+  var sparkles = [];
+  for (var i = 0; i < max; ++i) {
+    coordHist[i] = {x: 0, y: 0};
+    sparkles[i] = document.createElement("div");
+    sparkles[i].className = "trail";
+    sparkles[i].style.left = 0;
+    sparkles[i].style.top = 0;
+    sparkles[i].style.display = "none";
+    document.body.appendChild(sparkles[i]);
+  }
+  addEventListener("mousemove", function(event) {
+    sparkles[curr].style.left = (coordHist[curr].x - 3) + "px";
+    sparkles[curr].style.top = (coordHist[curr].y - 3) + "px";
+    sparkles[curr].style.display = "initial";
+    sparkles[curr].style.background = "blue";
+    sparkles[(curr + 19) % max].style.background = "teal";
+    curr = (curr + 1) % max;
+    coordHist[curr].x = event.pageX;
+    coordHist[curr].y = event.pageY;
+    
+    clearTimeout(timeoutCollapse);
+    timeoutCollapse = setTimeout(function() {
+      disappearSequence(curr, (curr + 19) % max, 5);
+      
+      function disappearSequence(current, final, delay) {
+        sparkles[current].style.display = "none";
+        current = (current + 1) % max;
+        if (current != final) {
+          setTimeout(function() {
+            disappearSequence(current, final, delay * 1.15);
+          }, delay);
+        }
+      }
+    }, msUntilCollapse);
+  });
+</script>
