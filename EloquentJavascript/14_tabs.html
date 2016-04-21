@@ -1,0 +1,28 @@
+<div id="tabWrapper">
+  <div data-tabname="one">Tab one</div>
+  <div data-tabname="two">Tab two</div>
+  <div data-tabname="three">Tab three</div>
+</div>
+<script>
+  function asTabs(node) {
+    // Your code here.
+    // var children = Array.prototype.slice.call(node.childNodes, 0);
+    var children = Array.prototype.filter.call(node.childNodes, function(item) {
+      return item.nodeType === document.ELEMENT_NODE;
+    });
+    var firstItem = node.firstChild;
+    children.forEach(function(child) {
+        console.log("found a node! " + child.getAttribute("data-tabname"))
+        var button = document.createElement("button");
+        button.innerHTML = child.getAttribute("data-tabname");
+        button.addEventListener("click", function(event) {
+          children.forEach(function(item) { item.style.display = "none"; });
+          child.style.display = "block";
+        });
+        node.insertBefore(button, firstItem);
+        child.style.display = "none";
+    });
+    children[0].style.display = "block";
+  }
+  asTabs(document.querySelector("#tabWrapper"));
+</script>
