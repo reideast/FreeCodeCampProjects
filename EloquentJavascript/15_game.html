@@ -6,9 +6,24 @@
 
 <script src="15_Level.js"></script>
 <script src="15_DOMDisplay.js"></script>
+<script src="15_GAME_LEVELS.js"></script>
+<script src="15_Game.js"></script>
 <script>
-  var simpleLevel = new Level(simpleLevelPlan);
-  var display = new DOMDisplay(document.body, simpleLevel);
+  // var simpleLevelPlan = [
+  //   "                      ",
+  //   "                      ",
+  //   "  x              = x  ",
+  //   "  x         o o    x  ",
+  //   "  x @      xxxxx   x  ",
+  //   "  xxxxx            x  ",
+  //   "      x!!!!!!!!!!!!x  ",
+  //   "      xxxxxxxxxxxxxx  ",
+  //   "                      "
+  // ];
+  // var simpleLevel = new Level(simpleLevelPlan);
+  // var display = new DOMDisplay(document.body, simpleLevel);
+  
+  runGame(GAME_LEVELS, DOMDisplay);
 </script>
 </body>
 </html>

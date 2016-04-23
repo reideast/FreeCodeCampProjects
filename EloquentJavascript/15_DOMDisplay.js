@@ -1,5 +1,6 @@
 var scale = 25;
 
+
 function DOMDisplay(parent, level) {
   console.log("Interfacing with DOM to implement level");
   this.wrap = parent.appendChild(elt("div", "game"));
