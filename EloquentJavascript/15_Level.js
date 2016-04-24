@@ -4,7 +4,7 @@ var playerXSpeed = 7;
 var playerJumpSpeed = 17;
 var gravity = 30;
 var coinWobbleSpeed = 8, coinWobbleDist = 0.07;
-var maxAnimationStep = 0.05;
+var maxAnimationStep = 0.05; // units in seconds
 
 // Level: a game room built from a text plan
 function Level(plan) {
@@ -79,7 +79,11 @@ Level.prototype.actorAt = function(actor) {
   }
 };
 Level.prototype.playerTouched = function(actor) {
-  type = actor.type;
+  var type;
+  if (actor.type)
+    type = actor.type;
+  else
+    type = actor;
   if (type === "lava" && this.status === null) {
     this.status = "lost";
     this.finishDelay = 1;
@@ -88,7 +92,7 @@ Level.prototype.playerTouched = function(actor) {
       return other != actor;
     });
     if (!this.actors.some(function(other) {
-      return actor.type === "coin"; 
+      return other.type === "coin";
     })) {
       this.status = "won";
       this.finishDelay = 1;
@@ -132,6 +136,7 @@ Vector.prototype.times = function(factor) {
   return new Vector(this.x * factor, this.y * factor);
 };
 
+// Actors:
 function Player(pos) {
   this.pos = pos.plus(new Vector(0, -0.5)); //moved up 1/2 square because character is 1.5 squares tall
   this.size = new Vector(0.8, 1.5);
@@ -173,7 +178,7 @@ Player.prototype.moveY = function(step, level, keys) {
   var obstacle = level.obstacleAt(newPos, this.size);
   if (obstacle) {
     level.playerTouched(obstacle);
-    if (keys.up && this.speed.y > 0) //jump only if touching something below us (gravity always pulling down, so even resting on the ground is pushing down)
+    if ((keys.up || keys.space) && this.speed.y > 0) //jump only if touching something below us (gravity always pulling down, so even resting on the ground is pushing down)
       this.speed.y = -playerJumpSpeed; //ignore acceleration due to gravity, and jump upward
     else
       this.speed.y = 0; //cancel downward acceleration gained due to gravity

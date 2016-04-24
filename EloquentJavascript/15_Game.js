@@ -13,12 +13,13 @@ function runGame(plans, Display) {
   startLevel(0);
 }
 
-var arrowCodes = {37: "left", 38: "up", 39: "right"};
+var arrowCodes = {37: "left", 38: "up", 39: "right", 32: "space"};
 var arrows = trackKeys(arrowCodes);
 
 function trackKeys(codes) {
   var pressed = Object.create(null);
   function handler(event) {
+    // console.log(event.keyCode);
     if (codes.hasOwnProperty(event.keyCode)) {
       var down = (event.type == "keydown");
       pressed[codes[event.keyCode]] = down;
@@ -35,8 +36,9 @@ function runAnimation(frameFunc) {
   function frame(time) {
     var stop = false;
     if (lastTime !== null) {
-      var timeStep = Math.min(time - lastTime, 100) / 1000;
-      stop = (frameFunc(timeStep) === false);
+      var timeStep = Math.min(time - lastTime, 100) / 1000; //only animate ONE second of frames, maximum
+      //also, convert milliseconds to full seconds, which level.animate(step, ) will use
+      stop = (frameFunc(timeStep) === false); // execute level.animate()! (and get boolean status back to quit)
     }
     lastTime = time;
     if (!stop)
