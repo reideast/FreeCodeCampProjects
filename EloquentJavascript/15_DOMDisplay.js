@@ -1,5 +1,4 @@
-var scale = 25;
-
+var scale = 25; // 1 : scale = Vector units : Pixels
 
 function DOMDisplay(parent, level) {
   console.log("Interfacing with DOM to implement level");
@@ -37,7 +36,7 @@ DOMDisplay.prototype.drawFrame = function() {
   if (this.actorLayer)
     this.wrap.removeChild(this.actorLayer);
   this.actorLayer = this.wrap.appendChild(this.drawActors());
-  this.wrap.classNameName = "game " + (this.level.status || "");
+  this.wrap.className = "game " + (this.level.status || "");
   this.scrollPlayerIntoView();
 };
 DOMDisplay.prototype.scrollPlayerIntoView = function() {
