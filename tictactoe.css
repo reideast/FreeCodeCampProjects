@@ -1,4 +1,47 @@
+#board {
+  max-width: 600px; }
+
+.space {
+  font-size: 40px;
+  line-height: 1;
+  font-weight: bold;
+  text-align: center; }
+  .space > * {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%); }
+
+#board .row, #board .col-xs-4 {
+  margin: 0;
+  padding: 0; }
+
+#board > div > div:first-child {
+  border-right: 15px solid black; }
+
+#board > div > div:nth-child(2) {
+  border-right: 15px solid black; }
+
+#board > div > div:last-child {
+  border-right: 15px solid white; }
+
+#board > div:first-child {
+  border-bottom: 15px solid black; }
+
+#board > div:last-child {
+  border-top: 15px solid black; }
+
 #debug {
-	font-family: monospace;
-	font-size: 2em;
-}
+  font-family: monospace;
+  font-size: 2em; }
+
+.squareDummy {
+  margin-top: 100%; }
+
+.squareContent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 100%; }

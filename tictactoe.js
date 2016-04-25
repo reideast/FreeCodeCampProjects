@@ -1,10 +1,18 @@
 $(document).ready(function() {
+  $(".space").addClass("squareContent").before('<div class="squareDummy"></div>');
+  $(window).resize(syncFontSize); 
+  syncFontSize();
+  
 	var board = new Board();
 	board.setSpace(2, true);
 	board.setSpace(4, false);
 	board.setSpace(5, true);
 	board.showDebug();
 });
+
+function syncFontSize() {
+  $(".space>span").css("font-size", ($(".space").height() * 0.85) + "px");
+}
 
 function Board() {
 	var board = [0,0,0, 0,0,0, 0,0,0]; // 0 for blank, 1 for computer, -3 for player
