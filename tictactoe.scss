@@ -1,11 +1,28 @@
+$colorBlack: #2e000a;
+// $colorBlack: #900020;
+$colorLight: #0084b7;
+// $colorLight: #006890;
 $borderWidth: 15px;
-$borderStyle: $borderWidth solid black;
+$borderStyle: $borderWidth solid $colorBlack;
+
+#status {
+	text-align: center;
+	color: $colorBlack;
+	font-size: 26px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
 
 #board {
 	max-width: 600px;
+	background-color: $colorLight;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	border-radius: 15px;
 }
 
 .space {
+	color: $colorBlack;
 	font-size: 40px;
 	line-height: 1;
 	font-weight: bold;
@@ -30,7 +47,7 @@ $borderStyle: $borderWidth solid black;
 	border-right: $borderStyle;
 }
 #board>div>div:last-child {
-	border-right: $borderWidth solid white;
+	border-right: $borderWidth solid $colorLight;
 }
 
 #board>div:first-child {
