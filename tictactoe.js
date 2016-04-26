@@ -1,32 +1,30 @@
-var board = new Board();
-
-
 $(document).ready(function() {
+	// add CSS to each .square to make it a dynamically-resizing square
   $(".space").addClass("squareContent").before('<div class="squareDummy"></div>');
-  $(".space").on("click", spaceClicked);
+	
+	// fit X/O into squares
   $(window).on("resize", syncFontSize); 
-  
-	board.showDebug();
   syncFontSize();
+  
+	// start a game, which will recursively call itself
+	playGame(true);
 });
 function syncFontSize() {
   $(".space>span").css("font-size", ($(".space").height() * 0.85) + "px");
 }
 
-function playGame() {
-	var isPlayerX = false;
-	while (1) {
-		var game = newGame(isPlayerX = !isPlayerX);
-		do {
-			game.turn();
-			//TODO: need to async wait for event, so a loop won't work, will it??
-		} while (game.status().isPlayable);
-	}
+
+function playGame(isPlayerX) {
+	var game = new Game(isPlayerX, playGame);
+	// if (game.status().isPlayable)
 }
 
-function Game(isPlayerX) {
+function Game(isPlayerX, callback) {
 	var isCompO = isPlayerX;
-	var isWaitingForPlay = false;
+	var postGameFunction = callback;
+	
+	var board = new Board();
+	var isWaitingForPlayer = false;
 	var statusMessages = {
 		playX: 'Play an <span class="fa fa-times"></span>',
 		playO: 'Play an <span class="fa fa-circle-o"></span>',
@@ -34,6 +32,9 @@ function Game(isPlayerX) {
 		playerWon: 'You have won!',
 		catsGame: "Cat's game..."
 	};
+	
+  $(".space").on("click", spaceClicked);
+	board.showDebug();
 	
 	this.turn = function() {
 		if (isCompO) {
@@ -176,7 +177,7 @@ function Board() {
 			compWon: false,
 			winningSpaces: []
 		};
-		var countWinableRows = 8; // enumerate rows with at least one X and one O in it, to determine if it's Cat's Game
+		var winableRows = 8; // enumerate rows with at least one X and one O in it, to determine if it's Cat's Game
 		for (var i = 0; i < this.totals; ++i) {
 			if (this.totals[i] == 3) {
 				//computer win
@@ -189,10 +190,10 @@ function Board() {
 				returnData.humanWon = true;
 				returnData.winningSpaces = rowToSpaces(i);
 			} else if (this.totals[i] == -2 || this.totals[i] == -5 || this.totals[i] == -1) {
-				--countWinableRows;
+				--winableRows;
 			}
 		}
-		if (countWinableRows == 0) {
+		if (winableRows == 0) {
 			returnData.isPlayable = false;
 			returnData.isCatsGame = true;
 		}
@@ -201,13 +202,39 @@ function Board() {
 	
 	// returns what the computer should do next
 	this.compNextMove = function() {
-		var bestTotal = this.totals.reduce(function(max, curr) {
+		// look for rows that need to be blocked
+		totals.forEach(function(item, row) {
+			if (item === -6)
+				rowToSpaces(row).forEach(function(space) {
+					if (board[space] === 0) // if empty
+						return space; // gotta block it now!
+				});
+		}); 
+		
+		// find which rows hae the best total
+		var bestTotal = totals.reduce(function(max, curr) {
 			return Math.max(max, curr);
 		}, 0);
 		console.log("compNextMove: bestTotal: " + bestTotal);
-		var bestMoves = [];
+		var bestRows = [];
+		var bestMoves= [];
+		totals.forEach(function(item, row) {
+			if (item === bestTotal)
+				bestRows.push(row);
+				rowToSpaces(row).forEach(function(space) {
+					if (board[space] === 0)
+						bestMoves.push(space);
+				});
+		});
 		
-		var bestSpace;
+		// assert
+		if (bestMoves.length === 0) {
+			throw new Error("There were no open spaces in any of the row #'s (" + bestRows + ") with the best totals (" + bestTotal + ").");
+		}
+		
+		// choose a random space from those selected
+		// because spaces that could win multiple rows show up more often in the array, they will be more likely to be chosen, but not perfectly
+		var bestSpace = bestMoves[Math.random() * bestMoves.length];
 		return bestSpace;
 	};
 }
