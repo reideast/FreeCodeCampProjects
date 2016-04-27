@@ -65,7 +65,7 @@ function Game(isComputerFirst, callback) {
 		}
 	}
 	function computerTurn() {
-		var space = board.compNextMove();
+		var space = board.computerNextMove();
 		if (board.isEmpty(space)) {
 			board.setComp(space);
 			syncBoard();
@@ -95,22 +95,27 @@ function Game(isComputerFirst, callback) {
 	
 	function gameOver(status) {
 		var message = "";
-		if (status.isCatsGame)
+		if (status.isCatsGame) {
+			$(".space").each(function() {
+				this.firstChild.className = this.firstChild.className + " catsGame";
+			});
 			message = "catsGame";
-		else if (status.humanWon)
-			message = "playerWon";
-		else if (status.compWon)
-			message = "compWon";
+		} else { // someone is a winner
+			if (status.winningSpaces.length > 0) {
+				$(".space").each(function() {
+					status.winningSpaces.forEach(function(item) {
+						if (item == this.dataset.space)
+							this.firstChild.className = this.firstChild.className + " winner";
+					}, this);
+				});
+			}
+			if (status.humanWon)
+				message = "playerWon";
+			else if (status.compWon)
+				message = "compWon";
+		}
 		$("#status").html(statusMessages[message]);
 		$("#clickToContinue").show();
-		if (status.winningSpaces.length > 0) {
-			$(".space").each(function() {
-				status.winningSpaces.forEach(function(item) {
-					if (item == this.dataset.space)
-						this.firstChild.className = this.firstChild.className + " winner";
-				}, this);
-			});
-		}
 		
 		$(".space").off("click").on("click", function() {
 			$(".space").each(function() {
@@ -161,7 +166,7 @@ function Board() {
 	}
 	
 	this.showDebug = function() {
-		var output = "";
+		var output = "Debug:<br>";
 		var i = 0;
 		for (var row = 0; row < 3; ++row) {
 			output += "&nbsp;&nbsp;";
@@ -253,12 +258,13 @@ function Board() {
 		return returnData;
 	};
 	
-	// returns what the computer should do next
-	this.compNextMove = function() {
-		// look for rows to win!
+	// use totals[] to have the board advise what the computer should do next
+	this.computerNextMove = function() {
+		// look through all the rows to find one that can win!
 		for (var i = 0; i < totals.length; ++i) {
-			if (totals[i] == 2) {
-				console.log("A row to WIN! row: " + i);
+			if (totals[i] == 2) { // 2 = 1 + 1 ie. two-in-a-row
+				console.log("Found a row to WIN! row#: " + i);
+				// look through row to find the empty space
 				var rowSpaces = rowToSpaces(i);
 				for (var j = 0; j < rowSpaces.length; ++j) {
 					if (board[rowSpaces[j]] == 0) { // if empty
@@ -268,10 +274,11 @@ function Board() {
 			}
 		}
 		
-		// look for rows that need to be blocked
+		// look for a row that need to be blocked
 		for (var i = 0; i < totals.length; ++i) {
-			if (totals[i] == -6) {
-				console.log("Found one to block!! row: " + i);
+			if (totals[i] == -6) { // -6 = -3 + -3
+				console.log("Found a row to block!! row#: " + i);
+				// look through row to find the empty space
 				var rowSpaces = rowToSpaces(i);
 				for (var j = 0; j < rowSpaces.length; ++j) {
 					if (board[rowSpaces[j]] == 0) { // if empty
@@ -281,19 +288,20 @@ function Board() {
 			}
 		}
 		
-		// find which rows hae the best total, starting below the worst possible total, -9
+		// find the highest total, which will be the smartest rows to play
+		//   start with max at the worst possible total, -9
 		var bestTotal = totals.reduce(function(max, curr) {
 			return Math.max(max, curr);
-		}, -10);
-		console.log("compNextMove: bestTotal: " + bestTotal);
-		var bestRows = [];
+		}, -9);
+		console.log("computerNextMove: bestTotal: " + bestTotal);
+		var bestRows = []; // bestRows is still here just for debug
 		var bestMoves= [];
 		totals.forEach(function(item, row) {
-			if (item === bestTotal) {
+			if (item == bestTotal) {
 				bestRows.push(row);
 				rowToSpaces(row).forEach(function(space) {
-					if (board[space] === 0)
-						bestMoves.push(space);
+					if (board[space] == 0)
+						bestMoves.push(space); // push duplicates, making them more likely to be chosen
 				});
 			}
 		});
@@ -305,7 +313,8 @@ function Board() {
 		}
 	
 		// choose a random space from those selected
-		// because spaces that could win multiple rows show up more often in the array, they will be more likely to be chosen, but not perfectly
+		// because spaces that could win multiple rows show up more often in the array, they will be more likely to be chosen
+		//   the computer could choose these duplicates 100% of the time, but I didn't want it to be entirely that smart
 		var bestSpace = bestMoves[Math.floor(Math.random() * bestMoves.length)];
 		return bestSpace;
 	};
