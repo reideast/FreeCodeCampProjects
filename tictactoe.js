@@ -14,17 +14,18 @@ function syncFontSize() {
 }
 
 
-function playGame(isPlayerX) {
-	var game = new Game(isPlayerX, playGame);
+function playGame(isComputerFirst) {
+	var game = new Game(isComputerFirst, function() {
+		playGame(!isComputerFirst);
+	});
 	// if (game.status().isPlayable)
 }
 
-function Game(isPlayerX, callback) {
-	var isCompO = isPlayerX;
-	var postGameFunction = callback;
+function Game(isComputerFirst, callback) {
+	// var isComputerFirst = isComputerFirst;
+	// var postGameFunction = callback;
 	
 	var board = new Board();
-	var isWaitingForPlayer = false;
 	var statusMessages = {
 		playX: 'Play an <span class="fa fa-times"></span>',
 		playO: 'Play an <span class="fa fa-circle-o"></span>',
@@ -33,45 +34,97 @@ function Game(isPlayerX, callback) {
 		catsGame: "Cat's game..."
 	};
 	
-  $(".space").on("click", spaceClicked);
-	board.showDebug();
+	// remove all click event handlers from the squares
+	$(".space").off("click");
 	
-	this.turn = function() {
-		if (isCompO) {
-			compTurn();
-			playerTurn();
+	// let computer go first if O's
+	if (isComputerFirst) {
+		computerTurn();
+	}
+	$("#status").html(statusMessages.playX);
+  $(".space").on("click", spaceClickEvent);
+	
+	function spaceClickEvent() {
+		var space = $(this).data("space");
+		// console.log("Clicked #" + space);
+		if (board.isEmpty(space))
+			humanTurn(space);
+	}
+	function humanTurn(space) {
+		if (board.isEmpty(space)) {
+			board.setPlayer(space);
+			syncBoard();
+			var status = board.status();
+			if (status.isPlayable) {
+				computerTurn();
+			} else {
+				gameOver(status);
+			}
 		} else {
-			playerTurn();
-			compTurn();
+			throw new Error("ComputerTurn tried to play in a filled space.");
 		}
+	}
+	function computerTurn() {
+		var space = board.compNextMove();
+		if (board.isEmpty(space)) {
+			board.setComp(space);
+			syncBoard();
+			var status = board.status();
+			if (!status.isPlayable) {
+				gameOver(status);
+			}
+		} else {
+			throw new Error("ComputerTurn tried to play in a filled space.");
+		}
+	}
+	
+	function syncBoard() {
+		$(".space").each(function(i) {
+			var val = board.getSpace(this.dataset.space);
+			var className;
+			if (val == 0)
+				className = "";
+			else if (val == -1)
+				className = "fa fa-times";
+			else if (val == 1)
+				className = "fa fa-circle-o";
+			this.firstChild.className = className;
+		});
+		board.showDebug();
+	}
+	
+	function gameOver(status) {
+		var message = "";
+		if (status.isCatsGame)
+			message = "catsGame";
+		else if (status.humanWon)
+			message = "playerWon";
+		else if (status.compWon)
+			message = "compWon";
+		$("#status").html(statusMessages[message]);
+		$("#clickToContinue").show();
+		if (status.winningSpaces.length > 0) {
+			$(".space").each(function() {
+				status.winningSpaces.forEach(function(item) {
+					if (item == this.dataset.space)
+						this.firstChild.className = this.firstChild.className + " winner";
+				}, this);
+			});
+		}
+		
+		$(".space").off("click").on("click", function() {
+			$(".space").each(function() {
+				this.firstChild.className = "";
+			});
+			$("#clickToContinue").hide();
+			callback();
+		});
 	}
 }
 
-function spaceClicked() {
-  var space = $(this).data("space");
-  // console.log("Clicked #" + space);
-  if (board.isEmpty(space))
-    board.setPlayer(space);
-  else if (board.getSpace(space) == -1)
-    board.setComp(space);
-  else
-    board.clearSpace(space);
-  syncBoard();
-	board.showDebug();
-}
-function syncBoard() {
-  $(".space").each(function(i) {
-    var val = board.getSpace(this.dataset.space);
-    var className;
-    if (val == 0)
-      className = "";
-    else if (val == -1)
-      className = "fa fa-times";
-    else if (val == 1)
-      className = "fa fa-circle-o";
-    this.firstChild.className = className;
-  });
-}
+
+
+
 
 function Board() {
   // idea for this tic-tac-toe logic:
@@ -178,18 +231,18 @@ function Board() {
 			winningSpaces: []
 		};
 		var winableRows = 8; // enumerate rows with at least one X and one O in it, to determine if it's Cat's Game
-		for (var i = 0; i < this.totals; ++i) {
-			if (this.totals[i] == 3) {
+		for (var i = 0; i < totals.length; ++i) {
+			if (totals[i] == 3) {
 				//computer win
 				returnData.isPlayable = false;
 				returnData.compWon = true;
-				returnData.winningSpaces = rowToSpaces(i);
-			} else if (this.totals[i] == -9) {
+				returnData.winningSpaces = returnData.winningSpaces.concat(rowToSpaces(i));
+			} else if (totals[i] == -9) {
 				//human win
 				returnData.isPlayable = false;
 				returnData.humanWon = true;
-				returnData.winningSpaces = rowToSpaces(i);
-			} else if (this.totals[i] == -2 || this.totals[i] == -5 || this.totals[i] == -1) {
+				returnData.winningSpaces = returnData.winningSpaces.concat(rowToSpaces(i));
+			} else if (totals[i] == -2 || totals[i] == -5 || totals[i] == -1) { //unwinable totals
 				--winableRows;
 			}
 		}
@@ -202,39 +255,58 @@ function Board() {
 	
 	// returns what the computer should do next
 	this.compNextMove = function() {
-		// look for rows that need to be blocked
-		totals.forEach(function(item, row) {
-			if (item === -6)
-				rowToSpaces(row).forEach(function(space) {
-					if (board[space] === 0) // if empty
-						return space; // gotta block it now!
-				});
-		}); 
+		// look for rows to win!
+		for (var i = 0; i < totals.length; ++i) {
+			if (totals[i] == 2) {
+				console.log("A row to WIN! row: " + i);
+				var rowSpaces = rowToSpaces(i);
+				for (var j = 0; j < rowSpaces.length; ++j) {
+					if (board[rowSpaces[j]] == 0) { // if empty
+						return rowSpaces[j]; // return immediately FTW
+					}
+				}
+			}
+		}
 		
-		// find which rows hae the best total
+		// look for rows that need to be blocked
+		for (var i = 0; i < totals.length; ++i) {
+			if (totals[i] == -6) {
+				console.log("Found one to block!! row: " + i);
+				var rowSpaces = rowToSpaces(i);
+				for (var j = 0; j < rowSpaces.length; ++j) {
+					if (board[rowSpaces[j]] == 0) { // if empty
+						return rowSpaces[j]; // gotta block it now!
+					}
+				}
+			}
+		}
+		
+		// find which rows hae the best total, starting below the worst possible total, -9
 		var bestTotal = totals.reduce(function(max, curr) {
 			return Math.max(max, curr);
-		}, 0);
+		}, -10);
 		console.log("compNextMove: bestTotal: " + bestTotal);
 		var bestRows = [];
 		var bestMoves= [];
 		totals.forEach(function(item, row) {
-			if (item === bestTotal)
+			if (item === bestTotal) {
 				bestRows.push(row);
 				rowToSpaces(row).forEach(function(space) {
 					if (board[space] === 0)
 						bestMoves.push(space);
 				});
+			}
 		});
+		console.log("bestRows: " + bestRows + " bestMoves: " + bestMoves);
 		
 		// assert
 		if (bestMoves.length === 0) {
 			throw new Error("There were no open spaces in any of the row #'s (" + bestRows + ") with the best totals (" + bestTotal + ").");
 		}
-		
+	
 		// choose a random space from those selected
 		// because spaces that could win multiple rows show up more often in the array, they will be more likely to be chosen, but not perfectly
-		var bestSpace = bestMoves[Math.random() * bestMoves.length];
+		var bestSpace = bestMoves[Math.floor(Math.random() * bestMoves.length)];
 		return bestSpace;
 	};
 }

@@ -5,12 +5,15 @@ $colorLight: #0084b7;
 $borderWidth: 15px;
 $borderStyle: $borderWidth solid $colorBlack;
 
-#status {
+#status, #clickToContinue {
 	text-align: center;
 	color: $colorBlack;
 	font-size: 26px;
 	padding-top: 10px;
 	padding-bottom: 10px;
+}
+#clickToContinue {
+	display: none;
 }
 
 #board {
@@ -33,6 +36,10 @@ $borderStyle: $borderWidth solid $colorBlack;
 		top: 50%;
 		transform: translateY(-50%);
 	}
+}
+
+.winner {
+	color: white;
 }
 
 #board .row, #board .col-xs-4 {
