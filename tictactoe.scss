@@ -1,7 +1,14 @@
+@import url(https://fonts.googleapis.com/css?family=Francois+One);
+body {
+	font-family: "Francois One";
+}
+
 $colorBlack: #2e000a;
 // $colorBlack: #900020;
 $colorLight: #0084b7;
 // $colorLight: #006890;
+$colorWin: white;
+$colorCatsGame: #532D35;
 $borderWidth: 15px;
 $borderStyle: $borderWidth solid $colorBlack;
 
@@ -17,7 +24,7 @@ $borderStyle: $borderWidth solid $colorBlack;
 }
 
 #board {
-	max-width: 600px;
+	max-width: 500px;
 	background-color: $colorLight;
 	padding-top: 15px;
 	padding-bottom: 15px;
@@ -39,7 +46,10 @@ $borderStyle: $borderWidth solid $colorBlack;
 }
 
 .winner {
-	color: white;
+	color: $colorWin;
+}
+.catsGame {
+	color: $colorCatsGame;
 }
 
 #board .row, #board .col-xs-4 {
