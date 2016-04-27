@@ -1,0 +1,102 @@
+@import url(https://fonts.googleapis.com/css?family=Francois+One);
+body {
+	font-family: "Francois One";
+}
+
+$colorBlack: #2e000a;
+// $colorBlack: #900020;
+$colorLight: #0084b7;
+// $colorLight: #006890;
+$colorWin: white;
+$colorCatsGame: #532D35;
+$borderWidth: 15px;
+$borderStyle: $borderWidth solid $colorBlack;
+
+#status, #clickToContinue {
+	text-align: center;
+	color: $colorBlack;
+	font-size: 26px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+#clickToContinue {
+	display: none;
+}
+
+#board {
+	max-width: 500px;
+	background-color: $colorLight;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	border-radius: 15px;
+}
+
+.space {
+	color: $colorBlack;
+	font-size: 40px;
+	line-height: 1;
+	font-weight: bold;
+	text-align: center;
+	
+	> * {
+		position: relative;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+}
+
+.winner {
+	color: $colorWin;
+}
+.catsGame {
+	color: $colorCatsGame;
+}
+
+#board .row, #board .col-xs-4 {
+	margin: 0;
+	padding: 0;
+}
+
+#board>div>div:first-child {
+	border-right: $borderStyle;
+}
+#board>div>div:nth-child(2) {
+	border-right: $borderStyle;
+}
+#board>div>div:last-child {
+	border-right: $borderWidth solid $colorLight;
+}
+
+#board>div:first-child {
+  border-bottom: $borderStyle;
+}
+#board>div:last-child {
+	border-top: $borderStyle;
+}
+
+#debug {
+	font-family: monospace;
+	font-size: 2em;
+}
+
+
+// use this style to set the height of .squareContent equal to the width of the container:
+// <div class="col-xs-4">
+//   <div class="squareDummy"></div>
+//   <div class="squareContent boxesToBeSquare">
+//     ...content...
+//   </div>
+// </div>
+// add with jQuery:
+// $(".boxesToBeSquare").addClass("squareContent").before('<div class="squareDummy"></div>');
+.squareDummy {
+  margin-top: 100%;
+}
+.squareContent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+}
