@@ -115,4 +115,39 @@ function addComment(title, comment) {
   }, reportError);
 }
 
+// set up nameField to always synchronize with localStorage
+var nameField = document.querySelector("#name");
+nameField.value = localStorage.getItem("name") || "";
+nameField.addEventListener("change", function() {
+  localStorage.setItem("name", nameField.value);
+});
+
+var talkForm = document.querySelector("#newtalk");
+talkForm.addEventListener("submit", function(event) {
+  event.preventDefault();
+  request({
+    pathname: talkURL(talkForm.element.title.value),
+    method: "PUT",
+    body: JSON.stringify({
+      presenter: nameField.value,
+      summary: talkForm.elements.summary.value
+    })
+  }, reportError);
+  talkForm.reset();
+});
+
+// long-polling mechanism to create an open connection to the server
+function waitForChanges() {
+  request({ pathname: "talks?changesSince=" + lastServerTime }, function(error, response) {
+    if (error) {
+      setTimeout(waitForChanges, 2500);
+      console.error(error.stack);
+    } else {
+      response = JSON.parse(response);
+      displayTalks(response.talks);
+      lastServerTime = response.serverTime;
+      waitForChanges();
+    }
+  });
+}
 

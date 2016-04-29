@@ -1,15 +1,15 @@
 // import modules
 var http = require("http");
 var Router = require("./router");
-var estatic = require("estatic"); // a file server found on NPM
+var ecstatic = require("ecstatic"); // a file server found on NPM
 
-// instantiate file server, http response router
-var fileServer = estatic({root: "./public"});
+// instantiate file server, http responses router
+var fileServer = ecstatic({root: "./public"});
 var router = new Router();
 
 http.createServer(function(request, response) {
   if (!router.resolve(request, response)) // Router.prototype.resolve() will look for AND execute a resolver it has 
-    fileServer(request, response); // if there is no match in router, let estatic handle it
+    fileServer(request, response); // if there is no match in router, let ecstatic handle it
 }).listen(8000); //start the http server on port 8000
 
 function respond(response, status, data, type) {
@@ -100,7 +100,7 @@ router.add("POST", /^\/talks\/([^\/]+)\/comments$/, // this time, the regex will
         registerChange(title);
         respond(response, 204, null);
       } else {
-        respond(response, 404, "No talk '" + title "' found");
+        respond(response, 404, "No talk '" + title + "' found");
       }
     });
   }
