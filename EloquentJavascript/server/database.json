@@ -1,0 +1,40 @@
+{
+  "Javascript Meetup": {
+    "title": "Javascript Meetup",
+    "presenter": "Andrew",
+    "summary": "A time for new and experienced Javascript devs to meet, talk, and discuss coding.",
+    "comments": [
+      {
+        "author": "Andrew",
+        "message": "Looking forward to seeing you all there!"
+      }
+    ]
+  },
+  "Friday Pub Night": {
+    "title": "Friday Pub Night",
+    "presenter": "Andrew",
+    "summary": "Let's socialize! Want to meet with others and commiserate about coding woes, or just talk about anything at all. Relax!",
+    "comments": [
+      {
+        "author": "Andrew",
+        "message": "Cheers!"
+      },
+      {
+        "author": "Jim",
+        "message": "Cheers"
+      },
+      {
+        "author": "Andrew",
+        "message": "Anybody know which pub to go to?"
+      },
+      {
+        "author": "Jim",
+        "message": "Lots downtown..."
+      },
+      {
+        "author": "Ann",
+        "message": "Let's try the quiet one with the big fireplace"
+      }
+    ]
+  }
+}

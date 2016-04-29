@@ -2,13 +2,16 @@
 var http = require("http");
 var Router = require("./router");
 var ecstatic = require("ecstatic"); // a file server found on NPM
+var fs = require("fs");
+var databaseFilename = "database.json";
 
 // instantiate file server, http responses router
 var fileServer = ecstatic({root: "./public"});
 var router = new Router();
 
 http.createServer(function(request, response) {
-  console.log("Handling request: " + request);
+  // console.log("Handling request:");
+  // console.log(request);
   if (!router.resolve(request, response)) // Router.prototype.resolve() will look for AND execute a resolver it has 
     fileServer(request, response); // if there is no match in router, let ecstatic handle it
 }).listen(8000); //start the http server on port 8000
@@ -25,7 +28,26 @@ function respondJSON(response, status, data) {
 }
 
 
-var talks = Object.create(null); // store the "Talks" or "Seminars" for the web app
+var talks = Object.create(null); // to store the "Talks" or "Seminars" for the web app
+loadFromDatabase();
+
+function loadFromDatabase() {
+  fs.readFile(databaseFilename, "utf8", function(error, text) {
+    if (error) {
+      console.log("Could not read file '" + databaseFilename + "'. Error was: " + error.message);
+    } else {
+      console.log("Reading from disk:");
+      console.log(text);
+      var rawData = JSON.parse(text);
+      for (var item in rawData) {
+        console.log(item);
+        talks[item] = rawData[item];
+      }
+      console.log(talks);
+    }
+  });
+}
+
 router.add("GET", /^\/talks\/([^\/]+)$/, // regex: /talks/talkName (must have no ending "/")
   function(request, response, title) { // title will be what's in the Capture Group in the preceeding regex
     if (title in talks)
@@ -53,7 +75,7 @@ function readStreamAsJSON(stream, callback) {
   stream.on("end", function() {
     var result, error;
     try { 
-      result = JSON.prase(data);
+      result = JSON.parse(data);
     } catch(e) {
       error = e;
     }
@@ -117,7 +139,7 @@ function sendTalks(talks, response) {
 router.add("GET", /^\/talks$/,
   function(request, response) {
     var query = require("url").parse(request.url, true).query;
-    if (query.changesSince == null) {
+    if (query.changesSince === null || query.changesSince === undefined) { //fixed vs. Eloquent Javascript: it was checking non-strict == null, so I changed it to  === null || === undefined
       var list = [];
       for (var title in talks)
         list.push(talks[title]);
@@ -159,6 +181,12 @@ function registerChange(title) {
     sendTalks(getChangedTalks(waiter.since), waiter.response);
   });
   waiting = [];
+  fs.writeFile(databaseFilename, JSON.stringify(talks, null, 2), function(error) {
+    if (error)
+      console.log("Failed to write to " + databaseFilename);
+    else
+      console.log("Database written to " + databaseFilename);
+  });
 }
 
 function getChangedTalks(since) {
