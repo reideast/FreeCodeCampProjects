@@ -4,8 +4,6 @@ function request(options, callback) {
   var req = new XMLHttpRequest();
   req.open(options.method || "GET", options.pathname, true);
   req.addEventListener("load", function() {
-    console.log("load finished:");
-    console.log(req);
     if (req.status < 400)
       callback(null, req.responseText);
     else
@@ -38,7 +36,7 @@ function reportError(error) {
 }
 
 var talkDiv = document.querySelector("#talks");
-var shownTalk = Object.create(null);
+var shownTalks = Object.create(null);
 
 function displayTalks(talks) {
   talks.forEach(function(talk) {
@@ -54,7 +52,7 @@ function displayTalks(talks) {
         talkDiv.replaceChild(node, shown);
       else
         talkDiv.appendChild(node);
-      shownTalk[talk.title] = node;
+      shownTalks[talk.title] = node;
     }
   });
 }
@@ -129,7 +127,7 @@ var talkForm = document.querySelector("#newtalk");
 talkForm.addEventListener("submit", function(event) {
   event.preventDefault();
   request({
-    pathname: talkURL(talkForm.element.title.value),
+    pathname: talkURL(talkForm.elements.title.value),
     method: "PUT",
     body: JSON.stringify({
       presenter: nameField.value,
