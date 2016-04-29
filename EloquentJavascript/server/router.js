@@ -14,11 +14,11 @@ Router.prototype.resolve = function(request, response) {
   var path = require("url").parse(request.url).pathname;
   
   return this.routes.some(function(route) { // Array.some() runs through elements one at a time, and will stop after function returns true (short circuit, like || operator does)
-    var match = route.url.exect(path);
+    var match = route.url.exec(path);
     if (!match || route.method != request.method)
       return false;
       
-    var urlParts = match.slice(1).map(decodeURIcomponent);
+    var urlParts = match.slice(1).map(decodeURIComponent);
     route.handler.apply(null, [request, response].concat(urlParts));
     
     return true;

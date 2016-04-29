@@ -4,10 +4,12 @@ function request(options, callback) {
   var req = new XMLHttpRequest();
   req.open(options.method || "GET", options.pathname, true);
   req.addEventListener("load", function() {
+    console.log("load finished:");
+    console.log(req);
     if (req.status < 400)
       callback(null, req.responseText);
     else
-      callback(new Error("Request failed: " + req.statusText));
+      callback(new Error("Request failed: " + req.status + " " + req.statusText + "\nResponse Text: " + req.responseText));
   });
   req.addEventListener("error", function() {
     callback(new Error("Network error"));
@@ -20,6 +22,7 @@ var lastServerTime = 0;
 // make an initial request for "/talks" from server
 request({pathname: "talks"}, function(error, response) {
   if (error) {
+    console.log("this is the error");
     reportError(error);
   } else {
     response = JSON.parse(response);

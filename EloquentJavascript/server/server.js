@@ -8,6 +8,7 @@ var fileServer = ecstatic({root: "./public"});
 var router = new Router();
 
 http.createServer(function(request, response) {
+  console.log("Handling request: " + request);
   if (!router.resolve(request, response)) // Router.prototype.resolve() will look for AND execute a resolver it has 
     fileServer(request, response); // if there is no match in router, let ecstatic handle it
 }).listen(8000); //start the http server on port 8000
@@ -67,7 +68,7 @@ router.add("PUT", /^\/talks\/([^\/]+)$/,
   function(request, response, title) {
     readStreamAsJSON(request, function(error, talk) {
       if (error) {
-        respond(response, 400, error.toString());
+        respond(response, 400, "PUT talks" + error.toString());
       } else if (!talk ||
                  typeof talk.presenter != "string" ||
                  typeof talk.summary != "string") {
@@ -90,7 +91,7 @@ router.add("POST", /^\/talks\/([^\/]+)\/comments$/, // this time, the regex will
   function(request, response, title) {
     readStreamAsJSON(request, function(error, comment) {
       if (error) {
-        respond(response, 400, error.toString());
+        respond(response, 400, "POST comments " + error.toString());
       } else if (!comment ||
                  typeof comment.author != "string" ||
                  typeof comment.message != "string") {
@@ -115,8 +116,8 @@ function sendTalks(talks, response) {
 
 router.add("GET", /^\/talks$/,
   function(request, response) {
-    var query = require("url").prase(request.url, true).query;
-    if (query.changesSince === null) {
+    var query = require("url").parse(request.url, true).query;
+    if (query.changesSince == null) {
       var list = [];
       for (var title in talks)
         list.push(talks[title]);
