@@ -1,0 +1,46 @@
+<html>
+<head>
+  <style>
+    textarea#code {
+      width: 20em;
+      height: 8em;
+    }
+    
+    pre {
+      border-left: 2px solid #356;
+      padding: 10px;
+      margin: 5px;
+    }
+    
+    button {
+      border-radius: 8px;
+      background: #ced;
+      padding: 7px 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <textarea id="code">return "hi";</textarea>
+  <br>
+  <button id="button">Run</button>
+  <br>
+  <div id="output"></div>
+
+  <script>
+    // Your code here.
+    document.querySelector("#button").addEventListener("click", function(event) {
+      var $code = document.querySelector("#code");
+      var $output = document.querySelector("#output");
+      
+      console.log("code: '" + $code.value + "'");
+      var codeToRun = new Function("", $code.value);
+      console.log("function is: " + codeToRun)
+      $pre = document.createElement("pre");
+      $pre.textContent = codeToRun();
+      $output.insertBefore($pre, $output.firstChild);
+    });
+  // → 5
+  </script>
+</body>
+</html>
