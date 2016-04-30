@@ -6,15 +6,18 @@
       height: 8em;
     }
     
-    pre {
+    pre, #output > div {
       border-left: 2px solid #356;
       padding: 10px;
       margin: 5px;
     }
+    .error {
+      color: #b01;
+      font-weight: bold;
+    }
     
     button {
       border-radius: 8px;
-      background: #ced;
       padding: 7px 10px;
     }
   </style>
@@ -33,12 +36,18 @@
       var $code = document.querySelector("#code");
       var $output = document.querySelector("#output");
       
-      console.log("code: '" + $code.value + "'");
+      // console.log("code: '" + $code.value + "'");
       var codeToRun = new Function("", $code.value);
-      console.log("function is: " + codeToRun)
-      $pre = document.createElement("pre");
-      $pre.textContent = codeToRun();
-      $output.insertBefore($pre, $output.firstChild);
+      // console.log("function is: " + codeToRun)
+      var $newElem;
+      try {
+        $newElem = document.createElement("pre");
+        $newElem.textContent = codeToRun();
+      } catch (e) {
+        $newElem = document.createElement("div");
+        $newElem.innerHTML = '<span class="error">Error: ' + e.message + "</span>";
+      }
+      $output.insertBefore($newElem, $output.firstChild);
     });
   // → 5
   </script>
