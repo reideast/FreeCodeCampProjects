@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Simon (For FreeCodeCamp)</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
+  <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+
+  <link rel="stylesheet" href="simon.css">
+</head>
+
+<body>
+  <div class="container" id="board">
+    <div class="row">
+      <div class="col-xs-4 col-xs-offset-4">
+        <div class="simonButton" data-simon="0"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-4 col-xs-offset-2">
+        <div class="simonButton" data-simon="1"></div>
+      </div>
+      <div class="col-xs-4">
+        <div class="simonButton" data-simon="2"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-4 col-xs-offset-4">
+        <div class="simonButton" data-simon="3"></div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-4 col-xs-offset-3 col-sm-offset-4">
+        <div id="debug"></div>
+      </div>
+    </div>
+  </div>
+  
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js'></script>
+  <script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
+  <script src="simon.js"></script>
+</body>
+
+</html>
