@@ -1,5 +1,30 @@
 $(document).ready(function() {
-  var game = new Simon();
+  var isTurnedOn = false;
+  var game = undefined;
+  var buttons = [$("#button0"), $("#button1"), $("#button2"), $("#button3")];
+  
+  
+  $("#power").on("click", function(event) {
+    if (isTurnedOn) {
+      isTurnedOn = false;
+      var game = undefined;
+    } else {
+      isTurnedOn = true;
+      var game = new Simon();
+    }
+  });
+  
+  $("#start").on("click", function(event) {
+    if (isTurnedOn) {
+      game.startHandler();
+    }
+  });
+  $("#strict").on("click", function(event) {
+    if (isTurnedOn) {
+      game.strictHandler();
+    }
+  });
+  // $("#counter")
   
   $(".simonButton").on("click", function(event) {
     // console.log(this.dataset.simon);
@@ -7,7 +32,7 @@ $(document).ready(function() {
   });
   window.addEventListener("keydown", function(event) {
     if (event.defaultPrevented) {
-      return; // do not act upon keydown; event was already used
+      return; // do not act upon keydown because event was already used
     }
     switch(event.keyCode) {
       case 37:
@@ -16,6 +41,8 @@ $(document).ready(function() {
       case 40:
         event.preventDefault();
         game.inputHandler(event.keyCode - 37);
+        buttons[event.keyCode - 37].addClass("activated");
+        setTimeout(function() { buttons[event.keyCode - 37].removeClass("activated"); }, 300);
     }
   });
 });
@@ -32,20 +59,24 @@ var Simon = function() {
   ];
   var state = 0;
   
+  this.startHandler = function() {
+    
+  };
+  
+  this.strictHandler = function() {
+    
+  };
+  
   // associate sound files. see: http://stackoverflow.com/questions/9419263/playing-audio-with-javascript
   var sounds = [
                 new Audio('https://s3.amazonaws.com/freecodecamp/simonSound4.mp3'),
                 new Audio('https://s3.amazonaws.com/freecodecamp/simonSound1.mp3'),
                 new Audio('https://s3.amazonaws.com/freecodecamp/simonSound2.mp3'),
                 new Audio('https://s3.amazonaws.com/freecodecamp/simonSound3.mp3')];
-  sounds[Math.floor(Math.random() * sounds.length)].play(); //TODO: test only!
-  
-  
+  // sounds[Math.floor(Math.random() * sounds.length)].play(); // test
   
   this.inputHandler = function(buttonNum) {
     console.log("Simon game is trying to handle button #" + buttonNum);
     sounds[buttonNum].play(); //test!
-    if (buttonNum === 0)
-      console.log("Exact match to 0");
   };
 };

@@ -3,7 +3,7 @@
   height: 200px;
   margin: 0 auto; }
 
-.simonButton:active, .buttonActive {
+.simonButton:active, .activated {
   -webkit-filter: brightness(1.5);
           filter: brightness(1.5); }
 
@@ -18,3 +18,10 @@
 
 #button3 {
   background-color: #219A48; }
+
+#controls-group {
+  text-align: center; }
+
+#counter {
+  width: 3em;
+  font-family: monospace; }

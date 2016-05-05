@@ -7,7 +7,7 @@
   height: 200px;
   margin: 0 auto;
 }
-.simonButton:active, .buttonActive {
+.simonButton:active, .activated {
   filter: brightness(1.5);
 }
 #button0 {
@@ -21,4 +21,15 @@
 }
 #button3 {
   background-color: #219A48; //low E -> green
+}
+
+#controls {
+  
+}
+#controls-group{
+  text-align: center;
+}
+#counter {
+  width: 3em;
+  font-family: monospace;
 }
