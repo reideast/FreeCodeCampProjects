@@ -5,6 +5,20 @@
 .simonButton {
   width: 200px;
   height: 200px;
-  background-color: blue;
   margin: 0 auto;
+}
+.simonButton:active, .buttonActive {
+  filter: brightness(1.5);
+}
+#button0 {
+  background-color: #DD271C; // ?
+}
+#button1 {
+  background-color: #1F9ABB; //high E -> should be blue 
+}
+#button2 {
+  background-color: #F7DD14; // C# -> yellow 
+}
+#button3 {
+  background-color: #219A48; //low E -> green
 }

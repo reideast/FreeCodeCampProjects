@@ -20,6 +20,11 @@ https://s3.amazonaws.com/freecodecamp/simonSound2.mp3
 https://s3.amazonaws.com/freecodecamp/simonSound3.mp3
 https://s3.amazonaws.com/freecodecamp/simonSound4.mp3
 
+E-note (blue, lower right);
+C♯-note (yellow, lower left);
+A-note (red, upper right).
+E-note (green, upper left, an octave lower than blue);
+
 tempo: speeds up on 5th, 9th, and 13th step
 
 win: 20th step correct, win! restart

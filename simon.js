@@ -33,12 +33,11 @@ var Simon = function() {
   var state = 0;
   
   // associate sound files. see: http://stackoverflow.com/questions/9419263/playing-audio-with-javascript
-  var chimeWorkDone = new Audio('http://dev.andreweast.net/FreeCodeCamp/chimeToBreak Zen Buddhist Temple Bell-SoundBible.com-331362457.mp3');
   var sounds = [
+                new Audio('https://s3.amazonaws.com/freecodecamp/simonSound4.mp3'),
                 new Audio('https://s3.amazonaws.com/freecodecamp/simonSound1.mp3'),
                 new Audio('https://s3.amazonaws.com/freecodecamp/simonSound2.mp3'),
-                new Audio('https://s3.amazonaws.com/freecodecamp/simonSound3.mp3'),
-                new Audio('https://s3.amazonaws.com/freecodecamp/simonSound4.mp3')];
+                new Audio('https://s3.amazonaws.com/freecodecamp/simonSound3.mp3')];
   sounds[Math.floor(Math.random() * sounds.length)].play(); //TODO: test only!
   
   
