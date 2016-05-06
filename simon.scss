@@ -7,24 +7,27 @@
   height: 200px;
   margin: 0 auto;
 }
-.simonButton:active, .activated {
+.activated {
   filter: brightness(1.5);
 }
+.poweredDown {
+  filter: brightness(0.5);
+}
 #button0 {
-  background-color: #DD271C; // ?
+  background-color: #DD271C; 
 }
 #button1 {
-  background-color: #1F9ABB; //high E -> should be blue 
+  background-color: #1F9ABB; 
 }
 #button2 {
-  background-color: #F7DD14; // C# -> yellow 
+  background-color: #F7DD14; 
 }
 #button3 {
-  background-color: #219A48; //low E -> green
+  background-color: #219A48;
 }
 
-#controls {
-  
+#controls .form-control{
+  display: inline-block; //override Bootstrap
 }
 #controls-group{
   text-align: center;
@@ -32,4 +35,7 @@
 #counter {
   width: 3em;
   font-family: monospace;
+}
+#status {
+  width: 10em;
 }
