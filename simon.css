@@ -24,7 +24,8 @@
   background-color: #219A48; }
 
 #controls .form-control {
-  display: inline-block; }
+  display: inline-block;
+  text-align: center; }
 
 .counterBlank {
   color: white; }

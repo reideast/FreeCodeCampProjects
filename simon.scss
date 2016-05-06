@@ -34,6 +34,7 @@ $counterBG: white;
 
 #controls .form-control{
   display: inline-block; //override Bootstrap
+  text-align: center;
 }
 .counterBlank {
   color: $counterBG;

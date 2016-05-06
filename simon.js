@@ -90,24 +90,16 @@ var Simon = function(statusTextBox) {
   var state = states.inactive;
   
   this.startHandler = function() {
-    if (state === states.inactive) {
-      state = states.starting;
-      status.value = "starting new game";
-      createSequence(optionsGameLength);
-      updateCounter("--");
-      flashCounter(1600);
-      
-      // start the first turn after a delay
-      setTimeout(function() {
-        seqCurrLimit++;
-        updateCounter(seqCurrLimit);
-        showSequence();
-      }, 1600);
-    } else {
-      state = states.inactive;
-      status.value = "inactive";
-    }
-    $("#start").toggleClass("btn-primary", state !== states.inactive);
+    state = states.starting;
+    status.value = "starting new game";
+    createSequence(optionsGameLength);
+    updateCounter("--");
+    // start the first turn after animating the counter
+    flashCounter(1600, function() {
+      seqCurrLimit++;
+      updateCounter(seqCurrLimit);
+      showSequence();
+    });
   };
   
   function createSequence(num) {
@@ -163,9 +155,13 @@ var Simon = function(statusTextBox) {
           console.log("FAIL AUGHH"); // TODO: reset game here
         } else {
           setTimeout(function() {
-            showSequence();
+            updateCounter("X");
+            flashCounter(1600, function() {
+              updateCounter(seqCurrLimit);
+              showSequence();
+            });
           }, 600);
-        } 
+        }
       }
     }
   };
@@ -178,16 +174,16 @@ var Simon = function(statusTextBox) {
   }
   
   function updateCounter(val) {
-    if (val === "--") {
-      $("#counter").val("--");
+    if (val === "--" || val === "X") {
+      $("#counter").val(val);
     } else if ($.isNumeric(val)) {
       $("#counter").val((val < 10) ? "0" + val : val);
     } else {
       console.log("Error: Simon.updateCounter given invalid value: " + val);
     }
   }
-  function flashCounter(totalDelay) {
-    var delay = totalDelay / 4;
+  function flashCounter(totalDelay, callback) {
+    var delay = totalDelay / 5;
     setTimeout(function() {
       $("#counter").addClass("counterBlank");
       setTimeout(function() {
@@ -196,6 +192,8 @@ var Simon = function(statusTextBox) {
           $("#counter").addClass("counterBlank");
           setTimeout(function() {
             $("#counter").removeClass("counterBlank");
+            if (callback && typeof(callback) === "function")
+              setTimeout(callback, delay);
           }, delay);
         }, delay);
       }, delay);
