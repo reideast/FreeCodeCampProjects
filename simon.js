@@ -80,29 +80,34 @@ var Simon = function(statusTextBox) {
   
   // for finite state machine
   var states = {
-    "waiting": 0,
+    "inactive": 0,
     "starting": 1,
     "showSequence": 2,
     "waitForInput": 3,
     "wrongInput": 4,
     "gameOver": 5
   };
-  var state = states.waiting;
+  var state = states.inactive;
   
   this.startHandler = function() {
-    if (state == states.waiting) {
+    if (state === states.inactive) {
       state = states.starting;
       status.value = "starting new game";
       createSequence(optionsGameLength);
+      updateCounter("--");
+      flashCounter(1600);
       
-      // start the first turn
-      seqCurrLimit++;
-      showSequence();
+      // start the first turn after a delay
+      setTimeout(function() {
+        seqCurrLimit++;
+        updateCounter(seqCurrLimit);
+        showSequence();
+      }, 1600);
     } else {
-      state = states.waiting;
-      status.value = "waiting";
+      state = states.inactive;
+      status.value = "inactive";
     }
-    $("#start").toggleClass("btn-primary", state !== states.waiting);
+    $("#start").toggleClass("btn-primary", state !== states.inactive);
   };
   
   function createSequence(num) {
@@ -139,7 +144,6 @@ var Simon = function(statusTextBox) {
     $("#strict").toggleClass("btn-danger", optionStrict);
   };
   
-  
   this.inputHandler = function(buttonNum) {
     if (state == states.waitForInput) {
       console.log("Simon game is trying to handle button " + buttonNum + "/" + seqLegend[buttonNum]);
@@ -150,12 +154,13 @@ var Simon = function(statusTextBox) {
         if (seqCurr >= seqCurrLimit) { // human got whole sequence right
           setTimeout(function() {
             seqCurrLimit++;
+            updateCounter(seqCurrLimit);
             showSequence();
           }, 600);
         }
       } else { // human hit incorrect button 
         if (optionStrict) {
-          console.log("FAIL AUGHH"); // TODO: reset game
+          console.log("FAIL AUGHH"); // TODO: reset game here
         } else {
           setTimeout(function() {
             showSequence();
@@ -171,4 +176,30 @@ var Simon = function(statusTextBox) {
     buttons[buttonNum].addClass("activated");
     setTimeout(function() { buttons[buttonNum].removeClass("activated"); }, 300);
   }
+  
+  function updateCounter(val) {
+    if (val === "--") {
+      $("#counter").val("--");
+    } else if ($.isNumeric(val)) {
+      $("#counter").val((val < 10) ? "0" + val : val);
+    } else {
+      console.log("Error: Simon.updateCounter given invalid value: " + val);
+    }
+  }
+  function flashCounter(totalDelay) {
+    var delay = totalDelay / 4;
+    setTimeout(function() {
+      $("#counter").addClass("counterBlank");
+      setTimeout(function() {
+        $("#counter").removeClass("counterBlank");
+        setTimeout(function() {
+          $("#counter").addClass("counterBlank");
+          setTimeout(function() {
+            $("#counter").removeClass("counterBlank");
+          }, delay);
+        }, delay);
+      }, delay);
+    }, delay);
+  }
+  
 };

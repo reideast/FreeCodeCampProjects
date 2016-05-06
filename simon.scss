@@ -1,3 +1,9 @@
+$simonRed: #DD271C;
+$simonBlue: #1F9ABB;
+$simonYellow: #F7DD14;
+$simonGreen: #219A48;
+
+$counterBG: white;
 
 // #board {
 // }
@@ -14,20 +20,23 @@
   filter: brightness(0.5);
 }
 #button0 {
-  background-color: #DD271C; 
+  background-color: $simonRed; 
 }
 #button1 {
-  background-color: #1F9ABB; 
+  background-color: $simonBlue; 
 }
 #button2 {
-  background-color: #F7DD14; 
+  background-color: $simonYellow; 
 }
 #button3 {
-  background-color: #219A48;
+  background-color: $simonGreen;
 }
 
 #controls .form-control{
   display: inline-block; //override Bootstrap
+}
+.counterBlank {
+  color: $counterBG;
 }
 #controls-group{
   text-align: center;
