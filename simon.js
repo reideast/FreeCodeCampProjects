@@ -60,12 +60,15 @@ $(document).ready(function() {
 
 var Simon = function(statusTextBox) {
   var status = statusTextBox;
-  // associate sound files. see: http://stackoverflow.com/questions/9419263/playing-audio-with-javascript
+  
+  // Using Howler.js, by James Simpson, a sound library that support simultnaeous playing of audio clips
+  // MIT License, Copyright (c) 2013-2014 James Simpson and GoldFire Studios, Inc.
+  // http://goldfirestudios.com/blog/104/howler.js-Modern-Web-Audio-Javascript-Library & https://github.com/goldfire/howler.js
   var sounds = [ //Ordered according to what the notes sound like, associated with colors according to wikipedia's info on Simon
-                new Audio('https://s3.amazonaws.com/freecodecamp/simonSound4.mp3'),  // ?? -> red
-                new Audio('https://s3.amazonaws.com/freecodecamp/simonSound1.mp3'),  // high E -> blue 
-                new Audio('https://s3.amazonaws.com/freecodecamp/simonSound2.mp3'),  // C# -> yellow 
-                new Audio('https://s3.amazonaws.com/freecodecamp/simonSound3.mp3')]; // low E -> green
+                new Howl({ urls: ['http://s3.amazonaws.com/freecodecamp/simonSound4.mp3'] }),  // ?? -> red
+                new Howl({ urls: ['http://s3.amazonaws.com/freecodecamp/simonSound1.mp3'] }),  // high E -> blue 
+                new Howl({ urls: ['http://s3.amazonaws.com/freecodecamp/simonSound2.mp3'] }),  // C# -> yellow 
+                new Howl({ urls: ['http://s3.amazonaws.com/freecodecamp/simonSound3.mp3'] })]; // low E -> green
   
   var optionStrict = false;
   var optionsGameLength = 20; // set as 20, per game description
@@ -154,7 +157,9 @@ var Simon = function(statusTextBox) {
         if (optionStrict) {
           console.log("FAIL AUGHH"); // TODO: reset game
         } else {
-          showSequence();
+          setTimeout(function() {
+            showSequence();
+          }, 600);
         } 
       }
     }
