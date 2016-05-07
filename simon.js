@@ -9,10 +9,12 @@ $(document).ready(function() {
   $("#power").on("click", togglePower);
   function togglePower() {
     if (isTurnedOn) {
-      isTurnedOn = false;
-      game = undefined;
-      $(".simonButton").addClass("poweredDown");
-      $("#status").val("off");
+      game.powerDown(function() {
+        isTurnedOn = false;
+        game = undefined;
+        $(".simonButton").addClass("poweredDown");
+        $("#status").val("off");
+      });
     } else {
       isTurnedOn = true;
       game = new Simon(document.getElementById("status"));
@@ -61,7 +63,7 @@ $(document).ready(function() {
 var Simon = function(statusTextBox) {
   var status = statusTextBox;
   
-  // Using Howler.js, by James Simpson, a sound library that support simultnaeous playing of audio clips
+  // Using Howler.js, by James Simpson, a sound library that support simultaneous playing of audio clips
   // MIT License, Copyright (c) 2013-2014 James Simpson and GoldFire Studios, Inc.
   // http://goldfirestudios.com/blog/104/howler.js-Modern-Web-Audio-Javascript-Library & https://github.com/goldfire/howler.js
   var sounds = [ //Ordered according to what the notes sound like, associated with colors according to wikipedia's info on Simon
@@ -71,12 +73,14 @@ var Simon = function(statusTextBox) {
                 new Howl({ urls: ['http://s3.amazonaws.com/freecodecamp/simonSound3.mp3'] })]; // low E -> green
   
   var optionStrict = false;
-  var optionsGameLength = 20; // set as 20, per game description
+  var optionsGameLength = 20; // set as 20, per project description
   
   var sequence = [];
   var seqCurrLimit = 0; // the maximum position the player has gotten to
   var seqCurr = 0 // the position currently being worked on
   var seqLegend = ["red", "blue", "yellow", "green"]; // not actually used for game logic, just for human feedback
+  
+  var timeoutSequence = undefined;
   
   // for finite state machine
   var states = {
@@ -89,7 +93,10 @@ var Simon = function(statusTextBox) {
   };
   var state = states.inactive;
   
+  updateCounter("--"); // set display after device turns on
+  
   this.startHandler = function() {
+    window.clearTimeout(timeoutSequence);
     state = states.starting;
     status.value = "starting new game";
     createSequence(optionsGameLength);
@@ -127,7 +134,7 @@ var Simon = function(statusTextBox) {
       lightUp(sequence[seqCurr]);
       console.log("showing #" + seqCurr + ": " + sequence[seqCurr] + "/" + seqLegend[sequence[seqCurr]]);
       seqCurr++;
-      setTimeout(showItem, 600); // TODO: make this able to be cancelled by pushing <button> start or power
+      timeoutSequence = setTimeout(showItem, 600); // TODO: make this able to be cancelled by pushing <button> start or power
     }
   }
   
@@ -144,7 +151,7 @@ var Simon = function(statusTextBox) {
       if (buttonNum === sequence[seqCurr]) { // human hit correct button
         seqCurr++;
         if (seqCurr >= seqCurrLimit) { // human got whole sequence right
-          setTimeout(function() {
+          timeoutSequence = setTimeout(function() {
             seqCurrLimit++;
             updateCounter(seqCurrLimit);
             showSequence();
@@ -156,7 +163,7 @@ var Simon = function(statusTextBox) {
         if (optionStrict) {
           console.log("FAIL AUGHH"); // TODO: reset game here
         } else {
-          setTimeout(function() {
+          timeoutSequence = setTimeout(function() {
             updateCounter("X");
             flashCounter(1600, function() {
               updateCounter(seqCurrLimit);
@@ -186,20 +193,25 @@ var Simon = function(statusTextBox) {
   }
   function flashCounter(totalDelay, callback) {
     var delay = totalDelay / 5;
-    setTimeout(function() {
+    timeoutSequence = setTimeout(function() {
       $("#counter").addClass("counterBlank");
-      setTimeout(function() {
+      timeoutSequence = setTimeout(function() {
         $("#counter").removeClass("counterBlank");
-        setTimeout(function() {
+        timeoutSequence = setTimeout(function() {
           $("#counter").addClass("counterBlank");
-          setTimeout(function() {
+          timeoutSequence = setTimeout(function() {
             $("#counter").removeClass("counterBlank");
             if (callback && typeof(callback) === "function")
-              setTimeout(callback, delay);
+              timeoutSequence = setTimeout(callback, delay);
           }, delay);
         }, delay);
       }, delay);
     }, delay);
   }
   
+  this.powerDown = function(callback) {
+    window.clearTimeout(timeoutSequence);
+    if (callback && typeof(callback) === "function")
+      callback();
+  };
 };
