@@ -155,8 +155,14 @@ var Simon = function(statusTextBox) {
           state = states.correctSequence;
           timeoutSequence = setTimeout(function() {
             seqCurrLimit++;
-            updateCounter(seqCurrLimit);
-            showSequence();
+            if (seqCurrLimit > optionsGameLength) { // this sequence has been has long as the winning sequence
+              state = states.gameOver;
+              states.value = "you won!";
+              playWinningSequence();
+            } else {
+              updateCounter(seqCurrLimit);
+              showSequence();
+            }
           }, 600);
         }
       } else { // human hit incorrect button
@@ -180,15 +186,26 @@ var Simon = function(statusTextBox) {
   
   var buttons = [$("#button0"), $("#button1"), $("#button2"), $("#button3")];
   function lightUp(buttonNum) {
-    sounds[buttonNum].play();
-    buttons[buttonNum].addClass("activated");
-    setTimeout(function() { buttons[buttonNum].removeClass("activated"); }, 300);
+    if (buttonNum >= 0 && buttonNum < sounds.length) {
+      sounds[buttonNum].play();
+      buttons[buttonNum].addClass("activated");
+      setTimeout(function() { buttons[buttonNum].removeClass("activated"); }, 300);
+    } else {
+      console.log("Error: lightUp() activated invalid button: " + buttonNum);
+    }
   }
   function playErrorSound() {
     sounds[1].play();
     setTimeout(function() {
       sounds[3].play();
     }, 250);
+  }
+  function playWinningSequence(num) {
+    if (num === undefined) num = 3; // start sequence at "3" if the argument was NOT passed
+    if (num >= 0) {
+      lightUp(num % buttons.length);
+      timeoutSequence = setTimeout(playWinningSequence, 400, num - 1);
+    }
   }
   
   function updateCounter(val) {
