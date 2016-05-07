@@ -25,7 +25,8 @@
 
 #controls .form-control {
   display: inline-block;
-  text-align: center; }
+  text-align: center;
+  background-color: white; }
 
 .counterBlank {
   color: white; }
