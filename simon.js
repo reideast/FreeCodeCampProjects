@@ -89,7 +89,8 @@ var Simon = function(statusTextBox) {
     "showSequence": 2,
     "waitForInput": 3,
     "wrongInput": 4,
-    "gameOver": 5
+    "correctSequence": 5,
+    "gameOver": 6
   };
   var state = states.inactive;
   
@@ -151,6 +152,7 @@ var Simon = function(statusTextBox) {
       if (buttonNum === sequence[seqCurr]) { // human hit correct button
         seqCurr++;
         if (seqCurr >= seqCurrLimit) { // human got whole sequence right
+          state = states.correctSequence;
           timeoutSequence = setTimeout(function() {
             seqCurrLimit++;
             updateCounter(seqCurrLimit);
@@ -165,6 +167,7 @@ var Simon = function(statusTextBox) {
         } else {
           timeoutSequence = setTimeout(function() {
             updateCounter("X");
+            playErrorSound();
             flashCounter(1600, function() {
               updateCounter(seqCurrLimit);
               showSequence();
@@ -180,6 +183,12 @@ var Simon = function(statusTextBox) {
     sounds[buttonNum].play();
     buttons[buttonNum].addClass("activated");
     setTimeout(function() { buttons[buttonNum].removeClass("activated"); }, 300);
+  }
+  function playErrorSound() {
+    sounds[1].play();
+    setTimeout(function() {
+      sounds[3].play();
+    }, 250);
   }
   
   function updateCounter(val) {
