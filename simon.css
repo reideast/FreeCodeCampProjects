@@ -1,7 +1,38 @@
+body, html {
+  margin: 0; }
+
+#board {
+  position: absolute; }
+
 .simonButton {
-  width: 200px;
-  height: 200px;
-  margin: 0 auto; }
+  width: 250px;
+  height: 250px;
+  border: 20px solid #0C271D;
+  float: left; }
+  @media (max-width: 580px) {
+    .simonButton {
+      width: 44vw;
+      height: 44vw;
+      border: 3vw solid #0C271D; } }
+
+.icon {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%) rotate(45deg);
+          transform: translate(-50%, -50%) rotate(45deg);
+  width: 64px;
+  height: 64px; }
+  .icon .fa {
+    font-size: 64px;
+    -webkit-text-stroke: 1px #fff;
+    color: transparent; }
+  @media (max-width: 580px) {
+    .icon {
+      height: 12vw;
+      width: 12vw; }
+      .icon .fa {
+        font-size: 12vw; } }
 
 .activated {
   -webkit-filter: brightness(1.5);
@@ -12,19 +43,48 @@
           filter: brightness(0.5); }
 
 #button0 {
-  background-color: #DD271C; }
+  background-color: #DD271C;
+  border-top-left-radius: 100%;
+  -webkit-transform: translate(-20%, 50%) rotate(-45deg);
+          transform: translate(-20%, 50%) rotate(-45deg); }
 
 #button1 {
-  background-color: #1F9ABB; }
+  background-color: #1F9ABB;
+  border-top-right-radius: 100%;
+  -webkit-transform: translate(-50%, -20%) rotate(-45deg);
+          transform: translate(-50%, -20%) rotate(-45deg); }
 
 #button2 {
-  background-color: #F7DD14; }
+  background-color: #F7DD14;
+  border-bottom-right-radius: 100%;
+  -webkit-transform: translate(20%, -50%) rotate(-45deg);
+          transform: translate(20%, -50%) rotate(-45deg); }
 
 #button3 {
-  background-color: #219A48; }
+  background-color: #219A48;
+  border-bottom-left-radius: 100%;
+  -webkit-transform: translate(50%, 20%) rotate(-45deg);
+          transform: translate(50%, 20%) rotate(-45deg); }
+
+#controls {
+  position: absolute;
+  z-index: 10;
+  width: 250px;
+  height: 250px;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 100%;
+  border: 20px solid #0C271D; }
+  @media (max-width: 580px) {
+    #controls {
+      width: 44vw;
+      height: 44vw;
+      border: 3vw solid #0C271D; } }
 
 #controls .form-control {
-  display: inline-block;
   text-align: center;
   background-color: white; }
 

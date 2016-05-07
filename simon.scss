@@ -5,13 +5,66 @@ $simonGreen: #219A48;
 
 $counterBG: white;
 
-// #board {
-// }
+$squareSize: 250px;
+$borderWidth: 0.08 * $squareSize;
+$borderWidthMobile: 3vw;
+// $squareSizeMobile: calc(50vw - #{1.5 * $borderWidthMobile + 20});
+$squareSizeMobile: 50vw - 2 * $borderWidthMobile;
+$mediaBreakpoint: $squareSize * 2 + $borderWidth * 4;
+
+$borderColor: #0C271D;
+$borderTemplate: $borderWidth solid $borderColor;
+$borderTemplateMobile: $borderWidthMobile solid $borderColor;
+// $borderInner: $borderWidth / 2 solid $borderColor;
+
+$iconSize: 64px;
+$iconSizeMobile: 4 * $borderWidthMobile;
+
+body, html {
+  margin: 0;
+}
+
+#board {
+  position: absolute;
+  // top: 50%;
+  // left: 50%;
+  // left: 0;
+  // margin: 0 auto;
+  // transform: translate(-50%, -50%);
+}
 
 .simonButton {
-  width: 200px;
-  height: 200px;
-  margin: 0 auto;
+  width: $squareSize;
+  height: $squareSize;
+  border: $borderTemplate;
+  @media (max-width: $mediaBreakpoint) {
+    width: $squareSizeMobile;
+    height: $squareSizeMobile;
+    border: $borderTemplateMobile;
+  }
+  // display: inline-block;
+  float: left;
+  // transform: rotate(-45deg);
+}
+.icon {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg); // rotation to counteract .button rotation
+  width: $iconSize;
+  height: $iconSize;
+  .fa {
+    font-size: $iconSize;
+    -webkit-text-stroke: 1px #fff;
+    color: transparent;
+  }
+  @media (max-width: $mediaBreakpoint) {
+    height: $iconSizeMobile;
+    width: $iconSizeMobile;
+    .fa {
+      font-size: $iconSizeMobile;
+    }
+  }
 }
 .activated {
   filter: brightness(1.5);
@@ -21,19 +74,47 @@ $counterBG: white;
 }
 #button0 {
   background-color: $simonRed; 
+  border-top-left-radius: 100%;
+  transform: translate(-20%, 50%) rotate(-45deg);
 }
 #button1 {
   background-color: $simonBlue; 
+  border-top-right-radius: 100%;
+  transform: translate(-50%, -20%) rotate(-45deg);
 }
 #button2 {
   background-color: $simonYellow; 
+  border-bottom-right-radius: 100%;
+  transform: translate(20%, -50%) rotate(-45deg);
 }
 #button3 {
   background-color: $simonGreen;
+  border-bottom-left-radius: 100%;
+  transform: translate(50%, 20%) rotate(-45deg);
+}
+
+#controls {
+  // display: none;
+  position: absolute;
+  z-index: 10;
+  width: $squareSize;
+  height: $squareSize;
+  // width: 10px;
+  // height: 10px;
+  @media (max-width: $mediaBreakpoint) {
+    width: $squareSizeMobile;
+    height: $squareSizeMobile;
+    border: $borderTemplateMobile;
+  }
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 100%;
+  border: $borderTemplate;
 }
 
 #controls .form-control{
-  display: inline-block; //override Bootstrap
   text-align: center;
   background-color: $counterBG;
 }
