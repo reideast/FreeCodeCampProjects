@@ -71,8 +71,8 @@ body, html {
   top: 50%;
   left: 50%;
   z-index: 10;
-  width: 200px;
-  height: 200px;
+  width: 212.5px;
+  height: 212.5px;
   border: 20px solid #0C271D;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
@@ -80,23 +80,34 @@ body, html {
   border-radius: 100%; }
   @media (max-width: 580px) {
     #controls {
-      width: 35.2vw;
-      height: 35.2vw;
+      width: 37.4vw;
+      height: 37.4vw;
       border: 3vw solid #0C271D; } }
 
-#controls .form-control {
+#controls {
+  text-align: center; }
+
+#controlsGroup {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%); }
+
+#controlsGroup > * {
+  margin: 10px; }
+  @media (max-width: 580px) {
+    #controlsGroup > * {
+      margin: 2px; } }
+
+#counter {
+  width: 3em;
+  font-family: monospace;
   text-align: center;
   background-color: white; }
 
 .counterBlank {
   color: white; }
-
-#controls-group {
-  text-align: center; }
-
-#counter {
-  width: 3em;
-  font-family: monospace; }
 
 #status {
   width: 10em; }

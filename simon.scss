@@ -11,8 +11,8 @@ $borderWidthMobile: 3vw;
 // $squareSizeMobile: calc(50vw - #{1.5 * $borderWidthMobile + 20});
 $squareSizeMobile: 50vw - 2 * $borderWidthMobile;
 
-$controlsSize: $squareSize * 0.8;
-$controlsSizeMobile: $squareSizeMobile * 0.8;
+$controlsSize: $squareSize * 0.85;
+$controlsSizeMobile: $squareSizeMobile * 0.85;
 
 $borderColor: #0C271D;
 $borderTemplate: $borderWidth solid $borderColor;
@@ -114,20 +114,31 @@ body, html {
   border-radius: 100%;
 }
 
-#controls .form-control{
+#controls{
+  text-align: center;
+}
+#controlsGroup {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#controlsGroup > * {
+  margin: $borderWidth / 2;
+  @media (max-width: $mediaBreakpoint) {
+    margin: 2px;
+  }
+}
+#counter {
+  width: 3em;
+  font-family: monospace;
   text-align: center;
   background-color: $counterBG;
 }
 .counterBlank {
   color: $counterBG;
 }
-#controls-group{
-  text-align: center;
-}
-#counter {
-  width: 3em;
-  font-family: monospace;
-}
+
 #status {
   width: 10em;
 }
