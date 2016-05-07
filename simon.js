@@ -138,7 +138,7 @@ var Simon = function(statusTextBox) {
   
   this.inputHandler = function(buttonNum) {
     if (state == states.waitForInput) {
-      console.log("Simon game is trying to handle button " + buttonNum + "/" + seqLegend[buttonNum]);
+      console.log("Human input: " + buttonNum + "/" + seqLegend[buttonNum]);
       lightUp(buttonNum);
       
       if (buttonNum === sequence[seqCurr]) { // human hit correct button
@@ -150,7 +150,9 @@ var Simon = function(statusTextBox) {
             showSequence();
           }, 600);
         }
-      } else { // human hit incorrect button 
+      } else { // human hit incorrect button
+        state = states.wrongInput;
+        states.value = "wrong input";
         if (optionStrict) {
           console.log("FAIL AUGHH"); // TODO: reset game here
         } else {
