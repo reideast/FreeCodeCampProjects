@@ -10,12 +10,15 @@ $borderWidth: 0.08 * $squareSize;
 $borderWidthMobile: 3vw;
 // $squareSizeMobile: calc(50vw - #{1.5 * $borderWidthMobile + 20});
 $squareSizeMobile: 50vw - 2 * $borderWidthMobile;
-$mediaBreakpoint: $squareSize * 2 + $borderWidth * 4;
+
+$controlsSize: $squareSize * 0.8;
+$controlsSizeMobile: $squareSizeMobile * 0.8;
 
 $borderColor: #0C271D;
 $borderTemplate: $borderWidth solid $borderColor;
 $borderTemplateMobile: $borderWidthMobile solid $borderColor;
-// $borderInner: $borderWidth / 2 solid $borderColor;
+
+$mediaBreakpoint: $squareSize * 2 + $borderWidth * 4;
 
 $iconSize: 64px;
 $iconSizeMobile: 4 * $borderWidthMobile;
@@ -94,24 +97,21 @@ body, html {
 }
 
 #controls {
-  // display: none;
   position: absolute;
-  z-index: 10;
-  width: $squareSize;
-  height: $squareSize;
-  // width: 10px;
-  // height: 10px;
-  @media (max-width: $mediaBreakpoint) {
-    width: $squareSizeMobile;
-    height: $squareSizeMobile;
-    border: $borderTemplateMobile;
-  }
   top: 50%;
   left: 50%;
+  z-index: 10;
+  width: $controlsSize;
+  height: $controlsSize;
+  border: $borderTemplate;
+  @media (max-width: $mediaBreakpoint) {
+    width: $controlsSizeMobile;
+    height: $controlsSizeMobile;
+    border: $borderTemplateMobile;
+  }
   transform: translate(-50%, -50%);
   background-color: white;
   border-radius: 100%;
-  border: $borderTemplate;
 }
 
 #controls .form-control{
