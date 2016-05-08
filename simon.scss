@@ -173,14 +173,14 @@ body, html {
 .counterBlank {
   color: $LCDbg;
 }
-#controls button {
+.btn {
   width: 28px;
   height: 28px;
   border-radius: 100%;
   border: 4px solid $borderColor;
   box-shadow: inset #333 0 -1px 3px, $LCDbg 3px 3px 9px;
 }
-#controls button:active {
+.btn:active, .btnPressed {
   box-shadow: inset #333 0 3px 2px, $LCDbg 3px 3px 9px;
   // note: inset shadow key: (color 0 <distance pushed> <fade of shadow>)
 }

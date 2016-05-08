@@ -13,17 +13,17 @@ $(document).ready(function() {
         isTurnedOn = false;
         game = undefined;
         $(".simonButton").addClass("poweredDown");
-        $("#controls").addClass("poweredDown");
+        $("#controls button").addClass("poweredDown");
         $("#status").val("off");
       });
     } else {
       isTurnedOn = true;
       game = new Simon(document.getElementById("status"));
       $(".simonButton").removeClass("poweredDown");
-      $("#controls").removeClass("poweredDown");
+      $("#controls button").removeClass("poweredDown");
       $("#status").val("on");
     }
-    $("#power").toggleClass("btn-primary", isTurnedOn);
+    $("#power").toggleClass("btnPressed", isTurnedOn);
   }
   
   $("#start").on("click", function(event) {
@@ -147,7 +147,7 @@ var Simon = function(statusTextBox) {
   
   this.strictHandler = function() {
     optionStrict = !optionStrict;
-    $("#strict").toggleClass("btn-danger", optionStrict);
+    $("#strict").toggleClass("btnPressed", optionStrict);
   };
   
   this.inputHandler = function(buttonNum) {
