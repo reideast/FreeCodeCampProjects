@@ -105,6 +105,9 @@ var Simon = function(btn0ID, btn1ID, btn2ID, btn3ID, btnStrictID, txtCounterID, 
   // start a new game
   // note: instantly stops a game in process, and starts over with a new sequence
   this.startButtonHandler = function() {
+    newGame();
+  };
+  function newGame() {
     window.clearTimeout(timeoutSequence);
     state = states.starting;
     status.value = "starting new game";
@@ -116,7 +119,7 @@ var Simon = function(btn0ID, btn1ID, btn2ID, btn3ID, btnStrictID, txtCounterID, 
       updateCounter(seqCurrLimit);
       showSequence();
     });
-  };
+  }
   
   // create a random sequence
   function createSequence(num) {
@@ -187,7 +190,11 @@ var Simon = function(btn0ID, btn1ID, btn2ID, btn3ID, btnStrictID, txtCounterID, 
     state = states.wrongInput;
     states.value = "wrong input";
     if (optionStrict) {
-      console.log("FAIL AUGHH"); // TODO: reset game here
+      timeoutSequence = setTimeout(function() {
+        playFailingAnimation(newGame);
+        updateCounter("X");
+        flashCounter(1600);
+      }, 600);
     } else {
       timeoutSequence = setTimeout(function() {
         updateCounter("X");
@@ -200,9 +207,9 @@ var Simon = function(btn0ID, btn1ID, btn2ID, btn3ID, btnStrictID, txtCounterID, 
     }
   }
   
-  function lightUp(buttonNum) {
+  function lightUp(buttonNum, playSound) {
     if (buttonNum >= 0 && buttonNum < sounds.length) {
-      sounds[buttonNum].play();
+      if (playSound === true || playSound === undefined) sounds[buttonNum].play();
       buttons[buttonNum].addClass("activated");
       setTimeout(function() { buttons[buttonNum].removeClass("activated"); }, 300);
     } else {
@@ -212,12 +219,25 @@ var Simon = function(btn0ID, btn1ID, btn2ID, btn3ID, btnStrictID, txtCounterID, 
   function playErrorSound() { // for one button incorrect
     soundIncorrect.play();
   }
-  function playFailingAnimation() { // for game over
-    lightUp(1); //sounds[1].play();
-    setTimeout(function() {
-      lightUp(3); //sounds[3].play();
-    }, 250);
-    
+  function playFailingAnimation(callback) { // for game over
+    var delay = 500;
+    lightUp(0, false);
+    lightUp(1, false);
+    lightUp(2, false);
+    lightUp(3, false);
+    playErrorSound();
+    timeoutSequence = setTimeout(function() {
+      sounds[1].play();
+      timeoutSequence = setTimeout(function() {
+        lightUp(0, false);
+        lightUp(1, false);
+        lightUp(2, false);
+        lightUp(3, false);
+        sounds[3].play();
+        if (callback && typeof(callback) === "function")
+          timeoutSequence = setTimeout(callback, delay * 3);
+      }, delay);
+    }, delay);
   }
   function playWinningAnimation(num) { // recursive function to cycle through the buttons
     if (num === undefined) num = 3; // start sequence at "3" if the argument was NOT passed
@@ -241,13 +261,13 @@ var Simon = function(btn0ID, btn1ID, btn2ID, btn3ID, btnStrictID, txtCounterID, 
   function flashCounter(totalDelay, callback) {
     var delay = totalDelay / 5;
     timeoutSequence = setTimeout(function() {
-      counter.addClass("counterBlank");
+      counter.toggleClass("counterBlank");
       timeoutSequence = setTimeout(function() {
-        counter.removeClass("counterBlank");
+        counter.toggleClass("counterBlank");
         timeoutSequence = setTimeout(function() {
-          counter.addClass("counterBlank");
+          counter.toggleClass("counterBlank");
           timeoutSequence = setTimeout(function() {
-            counter.removeClass("counterBlank");
+            counter.toggleClass("counterBlank");
             if (callback && typeof(callback) === "function")
               timeoutSequence = setTimeout(callback, delay);
           }, delay);
