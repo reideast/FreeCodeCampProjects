@@ -1,3 +1,4 @@
+@import url(https://fonts.googleapis.com/css?family=Press+Start+2P);
 body, html {
   margin: 0; }
 
@@ -22,11 +23,10 @@ body, html {
   -webkit-transform: translate(-50%, -50%) rotate(45deg);
           transform: translate(-50%, -50%) rotate(45deg);
   width: 64px;
-  height: 64px; }
-  .icon .fa {
-    font-size: 64px;
-    -webkit-text-stroke: 1px #fff;
-    color: transparent; }
+  height: 64px;
+  color: transparent;
+  font-size: 64px;
+  -webkit-text-stroke: 1px #fff; }
   @media (max-width: 580px) {
     .icon {
       height: 12vw;
@@ -34,9 +34,8 @@ body, html {
       .icon .fa {
         font-size: 12vw; } }
 
-.activated {
-  -webkit-filter: brightness(1.5);
-          filter: brightness(1.5); }
+.activated .icon {
+  color: rgba(255, 255, 255, 0.2); }
 
 .poweredDown {
   -webkit-filter: brightness(0.5);
@@ -48,11 +47,17 @@ body, html {
   -webkit-transform: translate(-20%, 50%) rotate(-45deg);
           transform: translate(-20%, 50%) rotate(-45deg); }
 
+#button0.activated {
+  background-color: #FF3B2A; }
+
 #button1 {
   background-color: #1F9ABB;
   border-top-right-radius: 100%;
   -webkit-transform: translate(-50%, -20%) rotate(-45deg);
           transform: translate(-50%, -20%) rotate(-45deg); }
+
+#button1.activated {
+  background-color: #2FE7FF; }
 
 #button2 {
   background-color: #F7DD14;
@@ -60,11 +65,17 @@ body, html {
   -webkit-transform: translate(20%, -50%) rotate(-45deg);
           transform: translate(20%, -50%) rotate(-45deg); }
 
+#button2.activated {
+  background-color: #FFFF1E; }
+
 #button3 {
   background-color: #219A48;
   border-bottom-left-radius: 100%;
   -webkit-transform: translate(50%, 20%) rotate(-45deg);
           transform: translate(50%, 20%) rotate(-45deg); }
+
+#button3.activated {
+  background-color: #32E76C; }
 
 #controls {
   position: absolute;
@@ -101,13 +112,21 @@ body, html {
       margin: 2px; } }
 
 #counter {
-  width: 3em;
-  font-family: monospace;
+  width: 64px;
+  height: 32px;
+  font-size: 30px;
+  font-family: "Press Start 2P", monospace;
   text-align: center;
-  background-color: white; }
+  background-color: #6B836B;
+  border: 2px solid black;
+  border-radius: 4px;
+  box-shadow: #000 0 -1px 7px 1px, inset #0B2327 0 -1px 9px, #6B836B 0 2px 12px; }
+
+.counterVisible {
+  color: #0B2327; }
 
 .counterBlank {
-  color: white; }
+  color: #6B836B; }
 
 #status {
   width: 10em; }

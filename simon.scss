@@ -2,8 +2,15 @@ $simonRed: #DD271C;
 $simonBlue: #1F9ABB;
 $simonYellow: #F7DD14;
 $simonGreen: #219A48;
+$activatedRed: #FF3B2A;
+$activatedBlue: #2FE7FF;
+$activatedYellow: #FFFF1E;
+$activatedGreen: #32E76C;
 
-$counterBG: white;
+$LCDbg: #6B836B;
+$LCDtext: #0B2327;
+@import url(https://fonts.googleapis.com/css?family=Press+Start+2P);
+$LCDfont: "Press Start 2P";
 
 $squareSize: 250px;
 $borderWidth: 0.08 * $squareSize;
@@ -56,10 +63,10 @@ body, html {
   transform: translate(-50%, -50%) rotate(45deg); // rotation to counteract .button rotation
   width: $iconSize;
   height: $iconSize;
+  color: transparent;
+  font-size: $iconSize;
+  -webkit-text-stroke: 1px #fff;
   .fa {
-    font-size: $iconSize;
-    -webkit-text-stroke: 1px #fff;
-    color: transparent;
   }
   @media (max-width: $mediaBreakpoint) {
     height: $iconSizeMobile;
@@ -69,9 +76,12 @@ body, html {
     }
   }
 }
-.activated {
-  filter: brightness(1.5);
+.activated .icon {
+  color: transparentize(white, 0.8);
 }
+// .activated {
+//   filter: brightness(1.5);
+//  }
 .poweredDown {
   filter: brightness(0.5);
 }
@@ -80,20 +90,32 @@ body, html {
   border-top-left-radius: 100%;
   transform: translate(-20%, 50%) rotate(-45deg);
 }
+#button0.activated {
+  background-color: $activatedRed;
+}
 #button1 {
   background-color: $simonBlue; 
   border-top-right-radius: 100%;
   transform: translate(-50%, -20%) rotate(-45deg);
+}
+#button1.activated {
+  background-color: $activatedBlue;
 }
 #button2 {
   background-color: $simonYellow; 
   border-bottom-right-radius: 100%;
   transform: translate(20%, -50%) rotate(-45deg);
 }
+#button2.activated {
+  background-color: $activatedYellow;
+}
 #button3 {
   background-color: $simonGreen;
   border-bottom-left-radius: 100%;
   transform: translate(50%, 20%) rotate(-45deg);
+}
+#button3.activated {
+  background-color: $activatedGreen;
 }
 
 #controls {
@@ -130,13 +152,21 @@ body, html {
   }
 }
 #counter {
-  width: 3em;
-  font-family: monospace;
+  width: 64px;
+  height: 32px;
+  font-size: 30px;
+  font-family: $LCDfont, monospace;
   text-align: center;
-  background-color: $counterBG;
+  background-color: $LCDbg;
+  border: 2px solid black;
+  border-radius: 4px;
+  box-shadow: #000 0 -1px 7px 1px, inset $LCDtext 0 -1px 9px, $LCDbg 0 2px 12px;
+}
+.counterVisible {
+  color: $LCDtext
 }
 .counterBlank {
-  color: $counterBG;
+  color: $LCDbg;
 }
 
 #status {

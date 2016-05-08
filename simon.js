@@ -66,11 +66,15 @@ var Simon = function(statusTextBox) {
   // Using Howler.js, by James Simpson, a sound library that support simultaneous playing of audio clips
   // MIT License, Copyright (c) 2013-2014 James Simpson and GoldFire Studios, Inc.
   // http://goldfirestudios.com/blog/104/howler.js-Modern-Web-Audio-Javascript-Library & https://github.com/goldfire/howler.js
+  // Simon Sounds provided by FreeCodeCamp. License unknown.
   var sounds = [ //Ordered according to what the notes sound like, associated with colors according to wikipedia's info on Simon
                 new Howl({ urls: ['http://s3.amazonaws.com/freecodecamp/simonSound4.mp3'] }),  // ?? -> red
                 new Howl({ urls: ['http://s3.amazonaws.com/freecodecamp/simonSound1.mp3'] }),  // high E -> blue 
                 new Howl({ urls: ['http://s3.amazonaws.com/freecodecamp/simonSound2.mp3'] }),  // C# -> yellow 
                 new Howl({ urls: ['http://s3.amazonaws.com/freecodecamp/simonSound3.mp3'] })]; // low E -> green
+                
+  // "Ding.wav" by Tim Kahn/corsica_s on freesound.org (https://www.freesound.org/people/Corsica_S/sounds/91926/), Copyright Tim Kahn. This work is licensed under Creative Commons Attribution License (http://creativecommons.org/licenses/by/3.0/). No changes were made. 
+  var soundIncorrect = new Howl({ urls: ['http://dev.andreweast.net/simon/91926__corsica-s__ding.wav'], volume: 0.5}); // ding sound
   
   var optionStrict = false;
   var optionsGameLength = 20; // set as 20, per project description
@@ -195,10 +199,11 @@ var Simon = function(statusTextBox) {
     }
   }
   function playErrorSound() {
-    sounds[1].play();
-    setTimeout(function() {
-      sounds[3].play();
-    }, 250);
+    // sounds[1].play();
+    // setTimeout(function() {
+    //   sounds[3].play();
+    // }, 250);
+    soundIncorrect.play();
   }
   function playWinningSequence(num) {
     if (num === undefined) num = 3; // start sequence at "3" if the argument was NOT passed
@@ -209,7 +214,9 @@ var Simon = function(statusTextBox) {
   }
   
   function updateCounter(val) {
-    if (val === "--" || val === "X") {
+    if (val === undefined) {
+      $("#counter").val("");
+    } else if (val === "--" || val === "X") {
       $("#counter").val(val);
     } else if ($.isNumeric(val)) {
       $("#counter").val((val < 10) ? "0" + val : val);
@@ -237,6 +244,7 @@ var Simon = function(statusTextBox) {
   
   this.powerDown = function(callback) {
     window.clearTimeout(timeoutSequence);
+    updateCounter();
     if (callback && typeof(callback) === "function")
       callback();
   };
