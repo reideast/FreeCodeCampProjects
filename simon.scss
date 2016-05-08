@@ -7,6 +7,9 @@ $activatedBlue: #2FE7FF;
 $activatedYellow: #FFFF1E;
 $activatedGreen: #32E76C;
 
+$borderColor: #0C271D;
+$controlsBG: #779288; // ie. hsla(158,11%,52%,1)
+
 $LCDbg: #6B836B;
 $LCDtext: #0B2327;
 @import url(https://fonts.googleapis.com/css?family=Press+Start+2P);
@@ -21,7 +24,6 @@ $squareSizeMobile: 50vw - 2 * $borderWidthMobile;
 $controlsSize: $squareSize * 0.85;
 $controlsSizeMobile: $squareSizeMobile * 0.85;
 
-$borderColor: #0C271D;
 $borderTemplate: $borderWidth solid $borderColor;
 $borderTemplateMobile: $borderWidthMobile solid $borderColor;
 
@@ -83,7 +85,7 @@ body, html {
 //   filter: brightness(1.5);
 //  }
 .poweredDown {
-  filter: brightness(0.5);
+  filter: brightness(0.8);
 }
 #button0 {
   background-color: $simonRed; 
@@ -138,6 +140,7 @@ body, html {
 
 #controls{
   text-align: center;
+  background-color: $controlsBG;
 }
 #controlsGroup {
   position: relative;
@@ -157,10 +160,12 @@ body, html {
   font-size: 30px;
   font-family: $LCDfont, monospace;
   text-align: center;
+  padding-left: 4px;
   background-color: $LCDbg;
-  border: 2px solid black;
+  border: 4px solid $borderColor;
   border-radius: 4px;
-  box-shadow: #000 0 -1px 7px 1px, inset $LCDtext 0 -1px 9px, $LCDbg 0 2px 12px;
+  // box-shadow: #000 0 -1px 7px 1px, inset $LCDtext 0 -1px 9px, $LCDbg 0 2px 12px;
+  box-shadow: inset $LCDtext 0 -1px 9px, $LCDbg 0 2px 12px;
 }
 .counterVisible {
   color: $LCDtext
@@ -168,6 +173,32 @@ body, html {
 .counterBlank {
   color: $LCDbg;
 }
+#controls button {
+  width: 28px;
+  height: 28px;
+  border-radius: 100%;
+  border: 4px solid $borderColor;
+  box-shadow: inset #333 0 -1px 3px, $LCDbg 3px 3px 9px;
+}
+#controls button:active {
+  box-shadow: inset #333 0 3px 2px, $LCDbg 3px 3px 9px;
+  // note: inset shadow key: (color 0 <distance pushed> <fade of shadow>)
+}
+#controls button:focus {
+  outline: none; //remove focus ring set by browser
+}
+#start {
+  background-color: #e31;
+}
+#strict {
+  background-color: yellow;
+}
+#power {
+  background-color: blue;
+}
+
+
+
 
 #status {
   width: 10em;

@@ -13,12 +13,14 @@ $(document).ready(function() {
         isTurnedOn = false;
         game = undefined;
         $(".simonButton").addClass("poweredDown");
+        $("#controls").addClass("poweredDown");
         $("#status").val("off");
       });
     } else {
       isTurnedOn = true;
       game = new Simon(document.getElementById("status"));
       $(".simonButton").removeClass("poweredDown");
+      $("#controls").removeClass("poweredDown");
       $("#status").val("on");
     }
     $("#power").toggleClass("btn-primary", isTurnedOn);
