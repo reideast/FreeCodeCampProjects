@@ -157,9 +157,7 @@ body, html {
 }
 .controlsGroup > div {
   display: inline-block;
-}
-.controlsGroup > * {
-  margin: $borderWidth / 2;
+  margin: $borderWidth / 4;
   @media (max-width: $mediaBreakpoint) {
     margin: 2px;
   }

@@ -114,12 +114,10 @@ body, html {
           transform: translate(-50%, -50%); }
 
 .controlsGroup > div {
-  display: inline-block; }
-
-.controlsGroup > * {
-  margin: 10px; }
+  display: inline-block;
+  margin: 5px; }
   @media (max-width: 580px) {
-    .controlsGroup > * {
+    .controlsGroup > div {
       margin: 2px; } }
 
 #counter {
