@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Simon (For FreeCodeCamp)</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>-->
+  <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+
+  <link rel="stylesheet" href="simon.css">
+</head>
+
+<body>
+  <div class="container" id="board">
+    <div class="row">
+      <div class="simonButton" id="button0" data-simon="0">
+        <div class="icon"><span class="fa fa-arrow-left"></span></div>
+      </div>
+      <div class="simonButton" id="button1" data-simon="1">
+        <div class="icon"><span class="fa fa-arrow-up"></span></div>
+      </div>
+    </div>
+    <div class="row" id="controls">
+      <div id="controlsContainer">
+        <div class="controlsGroup">
+          <div><button id="start" class="btn"></button><br>START</div>
+        </div>
+        <div class="controlsGroup">
+          <div><input id="counter" class="counterVisible form-control" type="text" value=""></div>
+        </div>
+        <div class="controlsGroup">
+          <div><button id="strict" class="btn"></button><br>STRICT</div>
+          <div><button id="power" class="btn"></button><br>POWER</div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="simonButton" id="button3" data-simon="3">
+        <div class="icon"><span class="fa fa-arrow-down"></span></div>
+      </div>
+      <div class="simonButton" id="button2" data-simon="2">
+        <div class="icon"><span class="fa fa-arrow-right"></span></div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-4 col-xs-offset-3 col-sm-offset-4">
+        <input id="status" class="form-control" type="text" value="off">
+      </div>
+    </div>
+  </div>
+  
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js'></script>
+  <!--<script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>-->
+  <!--<script src="howler.min.js"></script>-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/1.1.29/howler.min.js"></script>
+  <script src="simon.js"></script>
+</body>
+
+</html>

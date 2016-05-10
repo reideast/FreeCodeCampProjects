@@ -1,0 +1,223 @@
+$simonRed: #DD271C;
+$simonBlue: #1F9ABB;
+$simonYellow: #F7DD14;
+$simonGreen: #219A48;
+$activatedRed: #FF3B2A;
+$activatedBlue: #2FE7FF;
+$activatedYellow: #FFFF1E;
+$activatedGreen: #32E76C;
+
+$borderColor: #0C271D;
+$controlsBG: #779288; // ie. hsla(158,11%,52%,1)
+
+$LCDbg: #6B836B;
+$LCDtext: #0B2327;
+@import url(https://fonts.googleapis.com/css?family=Press+Start+2P);
+$LCDfont: "Press Start 2P";
+
+$squareSize: 250px;
+$borderWidth: 0.08 * $squareSize;
+$borderWidthMobile: 3vw;
+// $squareSizeMobile: calc(50vw - #{1.5 * $borderWidthMobile + 20});
+$squareSizeMobile: 50vw - 2 * $borderWidthMobile;
+
+$controlsSize: $squareSize * 0.85;
+$controlsSizeMobile: $squareSizeMobile * 0.85;
+
+$borderTemplate: $borderWidth solid $borderColor;
+$borderTemplateMobile: $borderWidthMobile solid $borderColor;
+
+$mediaBreakpoint: $squareSize * 2 + $borderWidth * 4;
+
+$iconSize: 64px;
+$iconSizeMobile: 4 * $borderWidthMobile;
+
+body, html {
+  margin: 0;
+}
+
+#board {
+  position: absolute;
+  // top: 50%;
+  // left: 50%;
+  // left: 0;
+  // margin: 0 auto;
+  // transform: translate(-50%, -50%);
+}
+
+.simonButton {
+  width: $squareSize;
+  height: $squareSize;
+  border: $borderTemplate;
+  @media (max-width: $mediaBreakpoint) {
+    width: $squareSizeMobile;
+    height: $squareSizeMobile;
+    border: $borderTemplateMobile;
+  }
+  // display: inline-block;
+  float: left;
+  // transform: rotate(-45deg);
+}
+.icon {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg); // rotation to counteract .button rotation
+  width: $iconSize;
+  height: $iconSize;
+  color: transparent;
+  font-size: $iconSize;
+  -webkit-text-stroke: 1px #fff;
+  .fa {
+  }
+  @media (max-width: $mediaBreakpoint) {
+    height: $iconSizeMobile;
+    width: $iconSizeMobile;
+    .fa {
+      font-size: $iconSizeMobile;
+    }
+  }
+}
+.activated .icon {
+  color: transparentize(white, 0.8);
+}
+// .activated {
+//   filter: brightness(1.5);
+//  }
+.poweredDown {
+  filter: brightness(0.8);
+}
+#button0 {
+  background-color: $simonRed; 
+  border-top-left-radius: 100%;
+  transform: translate(-20%, 50%) rotate(-45deg);
+}
+#button0.activated {
+  background-color: $activatedRed;
+}
+#button1 {
+  background-color: $simonBlue; 
+  border-top-right-radius: 100%;
+  transform: translate(-50%, -20%) rotate(-45deg);
+}
+#button1.activated {
+  background-color: $activatedBlue;
+}
+#button2 {
+  background-color: $simonYellow; 
+  border-bottom-right-radius: 100%;
+  transform: translate(20%, -50%) rotate(-45deg);
+}
+#button2.activated {
+  background-color: $activatedYellow;
+}
+#button3 {
+  background-color: $simonGreen;
+  border-bottom-left-radius: 100%;
+  transform: translate(50%, 20%) rotate(-45deg);
+}
+#button3.activated {
+  background-color: $activatedGreen;
+}
+
+#controls {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 10;
+  width: $controlsSize;
+  height: $controlsSize;
+  border: $borderTemplate;
+  @media (max-width: $mediaBreakpoint) {
+    width: $controlsSizeMobile;
+    height: $controlsSizeMobile;
+    border: $borderTemplateMobile;
+  }
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 100%;
+}
+
+#controls{
+  text-align: center;
+  background-color: $controlsBG;
+  font-family: sans-serif;
+  font-size: 12px;
+  line-height: 1.8;
+  @media (max-width: $mediaBreakpoint) {
+    font-size: 10px;
+    line-height: 1.5;
+  }
+}
+#controlsContainer {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.controlsGroup > div {
+  display: inline-block;
+  margin: $borderWidth / 4;
+  @media (max-width: $mediaBreakpoint) {
+    margin: 2px;
+  }
+}
+#counter {
+  width: 64px;
+  height: 32px;
+  font-size: 30px;
+  @media (max-width: $mediaBreakpoint) {
+    width: 45px;
+    height: 24px;
+    font-size: 22px;
+  }
+  font-family: $LCDfont, monospace;
+  text-align: center;
+  padding-left: 4px;
+  background-color: $LCDbg;
+  border: 4px solid $borderColor;
+  border-radius: 4px;
+  // box-shadow: #000 0 -1px 7px 1px, inset $LCDtext 0 -1px 9px, $LCDbg 0 2px 12px;
+  box-shadow: inset $LCDtext 0 -1px 9px, $LCDbg 0 2px 12px;
+}
+.counterVisible {
+  color: $LCDtext
+}
+.counterBlank {
+  color: $LCDbg;
+}
+.btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 100%;
+  border: 4px solid $borderColor;
+  box-shadow: inset #333 0 -1px 3px, $LCDbg 3px 3px 9px;
+  @media (max-width: $mediaBreakpoint) {
+    width: 18px;
+    height: 18px;
+    border: 2px solid $borderColor;
+  } 
+}
+.btn:active, .btnPressed {
+  box-shadow: inset #333 0 3px 2px, $LCDbg 3px 3px 9px;
+  // note: inset shadow key: (color 0 <distance pushed> <fade of shadow>)
+}
+#controls button:focus {
+  outline: none; //remove focus ring set by browser
+}
+#start {
+  background-color: #e31;
+}
+#strict {
+  background-color: yellow;
+}
+#power {
+  background-color: blue;
+}
+
+
+
+
+#status {
+  width: 10em;
+}

@@ -1,0 +1,174 @@
+@import url(https://fonts.googleapis.com/css?family=Press+Start+2P);
+body, html {
+  margin: 0; }
+
+#board {
+  position: absolute; }
+
+.simonButton {
+  width: 250px;
+  height: 250px;
+  border: 20px solid #0C271D;
+  float: left; }
+  @media (max-width: 580px) {
+    .simonButton {
+      width: 44vw;
+      height: 44vw;
+      border: 3vw solid #0C271D; } }
+
+.icon {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%) rotate(45deg);
+          transform: translate(-50%, -50%) rotate(45deg);
+  width: 64px;
+  height: 64px;
+  color: transparent;
+  font-size: 64px;
+  -webkit-text-stroke: 1px #fff; }
+  @media (max-width: 580px) {
+    .icon {
+      height: 12vw;
+      width: 12vw; }
+      .icon .fa {
+        font-size: 12vw; } }
+
+.activated .icon {
+  color: rgba(255, 255, 255, 0.2); }
+
+.poweredDown {
+  -webkit-filter: brightness(0.8);
+          filter: brightness(0.8); }
+
+#button0 {
+  background-color: #DD271C;
+  border-top-left-radius: 100%;
+  -webkit-transform: translate(-20%, 50%) rotate(-45deg);
+          transform: translate(-20%, 50%) rotate(-45deg); }
+
+#button0.activated {
+  background-color: #FF3B2A; }
+
+#button1 {
+  background-color: #1F9ABB;
+  border-top-right-radius: 100%;
+  -webkit-transform: translate(-50%, -20%) rotate(-45deg);
+          transform: translate(-50%, -20%) rotate(-45deg); }
+
+#button1.activated {
+  background-color: #2FE7FF; }
+
+#button2 {
+  background-color: #F7DD14;
+  border-bottom-right-radius: 100%;
+  -webkit-transform: translate(20%, -50%) rotate(-45deg);
+          transform: translate(20%, -50%) rotate(-45deg); }
+
+#button2.activated {
+  background-color: #FFFF1E; }
+
+#button3 {
+  background-color: #219A48;
+  border-bottom-left-radius: 100%;
+  -webkit-transform: translate(50%, 20%) rotate(-45deg);
+          transform: translate(50%, 20%) rotate(-45deg); }
+
+#button3.activated {
+  background-color: #32E76C; }
+
+#controls {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 10;
+  width: 212.5px;
+  height: 212.5px;
+  border: 20px solid #0C271D;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 100%; }
+  @media (max-width: 580px) {
+    #controls {
+      width: 37.4vw;
+      height: 37.4vw;
+      border: 3vw solid #0C271D; } }
+
+#controls {
+  text-align: center;
+  background-color: #779288;
+  font-family: sans-serif;
+  font-size: 12px;
+  line-height: 1.8; }
+  @media (max-width: 580px) {
+    #controls {
+      font-size: 10px;
+      line-height: 1.5; } }
+
+#controlsContainer {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%); }
+
+.controlsGroup > div {
+  display: inline-block;
+  margin: 5px; }
+  @media (max-width: 580px) {
+    .controlsGroup > div {
+      margin: 2px; } }
+
+#counter {
+  width: 64px;
+  height: 32px;
+  font-size: 30px;
+  font-family: "Press Start 2P", monospace;
+  text-align: center;
+  padding-left: 4px;
+  background-color: #6B836B;
+  border: 4px solid #0C271D;
+  border-radius: 4px;
+  box-shadow: inset #0B2327 0 -1px 9px, #6B836B 0 2px 12px; }
+  @media (max-width: 580px) {
+    #counter {
+      width: 45px;
+      height: 24px;
+      font-size: 22px; } }
+
+.counterVisible {
+  color: #0B2327; }
+
+.counterBlank {
+  color: #6B836B; }
+
+.btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 100%;
+  border: 4px solid #0C271D;
+  box-shadow: inset #333 0 -1px 3px, #6B836B 3px 3px 9px; }
+  @media (max-width: 580px) {
+    .btn {
+      width: 18px;
+      height: 18px;
+      border: 2px solid #0C271D; } }
+
+.btn:active, .btnPressed {
+  box-shadow: inset #333 0 3px 2px, #6B836B 3px 3px 9px; }
+
+#controls button:focus {
+  outline: none; }
+
+#start {
+  background-color: #e31; }
+
+#strict {
+  background-color: yellow; }
+
+#power {
+  background-color: blue; }
+
+#status {
+  width: 10em; }
